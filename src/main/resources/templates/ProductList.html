@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Product List</title>
+<script src="lib/jquery-3.6.0.js" ></script>
+<link rel="stylesheet" href="lib/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/header.css">
+<script src="lib/bootstrap-4.0.0-dist/js/bootstrap.min.js" ></script>
+<script src="js/header.js" ></script>
+
+    
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">
+
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
+
+
+<style>
+  .main-content{
+      background-color: white;
+      border:1px solid #ddd;
+      margin-top: 40px;
+      padding-top:30px;
+      padding-bottom: 30px;
+      border-radius: 5px;
+  }
+  .error{
+          color: red; 
+
+        }
+
+</style>
+<script>
+  $( document ).ready(function() {
+
+   
+
+$('#pdtTable').DataTable(
+    {
+        ajax: {
+            url: 'http://localhost:8080/getAllProducts',
+        dataSrc: ''
+        },
+                      
+    columns: [ 
+
+        { data:'productName'},
+        
+        { data:'batch'},
+        { data:'expDate'},
+        { data:'mfgDate'},
+        { data:'mrp'},
+        { data:'noBoxBought'},
+        { data:'noBoxSold'},
+        { data:'percentageDiscount'},
+        { data:'sellerName'} , 
+        {
+  data: null,
+  render: function ( data, type, row ) {
+            // Combine the first and last names into a single table field
+            return "<button type=\"button\" style=\" margin-right: 10px;\""
+                  +"class=\"btn btn-primary btn-sm editpdt\" data-id=\""+data.id+"\">Edit</button>"
+                  +"<button  class=\"btn btn-danger btn-sm deletepdt\" data-id=\""+data.id+"\">Delete</button>";
+}
+}
+                    ]
+    
+
+    }
+);
+
+$('#pdtTable').on( 'click', '.deletepdt', function () {
+  
+ 
+  alert("delete clicked");
+  var pdtId=$(this).attr("data-id");
+  $.ajax({
+    type : "GET",
+    url : "http://localhost:8080/deleteProduct",
+    data:{
+         productId:pdtId
+     },
+    success: function(data){
+    
+     $('#pdtTable').DataTable().ajax.reload();
+    
+    },
+    error : function(xhr, status, error) {
+  
+    alert("Exception occured!");
+    console.log(xhr.responseText);
+            }
+
+    });
+
+
+})
+
+$('#pdtTable').on( 'click', '.editpdt', function () {
+ 
+  var pdtId=$(this).attr("data-id");
+  $('#pdtTable_wrapper').hide("fast");
+  $('#productUpdateForm').show("fast");
+  $('#pdtIdHidden').attr("data-id",pdtId);
+  $('#pdtIdHidden').val(pdtId);
+
+  populateForm(pdtId);
+  
+
+})
+function populateForm(productId){
+  $.ajax({
+    type : "GET",
+    url : "http://localhost:8080/getProductById/"+productId,
+    
+    success: function(data){
+
+
+      console.log(data);
+
+    $("#pdtNameInput").val(data.productName);
+    $("#pdtDescInput").val(data.productDesc);
+    $("#pdtMfgInput").val(changeDateFormat(data.mfgDate));
+    $("#pdtExpInput").val(changeDateFormat(data.expDate));
+    $("#pdtBatchInput").val(data.batch);
+    $("#pdtMrpInput").val(data.mrp);
+    $("#pdtSellerInput").val(data.sellerName);
+    $("#pdtDiscountInput").val(data.percentageDiscount);
+    $("#pdtMedTypeInput").val(data.medType);
+
+    $("#boxNoBoughtInput").val(data.noBoxBought);
+    $("#boxNoSoldInput").val(data.noBoxSold);
+    $("#addNoteInput").val(data.additionalNotes);
+    
+     
+    
+    },
+    error : function(xhr, status, error) {
+  
+    alert("Exception occured!");
+    console.log(xhr.responseText);
+            }
+
+    });
+
+}
+
+$("#productUpdateForm").validate({
+    rules: {
+      pdtNameInput: {
+                required: true,
+            },
+      pdtMfgInput:{
+                required: true,
+            },
+      pdtBatchInput:{
+                required: true,
+            },
+      pdtExpInput:{
+                required: true,
+            },
+      pdtMrpInput:{
+                required: true,
+                number:true
+            },
+      pdtDiscountInput:{
+              
+              number:true
+
+            },
+      pdtSellerInput:{
+                required: true,
+            },
+            boxNoBoughtInput:{
+                
+              digits:true
+            },
+            boxNoSoldInput:{
+               
+              digits:true
+            },
+          
+               
+       
+    },
+    messages: {
+      pdtNameInput: {
+                required: "Please enter product Name",
+            },
+      pdtMfgInput: {
+                required: "Please enter mfg date",
+            }, 
+      pdtBatchInput: {
+                required: "Please enter batch number",
+            },
+      pdtExpInput: {
+                required: "Please enter exp date",
+            },
+      pdtMrpInput:{
+                required: "Please enter Price",
+                number: "Provide a valid number"
+            },
+      pdtSellerInput:{
+                required: "Please enter seller name",
+            },
+            
+            
+      pdtDiscountInput:{
+              
+        number: "Provide a valid number"
+
+            },
+     
+            boxNoBoughtInput:{
+                
+              digits: "Provide a valid integer number"
+            },
+            boxNoSoldInput:{
+                
+              digits: "Provide a valid integer number"
+            },
+    },
+   
+       
+   
+    submitHandler: function(form) {
+      var pdtId=$("#pdtIdHidden").val();
+    var pdtName=$("#pdtNameInput").val();
+    var pdtDesc=$("#pdtDescInput").val();
+    var mfgDate=changeDateFormat($("#pdtMfgInput").val());
+    var expDate=changeDateFormat($("#pdtExpInput").val());
+    var batch=$("#pdtBatchInput").val();
+    var mrp=$("#pdtMrpInput").val();
+    var seller=$("#pdtSellerInput").val();
+    var discount=$("#pdtDiscountInput").val();
+    var medtype= $("#pdtMedTypeInput").val();
+
+    var boxBought= $("#boxNoBoughtInput").val();
+    var boxSold= $("#boxNoSoldInput").val();
+    var note= $("#addNoteInput").val();
+
+  $.ajax({
+    type : "GET",
+    url : "http://localhost:8080/updateProduct",
+    data:{
+    productId:pdtId,
+        productName:pdtName,
+        productDescription:pdtDesc,
+        mfgDate:mfgDate,
+        expDate:expDate,
+        batch:batch,
+        mrp:mrp,
+        seller:seller,
+        discount:discount,
+        medtype:medtype,
+        boxBought:boxBought,
+        boxSold:boxSold,
+        
+        note:note,
+
+    },
+    success: function(data){
+      console.log(data);  
+      $('#pdtIdHidden').attr("data-id","");
+  $('#pdtIdHidden').val("");
+  $('#productUpdateForm').hide("fast");
+  $('#pdtTable_wrapper').show("fast");
+  
+  $('#pdtTable').DataTable().ajax.reload();
+ 
+      
+       
+        
+    },
+    error : function(xhr, status, error) {
+      
+      alert("Exception occured!");
+      console.log(xhr.responseText);
+                }
+    
+}); 
+    }
+});
+
+function changeDateFormat(date){
+  var  changedFormat='';
+ 
+if(date!=null || date!=undefined|| date!=""){
+  var dtArray=date.split("-");
+  changedFormat=dtArray[2]+'-'+dtArray[1]+'-'+dtArray[0];
+}
+
+
+  return changedFormat;
+
+}
+
+
+
+});
+ 
+</script>
+
+</head>
+
+
+
+<body style="background: #eee;">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="box-shadow: 1px 1px 11px #ddd;position: relative;">
+  <a class="navbar-brand" href="#" style="color: #dc3563;">Med Store</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse navbar-center" id="navbarTogglerDemo02">
+    <ul class="navbar-nav  mr-auto mt-2 mt-lg-0 navul">
+      <li class="nav-item ">
+        <a class="nav-link " href="http://localhost:8080/" id="loadHomePage">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item liclicked">
+        <a class="nav-link navclicked" href="http://localhost:8080/pdtListPage" id="loadAllProductsPage">Products</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Category</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="http://localhost:8080/pdtUploadPage" id="loadProductUploadPage">Upload</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="http://localhost:8080/advancedSearchPage" id="loadAdvSearchPage">Advanced Search</a>
+      </li>
+      
+    </ul>
+    <!-- <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form> -->
+  </div>
+</nav>
+
+
+<div class="row">
+  <div class="col">
+   
+  </div>
+  <div class="col-10  main-content">
+    
+    <table id='pdtTable'  class="table table-striped table-bordered table-hover   dt-responsive nowrap" cellspacing="0" width="100%">   
+        <thead>
+            <tr>
+               
+                <th>Product</th>
+               
+                <th>Batch</th>
+                <th>Exp Dt.</th>
+                <th>Mfg Dt.</th>
+                <th>MRP</th>
+                <th># Bought</th>
+                <th># Sold</th>
+                <th>Discount %</th>
+                <th>Seller</th>
+                <th></th>
+                
+                
+            </tr>
+        </thead> 
+        
+           
+        
+            
+    </table>
+    
+
+    <form id="productUpdateForm" style="display: none;">
+      <input type="hidden"  id="pdtIdHidden" >
+      <div class="form-group row">
+        <label for="pdtNameInput" class="col-sm-2 col-form-label">Product Name</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="pdtNameInput" name="pdtNameInput" data-error="You must have a name." placeholder="Product Name" maxlength="10" minlength="3" required>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="pdtDescInput" class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="pdtDescInput" name="pdtDescInput"  placeholder="Description">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="pdtBatchInput" class="col-sm-2 col-form-label">Batch</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="pdtBatchInput" name="pdtBatchInput" placeholder="Batch Id">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="pdtMfgInput" class="col-sm-2 col-form-label">Mfg Date</label>
+        <div class="col-sm-10">
+         
+          <input type="text" class="form-control datepicker" name="pdtMfgInput" id="pdtMfgInput" data-provide="datepicker" placeholder="dd-mm-yyyy" >
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="pdtExpInput" class="col-sm-2 col-form-label">Exp. Date</label>
+        <div class="col-sm-10">
+  
+          <input type="text" class="form-control datepicker" id="pdtExpInput" name="pdtExpInput" data-provide="datepicker" placeholder="dd-mm-yyyy" >
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="pdtMrpInput" class="col-sm-2 col-form-label">MRP</label>
+        <div class="col-sm-10">
+          <input type="" class="form-control" id="pdtMrpInput" name="pdtMrpInput"  placeholder="Price">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="pdtSellerInput" class="col-sm-2 col-form-label">Seller</label>
+        <div class="col-sm-10">
+          <input type="" class="form-control" id="pdtSellerInput" name="pdtSellerInput" placeholder="Seller Name">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="pdtDiscountInput" class="col-sm-2 col-form-label">Discount</label>
+        <div class="col-sm-10">
+          <input type="" class="form-control" id="pdtDiscountInput" name="pdtDiscountInput" placeholder="Discount %">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="pdtMedTypeInput" class="col-sm-2 col-form-label">Medicine Type</label>
+        <div class="col-sm-10">
+          <input type="" class="form-control" id="pdtMedTypeInput" name="pdtMedTypeInput"   placeholder="Medicine Type">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="boxNoBoughtInput" class="col-sm-2 col-form-label"># Box Bought</label>
+        <div class="col-sm-10">
+          <input type="" class="form-control" id="boxNoBoughtInput" name="boxNoBoughtInput" placeholder="No of box bought">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="boxNoSoldInput" class="col-sm-2 col-form-label"># Box Sold</label>
+        <div class="col-sm-10">
+          <input type="" class="form-control" id="boxNoSoldInput" name="boxNoSoldInput" placeholder="No of box sold">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="addNoteInput" class="col-sm-2 col-form-label">Additional Note</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="addNoteInput" name="addNoteInput" placeholder="Provide additional note">
+        </div>
+      </div>
+      
+  
+  
+  
+  
+      
+      <div class="form-group row">
+        <div class="col-sm-10">
+          <button   class="btn btn-primary" id="uploadProduct">Save</button>
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+  <div class="col">
+   
+  </div>
+</div>
+   
+      
+
+
+
+
+
+</body>
+</html>
