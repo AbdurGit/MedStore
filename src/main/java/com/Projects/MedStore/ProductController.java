@@ -78,10 +78,26 @@ public ModelAndView home() {
 		pdt.setBatch(batch);
 		pdt.setMrp(Double.parseDouble(mrp));
 		pdt.setSellerName(seller);
-		pdt.setPercentageDiscount(Double.parseDouble(discount));
+		if(discount.trim().length()>0){
+			pdt.setPercentageDiscount(Double.parseDouble(discount.trim()));
+		}else{
+			pdt.setPercentageDiscount(0);
+		}
+		
 		pdt.setMedType(medtype);
-		pdt.setNoBoxBought(Integer.parseInt(boxBought));
-		pdt.setNoBoxSold(Integer.parseInt(boxSold));
+		if(boxBought.trim().length()>0){
+			pdt.setNoBoxBought(Integer.parseInt(boxBought.trim()));
+		}else{
+			pdt.setNoBoxBought(0);
+		}
+
+		if(boxSold.trim().length()>0){
+			pdt.setNoBoxSold(Integer.parseInt(boxSold.trim()));
+		}else{
+			pdt.setNoBoxSold(0);
+		}
+		
+		
 		pdt.setAdditionalNotes(note);
 		
 		productService.addProduct(pdt);
