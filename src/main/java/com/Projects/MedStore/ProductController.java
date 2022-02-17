@@ -1,5 +1,6 @@
 package com.Projects.MedStore;
 
+import java.io.File;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
@@ -32,7 +34,7 @@ public class ProductController {
 	
 	
 	
-@GetMapping("/")
+@GetMapping("/medstore")
 public ModelAndView home() {
 	    
 	ModelAndView modelAndView = new ModelAndView();    
@@ -67,7 +69,7 @@ public ModelAndView home() {
 	public String addProduct( @RequestParam String productName,@RequestParam String productDescription,@RequestParam String  mfgDate,
 	@RequestParam String expDate, @RequestParam String batch, @RequestParam String mrp, @RequestParam String seller,
 	@RequestParam String discount, @RequestParam String medtype, @RequestParam String boxBought, @RequestParam String boxSold,
-	@RequestParam String note) {
+	@RequestParam String note,@RequestParam("medImage") MultipartFile file) {
 		//System.out.println("fuction called");
 		Product pdt = new Product();
 		pdt.setId(UUID.randomUUID().toString());
@@ -99,6 +101,16 @@ public ModelAndView home() {
 		
 		
 		pdt.setAdditionalNotes(note);
+		String fileName=file.getOriginalFilename();
+
+		String rootuploadPath="C:\\MedStore\\upload\\";
+		try {
+			file.transferTo( new File( rootuploadPath.concat(fileName)));
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+
+
 		
 		productService.addProduct(pdt);
 		return pdt.getId();
@@ -162,6 +174,20 @@ public ModelAndView home() {
 	public ResponseEntity<Object> showProductDetails() {
 
 		return new ResponseEntity<>(productRepo.values(), HttpStatus.OK);
+	}
+
+	@PostMapping( path = "/upload")
+	public String upload(@RequestParam("file") MultipartFile file) {
+		String fileName=file.getOriginalFilename();
+
+		String rootuploadPath="C:\\MedStore\\upload\\";
+		try {
+			file.transferTo( new File( rootuploadPath.concat(fileName)));
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return "success!!";
+
 	}
 
 }

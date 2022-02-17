@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.Projects.MedStore"})
-@EnableJpaRepositories(basePackageClasses = UserRepository.class)
+
 public class MedStoreApplication {
 
 	public static void main(String[] args) {
