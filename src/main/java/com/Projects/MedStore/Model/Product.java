@@ -41,6 +41,7 @@ public class Product implements Serializable {
 	private int noBoxBought;
 	private int noBoxSold;
 	private String additionalNotes;
+	private String productImagePath;
 	
 	
 	public Product() {
@@ -195,6 +196,16 @@ public class Product implements Serializable {
 
 	public void setExpDate(Date expDate) {
 		this.expDate = expDate;
+	}
+
+
+	public String getProductImagePath() {
+		return productImagePath;
+	}
+
+
+	public void setProductImagePath(String productImagePath) {
+		this.productImagePath = productImagePath;
 	}
 	
 

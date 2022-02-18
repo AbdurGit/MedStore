@@ -2,8 +2,7 @@ package com.Projects.MedStore;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.Projects.MedStore.Model.User;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 
 
@@ -14,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class GreetController {
-	private static Map<String, User> productRepo = new HashMap<>();
+	
 	static {
 	// 	User user1=new User("1", "a", "pass");
 	// 	User user2=new User("2","abdur","123");
@@ -56,11 +55,7 @@ public class GreetController {
 	return modelAndView;    
 	}
 	
-	@GetMapping("/getUser")    
-public ResponseEntity<Object> getUser()  {    
 
- return new ResponseEntity<>(productRepo.values(), HttpStatus.OK);   
-}
 
 
 @GetMapping("/user")

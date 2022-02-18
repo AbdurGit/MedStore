@@ -8,10 +8,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.Projects.MedStore.Model.Product;
 import com.Projects.MedStore.service.ProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +32,9 @@ public class ProductController {
 
 	@Autowired
 	ProductService productService;
+
+	@Value("${application.upload.folder}")
+    private String uploadFolderPath;
 
 	private static Map<String, Product> productRepo = new HashMap<>();
 	
@@ -65,11 +71,11 @@ public ModelAndView home() {
 	
 	
 
-	@GetMapping("/addProduct")
-	public String addProduct( @RequestParam String productName,@RequestParam String productDescription,@RequestParam String  mfgDate,
-	@RequestParam String expDate, @RequestParam String batch, @RequestParam String mrp, @RequestParam String seller,
-	@RequestParam String discount, @RequestParam String medtype, @RequestParam String boxBought, @RequestParam String boxSold,
-	@RequestParam String note,@RequestParam("medImage") MultipartFile file) {
+	@PostMapping("/addProduct")
+	public String addProduct( @RequestParam("pdtNameInput") String productName,@RequestParam("pdtDescInput") String productDescription,@RequestParam("pdtMfgInput") String  mfgDate,
+	@RequestParam("pdtExpInput") String expDate, @RequestParam("pdtBatchInput")String batch, @RequestParam("pdtMrpInput") String mrp, @RequestParam("pdtSellerInput") String seller,
+	@RequestParam("pdtDiscountInput") String discount, @RequestParam("pdtMedTypeInput") String medtype, @RequestParam("boxNoBoughtInput") String boxBought, @RequestParam("boxNoSoldInput") String boxSold,
+	@RequestParam("addNoteInput") String note,@RequestParam("medImg") MultipartFile file,HttpServletResponse httpResponse )  throws Exception {
 		//System.out.println("fuction called");
 		Product pdt = new Product();
 		pdt.setId(UUID.randomUUID().toString());
@@ -101,19 +107,27 @@ public ModelAndView home() {
 		
 		
 		pdt.setAdditionalNotes(note);
-		String fileName=file.getOriginalFilename();
-
-		String rootuploadPath="C:\\MedStore\\upload\\";
-		try {
-			file.transferTo( new File( rootuploadPath.concat(fileName)));
-		}catch (Exception e){
-			e.printStackTrace();
-		}
-
 
 		
+		String randomFileId=UUID.randomUUID().toString();
+		//String fileName=file.getOriginalFilename();
+
+
+		String fileName=randomFileId.concat("_"+file.getOriginalFilename());
+		String fullFileName=uploadFolderPath.concat(fileName);
+
+		 //String rootuploadPath="C:\\MedStore\\upload\\";
+		 try {
+			file.transferTo( new File( fullFileName));
+		 }catch (Exception e){
+			e.printStackTrace();
+		 }
+		pdt.setProductImagePath(fileName);
 		productService.addProduct(pdt);
-		return pdt.getId();
+		//return pdt.getId();
+		httpResponse.sendRedirect("/pdtListPage");
+        return null;
+		//return "redirect:/getAllProducts";
 	}
 
 
@@ -176,7 +190,7 @@ public ModelAndView home() {
 		return new ResponseEntity<>(productRepo.values(), HttpStatus.OK);
 	}
 
-	@PostMapping( path = "/upload")
+	@PostMapping( "/upload")
 	public String upload(@RequestParam("file") MultipartFile file) {
 		String fileName=file.getOriginalFilename();
 
