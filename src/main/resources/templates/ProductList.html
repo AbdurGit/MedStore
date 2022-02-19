@@ -17,6 +17,9 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+
 
 
 
@@ -52,20 +55,35 @@ $('#pdtTable').DataTable(
         { data:'productName'},
         
         { data:'batch'},
-        { data:'expDate'},
-        { data:'mfgDate'},
+        { data:'expDate',
+          render: function(data, type, row){
+                if(type === "sort" || type === "type"){
+                    return data;
+                }
+                return moment(data).format("DD-MM-YYYY");
+            }
+        },
+        { data:'mfgDate',
+        render: function(data, type, row){
+                if(type === "sort" || type === "type"){
+                    return data;
+                }
+                return moment(data).format("DD-MM-YYYY");
+            }
+        },
         { data:'mrp'},
         { data:'noBoxBought'},
         { data:'noBoxSold'},
-        { data:'percentageDiscount'},
         { data:'sellerName'} , 
         {
-  data: null,
-  render: function ( data, type, row ) {
+          data: null,
+          render: function ( data, type, row ) {
             // Combine the first and last names into a single table field
             return "<button type=\"button\" style=\" margin-right: 10px;\""
-                  +"class=\"btn btn-primary btn-sm editpdt\" data-id=\""+data.id+"\">Edit</button>"
-                  +"<button  class=\"btn btn-danger btn-sm deletepdt\" data-id=\""+data.id+"\">Delete</button>";
+                  +"class=\"btn btn-outline-success btn-sm viewpdt\" data-id=\""+data.id+"\">View</button>"
+            +"<button type=\"button\" style=\" margin-right: 10px;\""
+                  +"class=\"btn btn-outline-primary btn-sm editpdt\" data-id=\""+data.id+"\">Edit</button>"
+                  +"<button  class=\"btn btn-outline-danger btn-sm deletepdt\" data-id=\""+data.id+"\">Delete</button>";
 }
 }
                     ]
@@ -267,11 +285,11 @@ $("#productUpdateForm").validate({
     success: function(data){
       console.log(data);  
       $('#pdtIdHidden').attr("data-id","");
-  $('#pdtIdHidden').val("");
-  $('#productUpdateForm').hide("fast");
-  $('#pdtTable_wrapper').show("fast");
-  
-  $('#pdtTable').DataTable().ajax.reload();
+      $('#pdtIdHidden').val("");
+      $('#productUpdateForm').hide("fast");
+      $('#pdtTable_wrapper').show("fast");
+      
+      $('#pdtTable').DataTable().ajax.reload();
  
       
        
@@ -363,7 +381,7 @@ if(date!=null || date!=undefined|| date!=""){
                 <th>MRP</th>
                 <th># Bought</th>
                 <th># Sold</th>
-                <th>Discount %</th>
+                <!-- <th>Discount %</th> -->
                 <th>Seller</th>
                 <th></th>
                 

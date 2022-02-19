@@ -78,11 +78,24 @@ public ModelAndView home() {
 	@RequestParam("addNoteInput") String note,@RequestParam("medImg") MultipartFile file,HttpServletResponse httpResponse )  throws Exception {
 		//System.out.println("fuction called");
 		Product pdt = new Product();
+		String formattedMfgDt=null;
+		String formattedExpDt=null;
 		pdt.setId(UUID.randomUUID().toString());
 		pdt.setProductName(productName);
 		pdt.setProductDesc(productDescription);
-		pdt.setMfgDate( Date.valueOf(mfgDate));
-		pdt.setExpDate(Date.valueOf(expDate));
+		if(mfgDate.length()>0){
+			formattedMfgDt=changeDtFormat(mfgDate);
+			if(formattedMfgDt!=null){
+				pdt.setMfgDate( Date.valueOf(formattedMfgDt));
+			}
+		}
+		
+		if(expDate.length()>0){
+			formattedExpDt=changeDtFormat(expDate);
+			if(formattedExpDt!=null){
+				pdt.setExpDate( Date.valueOf(formattedExpDt));
+			}
+		}
 		pdt.setBatch(batch);
 		pdt.setMrp(Double.parseDouble(mrp));
 		pdt.setSellerName(seller);
@@ -160,12 +173,28 @@ public ModelAndView home() {
 	@RequestParam String discount, @RequestParam String medtype, @RequestParam String boxBought, @RequestParam String boxSold,
 	@RequestParam String note) {
 		//System.out.println("fuction called");
+		String formattedMfgDt=null;
+		String formattedExpDt=null;
 		Product pdt = new Product();
 		pdt.setId(productId);
 		pdt.setProductName(productName);
 		pdt.setProductDesc(productDescription);
-		pdt.setMfgDate( Date.valueOf(mfgDate));
-		pdt.setExpDate(Date.valueOf(expDate));
+
+		if(mfgDate.length()>0){
+			formattedMfgDt=changeDtFormat(mfgDate);
+			if(formattedMfgDt!=null){
+				pdt.setMfgDate( Date.valueOf(formattedMfgDt));
+			}
+		}
+		
+		if(expDate.length()>0){
+			formattedExpDt=changeDtFormat(expDate);
+			if(formattedExpDt!=null){
+				pdt.setExpDate( Date.valueOf(formattedExpDt));
+			}
+		}
+		
+		
 		pdt.setBatch(batch);
 		pdt.setMrp(Double.parseDouble(mrp));
 		pdt.setSellerName(seller);
@@ -174,7 +203,6 @@ public ModelAndView home() {
 		pdt.setNoBoxBought(Integer.parseInt(boxBought));
 		pdt.setNoBoxSold(Integer.parseInt(boxSold));
 		pdt.setAdditionalNotes(note);
-		
 		productService.updateProduct(pdt);
 		return pdt.getId();
 	}
@@ -201,6 +229,17 @@ public ModelAndView home() {
 			e.printStackTrace();
 		}
 		return "success!!";
+
+	}
+	public String changeDtFormat(String inputDt){
+		String outDt=null;
+		String[] dtComponentArray=inputDt.split("-");
+		if(dtComponentArray.length==3 ){
+			outDt=dtComponentArray[2]+"-"+dtComponentArray[1]+"-"+dtComponentArray[0];
+		}
+		
+
+		return outDt;
 
 	}
 

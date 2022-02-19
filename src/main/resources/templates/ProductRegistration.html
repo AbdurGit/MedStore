@@ -55,6 +55,8 @@
         padding-top:30px;
         padding-bottom: 30px;
         border-radius: 5px;
+        padding-left: 40px;
+        padding-right: 40px;
     }
     .has-error label,
         .has-error input,
@@ -66,7 +68,11 @@
           color: red; 
 
         }
-     
+    .form-title{
+      text-align: center;
+    margin-bottom: 54px;
+    color: #dc3545;
+    } 
 
 </style>
 <script>
@@ -86,7 +92,7 @@ $( document ).ready(function() {
 
   $('.datepicker').datepicker({
    
-    format: 'yyyy-mm-dd',
+    format: 'dd-mm-yyyy',
     startDate: '-3d'
 });
 // jQuery.validator.setDefaults({
@@ -248,7 +254,7 @@ if(date!=null || date!=undefined|| date!=""){
     <div class="col-10  main-content">
      
         <div class="container">
-          <h5 calss="form-title">Upload Medicine</h5>
+          <h4 class="form-title">Upload Medicine</h4>
              
                 
 <form id="productForm"  method="post" enctype="multipart/form-data" action="/addProduct">
@@ -272,7 +278,7 @@ if(date!=null || date!=undefined|| date!=""){
     <div class="form-group row">
       <label for="pdtNameInput" class="col-sm-2 col-form-label">Product Name:</label>
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="pdtNameInput" name="pdtNameInput" data-error="You must have a name." placeholder="Product Name" maxlength="10" minlength="3" required>
+        <input type="text" class="form-control" id="pdtNameInput" name="pdtNameInput" data-error="You must have a name." placeholder="Product Name" maxlength="20" minlength="3" required>
       </div>
     </div>
   
