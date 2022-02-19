@@ -1,328 +1,483 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="ISO-8859-1">
-<title>Product List</title>
-<script src="lib/jquery-3.6.0.js" ></script>
-<link rel="stylesheet" href="lib/bootstrap-4.0.0-dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="css/header.css">
-<script src="lib/bootstrap-4.0.0-dist/js/bootstrap.min.js" ></script>
-<script src="js/header.js" ></script>
-
-    
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">
-
-<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <meta charset="ISO-8859-1">
+  <title>Product List</title>
+  <script src="lib/jquery-3.6.0.js"></script>
+  <link rel="stylesheet" href="lib/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/header.css">
+  <script src="lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+  <script src="js/header.js"></script>
 
 
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css">
+
+  <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
+
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
 
 
-<style>
-  .main-content{
+
+  <style>
+    .main-content {
       background-color: white;
-      border:1px solid #ddd;
+      border: 1px solid #ddd;
       margin-top: 40px;
-      padding-top:30px;
+      padding-top: 30px;
       padding-bottom: 30px;
       border-radius: 5px;
-  }
-  .error{
-          color: red; 
+      
+    }
+    /* @media screen and  (max-width: 768px) {
+
+      .main-content {
+      background-color: rgb(219, 122, 122);
+      border: 1px solid #ddd;
+      margin-top: 40px;
+      padding-top: 30px;
+      padding-bottom: 30px;
+      border-radius: 5px;
+      overflow: scroll;
+      
+    }
+    } */
+
+    
+    
+
+    .error {
+      color: red;
+
+    }
+    .section-title{
+      text-align: center;
+            margin-bottom: 54px;
+            color: #dc3545;
+
+    }
+    .pdt-name {
+            font-weight: 700;
+            color: #636363;
+        }
+
+        .title {
+            font-weight: 600;
+            margin-top: 20px;
+            color: rgb(226 39 95 / 75%);
 
         }
 
-</style>
-<script>
-  $( document ).ready(function() {
+        .value {
+            margin-top: 5px;
+            color: rgb(151, 151, 151);
 
-   
+        }
 
-$('#pdtTable').DataTable(
-    {
+        .img-wrap {
+
+            padding: 5px;
+            border: 1px solid #eee;
+            transition: box-shadow 0.5s;
+        }
+
+        .img-wrap:hover {
+            box-shadow: 1px 1px 10px rgb(197, 197, 197);
+        }
+  </style>
+  <script>
+    $(document).ready(function () {
+
+      $('#pdtTable').DataTable({
         ajax: {
-            url: 'http://localhost:8080/getAllProducts',
-        dataSrc: ''
+          url: 'http://192.168.1.102:8080/getAllProducts',
+          dataSrc: ''
         },
-                      
-    columns: [ 
 
-        { data:'productName'},
-        
-        { data:'batch'},
-        { data:'expDate',
-          render: function(data, type, row){
-                if(type === "sort" || type === "type"){
-                    return data;
-                }
-                return moment(data).format("DD-MM-YYYY");
+        columns: [
+
+          {
+            data: 'productName'
+          },
+
+          {
+            data: 'batch'
+          },
+          {
+            data: 'expDate',
+            render: function (data, type, row) {
+              if (type === "sort" || type === "type") {
+                return data;
+              }
+              return moment(data).format("DD-MM-YYYY");
             }
-        },
-        { data:'mfgDate',
-        render: function(data, type, row){
-                if(type === "sort" || type === "type"){
-                    return data;
-                }
-                return moment(data).format("DD-MM-YYYY");
+          },
+          {
+            data: 'mfgDate',
+            render: function (data, type, row) {
+              if (type === "sort" || type === "type") {
+                return data;
+              }
+              return moment(data).format("DD-MM-YYYY");
             }
-        },
-        { data:'mrp'},
-        { data:'noBoxBought'},
-        { data:'noBoxSold'},
-        { data:'sellerName'} , 
-        {
-          data: null,
-          render: function ( data, type, row ) {
-            // Combine the first and last names into a single table field
-            return "<button type=\"button\" style=\" margin-right: 10px;\""
-                  +"class=\"btn btn-outline-success btn-sm viewpdt\" data-id=\""+data.id+"\">View</button>"
-            +"<button type=\"button\" style=\" margin-right: 10px;\""
-                  +"class=\"btn btn-outline-primary btn-sm editpdt\" data-id=\""+data.id+"\">Edit</button>"
-                  +"<button  class=\"btn btn-outline-danger btn-sm deletepdt\" data-id=\""+data.id+"\">Delete</button>";
-}
-}
-                    ]
-    
-
-    }
-);
-
-$('#pdtTable').on( 'click', '.deletepdt', function () {
-  
- 
-  alert("delete clicked");
-  var pdtId=$(this).attr("data-id");
-  $.ajax({
-    type : "GET",
-    url : "http://localhost:8080/deleteProduct",
-    data:{
-         productId:pdtId
-     },
-    success: function(data){
-    
-     $('#pdtTable').DataTable().ajax.reload();
-    
-    },
-    error : function(xhr, status, error) {
-  
-    alert("Exception occured!");
-    console.log(xhr.responseText);
+          },
+          {
+            data: 'mrp'
+          },
+          {
+            data: 'noBoxBought'
+          },
+          {
+            data: 'noBoxSold'
+          },
+          {
+            data: 'sellerName'
+          },
+          {
+            data: null,
+            render: function (data, type, row) {
+              // Combine the first and last names into a single table field
+              return "<button type=\"button\" style=\" margin-right: 10px;\"" +
+                "class=\"btn btn-outline-success btn-sm viewpdt\" data-id=\"" + data.id +
+                "\">View</button>" +
+                "<button type=\"button\" style=\" margin-right: 10px;\"" +
+                "class=\"btn btn-outline-primary btn-sm editpdt\" data-id=\"" + data.id +
+                "\">Edit</button>" +
+                "<button  class=\"btn btn-outline-danger btn-sm deletepdt\" data-id=\"" + data.id +
+                "\">Delete</button>";
             }
+          }
+        ]
 
-    });
 
+      });
 
+$("#backToTable").click(function(){
+  $("#pdtViewContainer").hide("fast");
+
+$('#pdtTable').show("fast");
+$('#pdtTable_wrapper').show("fast");
 })
 
-$('#pdtTable').on( 'click', '.editpdt', function () {
- 
-  var pdtId=$(this).attr("data-id");
-  $('#pdtTable_wrapper').hide("fast");
-  $('#productUpdateForm').show("fast");
-  $('#pdtIdHidden').attr("data-id",pdtId);
-  $('#pdtIdHidden').val(pdtId);
+$("#backToTableFromUpdateForm").click(function(){
+  $("#pdtUpdateContainer").hide("fast");
 
-  populateForm(pdtId);
-  
-
+$('#pdtTable').show("fast");
+$('#pdtTable_wrapper').show("fast");
 })
-function populateForm(productId){
-  $.ajax({
-    type : "GET",
-    url : "http://localhost:8080/getProductById/"+productId,
-    
-    success: function(data){
 
 
-      console.log(data);
 
-    $("#pdtNameInput").val(data.productName);
-    $("#pdtDescInput").val(data.productDesc);
-    $("#pdtMfgInput").val(changeDateFormat(data.mfgDate));
-    $("#pdtExpInput").val(changeDateFormat(data.expDate));
-    $("#pdtBatchInput").val(data.batch);
-    $("#pdtMrpInput").val(data.mrp);
-    $("#pdtSellerInput").val(data.sellerName);
-    $("#pdtDiscountInput").val(data.percentageDiscount);
-    $("#pdtMedTypeInput").val(data.medType);
 
-    $("#boxNoBoughtInput").val(data.noBoxBought);
-    $("#boxNoSoldInput").val(data.noBoxSold);
-    $("#addNoteInput").val(data.additionalNotes);
-    
-     
-    
-    },
-    error : function(xhr, status, error) {
-  
-    alert("Exception occured!");
-    console.log(xhr.responseText);
+
+
+
+
+      $('#pdtTable').on('click', '.viewpdt', function () {
+
+        var pdtId = $(this).attr("data-id");
+        $.ajax({
+          type: "GET",
+          url: "http://192.168.1.102:8080/getProductById/"+pdtId,
+         
+          success: function (data) {
+            $("#pdtViewContainer").show("fast");
+
+            $('#pdtTable').hide("fast");
+            $('#pdtTable_wrapper').hide("fast");
+            console.log(data);
+
+            document.getElementById("pdtImg").src="images/"+data.productImagePath;
+
+
+
+            $("#pdtNameVal").text("");
+            $("#descVal").text("");
+            
+            $("#batchVal").text("");
+            $("#priceVal").text("");
+            $("#sellerVal").text("");
+            $("#discountVal").text("");
+            $("#typeVal").text("");
+
+            $("#boxBoughtVal").text("");
+            $("#boxSoldVal").text("");
+            $("#noteVal").text("");
+            $("#mfgDtVal").text("");
+            $("#expiryDtVal").text("");
+
+
+
+
+            $("#pdtNameVal").text(data.productName);
+            $("#descVal").text(data.productDesc);
+            
+            $("#batchVal").text(data.batch);
+            $("#priceVal").text(data.mrp);
+            $("#sellerVal").text(data.sellerName);
+            $("#discountVal").text(data.percentageDiscount);
+            $("#typeVal").text(data.medType);
+
+            $("#boxBoughtVal").text(data.noBoxBought);
+            $("#boxSoldVal").text(data.noBoxSold);
+            $("#noteVal").text(data.additionalNotes);
+            $("#mfgDtVal").text((data.mfgDate));
+            $("#expiryDtVal").text((data.expDate));
+            
+            
+            
+            
+
+          },
+          error: function (xhr, status, error) {
+
+            alert("Exception occured!");
+            console.log(xhr.responseText);
+          }
+
+        });
+
+
+      })
+
+
+      $('#pdtTable').on('click', '.deletepdt', function () {
+
+
+        alert("delete clicked");
+        var pdtId = $(this).attr("data-id");
+        $.ajax({
+          type: "GET",
+          url: "http://192.168.1.102:8080/deleteProduct",
+          data: {
+            productId: pdtId
+          },
+          success: function (data) {
+
+            $('#pdtTable').DataTable().ajax.reload();
+
+          },
+          error: function (xhr, status, error) {
+
+            alert("Exception occured!");
+            console.log(xhr.responseText);
+          }
+
+        });
+
+
+      })
+
+      $('#pdtTable').on('click', '.editpdt', function () {
+
+        var pdtId = $(this).attr("data-id");
+        $('#pdtTable_wrapper').hide("fast");
+        $('#pdtUpdateContainer').show("fast");
+        $('#pdtIdHidden').attr("data-id", pdtId);
+        $('#pdtIdHidden').val(pdtId);
+
+        populateForm(pdtId);
+
+
+      })
+
+      function populateForm(productId) {
+        $.ajax({
+          type: "GET",
+          url: "http://192.168.1.102:8080/getProductById/" + productId,
+
+          success: function (data) {
+
+
+            console.log(data);
+
+            $("#pdtNameInput").val(data.productName);
+            $("#pdtDescInput").val(data.productDesc);
+            $("#pdtMfgInput").val(changeDateFormat(data.mfgDate));
+            $("#pdtExpInput").val(changeDateFormat(data.expDate));
+            $("#pdtBatchInput").val(data.batch);
+            $("#pdtMrpInput").val(data.mrp);
+            $("#pdtSellerInput").val(data.sellerName);
+            $("#pdtDiscountInput").val(data.percentageDiscount);
+            $("#pdtMedTypeInput").val(data.medType);
+
+            $("#boxNoBoughtInput").val(data.noBoxBought);
+            $("#boxNoSoldInput").val(data.noBoxSold);
+            $("#addNoteInput").val(data.additionalNotes);
+
+
+
+          },
+          error: function (xhr, status, error) {
+
+            alert("Exception occured!");
+            console.log(xhr.responseText);
+          }
+
+        });
+
+      }
+
+      $("#productUpdateForm").validate({
+        rules: {
+          pdtNameInput: {
+            required: true,
+          },
+          pdtMfgInput: {
+            required: true,
+          },
+          pdtBatchInput: {
+            required: true,
+          },
+          pdtExpInput: {
+            required: true,
+          },
+          pdtMrpInput: {
+            required: true,
+            number: true
+          },
+          pdtDiscountInput: {
+
+            number: true
+
+          },
+          pdtSellerInput: {
+            required: true,
+          },
+          boxNoBoughtInput: {
+
+            digits: true
+          },
+          boxNoSoldInput: {
+
+            digits: true
+          },
+
+
+
+        },
+        messages: {
+          pdtNameInput: {
+            required: "Please enter product Name",
+          },
+          pdtMfgInput: {
+            required: "Please enter mfg date",
+          },
+          pdtBatchInput: {
+            required: "Please enter batch number",
+          },
+          pdtExpInput: {
+            required: "Please enter exp date",
+          },
+          pdtMrpInput: {
+            required: "Please enter Price",
+            number: "Provide a valid number"
+          },
+          pdtSellerInput: {
+            required: "Please enter seller name",
+          },
+
+
+          pdtDiscountInput: {
+
+            number: "Provide a valid number"
+
+          },
+
+          boxNoBoughtInput: {
+
+            digits: "Provide a valid integer number"
+          },
+          boxNoSoldInput: {
+
+            digits: "Provide a valid integer number"
+          },
+        },
+
+
+
+        submitHandler: function (form) {
+          var pdtId = $("#pdtIdHidden").val();
+          var pdtName = $("#pdtNameInput").val();
+          var pdtDesc = $("#pdtDescInput").val();
+          var mfgDate = changeDateFormat($("#pdtMfgInput").val());
+          var expDate = changeDateFormat($("#pdtExpInput").val());
+          var batch = $("#pdtBatchInput").val();
+          var mrp = $("#pdtMrpInput").val();
+          var seller = $("#pdtSellerInput").val();
+          var discount = $("#pdtDiscountInput").val();
+          var medtype = $("#pdtMedTypeInput").val();
+
+          var boxBought = $("#boxNoBoughtInput").val();
+          var boxSold = $("#boxNoSoldInput").val();
+          var note = $("#addNoteInput").val();
+
+          $.ajax({
+            type: "GET",
+            url: "http://192.168.1.102:8080/updateProduct",
+            data: {
+              productId: pdtId,
+              productName: pdtName,
+              productDescription: pdtDesc,
+              mfgDate: mfgDate,
+              expDate: expDate,
+              batch: batch,
+              mrp: mrp,
+              seller: seller,
+              discount: discount,
+              medtype: medtype,
+              boxBought: boxBought,
+              boxSold: boxSold,
+
+              note: note,
+
+            },
+            success: function (data) {
+              console.log(data);
+              $('#pdtIdHidden').attr("data-id", "");
+              $('#pdtIdHidden').val("");
+              $('#productUpdateForm').hide("fast");
+              $('#pdtTable_wrapper').show("fast");
+
+              $('#pdtTable').DataTable().ajax.reload();
+
+
+
+
+            },
+            error: function (xhr, status, error) {
+
+              alert("Exception occured!");
+              console.log(xhr.responseText);
             }
 
+          });
+        }
+      });
+
+      function changeDateFormat(date) {
+        var changedFormat = '';
+
+        if (date != null || date != undefined || date != "") {
+          var dtArray = date.split("-");
+          changedFormat = dtArray[2] + '-' + dtArray[1] + '-' + dtArray[0];
+        }
+
+
+        return changedFormat;
+
+      }
+
+
+
     });
-
-}
-
-$("#productUpdateForm").validate({
-    rules: {
-      pdtNameInput: {
-                required: true,
-            },
-      pdtMfgInput:{
-                required: true,
-            },
-      pdtBatchInput:{
-                required: true,
-            },
-      pdtExpInput:{
-                required: true,
-            },
-      pdtMrpInput:{
-                required: true,
-                number:true
-            },
-      pdtDiscountInput:{
-              
-              number:true
-
-            },
-      pdtSellerInput:{
-                required: true,
-            },
-            boxNoBoughtInput:{
-                
-              digits:true
-            },
-            boxNoSoldInput:{
-               
-              digits:true
-            },
-          
-               
-       
-    },
-    messages: {
-      pdtNameInput: {
-                required: "Please enter product Name",
-            },
-      pdtMfgInput: {
-                required: "Please enter mfg date",
-            }, 
-      pdtBatchInput: {
-                required: "Please enter batch number",
-            },
-      pdtExpInput: {
-                required: "Please enter exp date",
-            },
-      pdtMrpInput:{
-                required: "Please enter Price",
-                number: "Provide a valid number"
-            },
-      pdtSellerInput:{
-                required: "Please enter seller name",
-            },
-            
-            
-      pdtDiscountInput:{
-              
-        number: "Provide a valid number"
-
-            },
-     
-            boxNoBoughtInput:{
-                
-              digits: "Provide a valid integer number"
-            },
-            boxNoSoldInput:{
-                
-              digits: "Provide a valid integer number"
-            },
-    },
-   
-       
-   
-    submitHandler: function(form) {
-      var pdtId=$("#pdtIdHidden").val();
-    var pdtName=$("#pdtNameInput").val();
-    var pdtDesc=$("#pdtDescInput").val();
-    var mfgDate=changeDateFormat($("#pdtMfgInput").val());
-    var expDate=changeDateFormat($("#pdtExpInput").val());
-    var batch=$("#pdtBatchInput").val();
-    var mrp=$("#pdtMrpInput").val();
-    var seller=$("#pdtSellerInput").val();
-    var discount=$("#pdtDiscountInput").val();
-    var medtype= $("#pdtMedTypeInput").val();
-
-    var boxBought= $("#boxNoBoughtInput").val();
-    var boxSold= $("#boxNoSoldInput").val();
-    var note= $("#addNoteInput").val();
-
-  $.ajax({
-    type : "GET",
-    url : "http://localhost:8080/updateProduct",
-    data:{
-    productId:pdtId,
-        productName:pdtName,
-        productDescription:pdtDesc,
-        mfgDate:mfgDate,
-        expDate:expDate,
-        batch:batch,
-        mrp:mrp,
-        seller:seller,
-        discount:discount,
-        medtype:medtype,
-        boxBought:boxBought,
-        boxSold:boxSold,
-        
-        note:note,
-
-    },
-    success: function(data){
-      console.log(data);  
-      $('#pdtIdHidden').attr("data-id","");
-      $('#pdtIdHidden').val("");
-      $('#productUpdateForm').hide("fast");
-      $('#pdtTable_wrapper').show("fast");
-      
-      $('#pdtTable').DataTable().ajax.reload();
- 
-      
-       
-        
-    },
-    error : function(xhr, status, error) {
-      
-      alert("Exception occured!");
-      console.log(xhr.responseText);
-                }
-    
-}); 
-    }
-});
-
-function changeDateFormat(date){
-  var  changedFormat='';
- 
-if(date!=null || date!=undefined|| date!=""){
-  var dtArray=date.split("-");
-  changedFormat=dtArray[2]+'-'+dtArray[1]+'-'+dtArray[0];
-}
-
-
-  return changedFormat;
-
-}
-
-
-
-});
- 
-</script>
+  </script>
 
 </head>
 
@@ -330,172 +485,286 @@ if(date!=null || date!=undefined|| date!=""){
 
 <body style="background: #eee;">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light" style="box-shadow: 1px 1px 11px #ddd;position: relative;">
-  <a class="navbar-brand" href="#" style="color: #dc3563;">Med Store</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="box-shadow: 1px 1px 11px #ddd;position: relative;">
+    <a class="navbar-brand" href="#" style="color: #dc3563;">Med Store</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+      aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse navbar-center" id="navbarTogglerDemo02">
-    <ul class="navbar-nav  mr-auto mt-2 mt-lg-0 navul">
-      <li class="nav-item ">
-        <a class="nav-link " href="http://localhost:8080/" id="loadHomePage">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item liclicked">
-        <a class="nav-link navclicked" href="http://localhost:8080/pdtListPage" id="loadAllProductsPage">Products</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Category</a>
-      </li>
-       <li class="nav-item">
-        <a class="nav-link" href="http://localhost:8080/pdtUploadPage" id="loadProductUploadPage">Upload</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="http://localhost:8080/advancedSearchPage" id="loadAdvSearchPage">Advanced Search</a>
-      </li>
-      
-    </ul>
-    <!-- <form class="form-inline my-2 my-lg-0">
+    <div class="collapse navbar-collapse navbar-center" id="navbarTogglerDemo02">
+      <ul class="navbar-nav  mr-auto mt-2 mt-lg-0 navul">
+        <li class="nav-item">
+          <a class="nav-link" href="http://192.168.1.102:8080/medstore" id="loadHomePage">Home <span
+              class="sr-only">(current)</span></a>
+        </li> 
+        <li class="nav-item liclicked">
+          <a class="nav-link navclicked" href="http://192.168.1.102:8080/pdtListPage"
+            id="loadAllProductsPage">Products</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="#">Category</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="http://192.168.1.102:8080/pdtUploadPage" id="loadProductUploadPage">Upload</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="http://192.168.1.102:8080/advancedSearchPage" id="loadAdvSearchPage">Advanced
+            Search</a>
+        </li> -->
+
+      </ul>
+      <!-- <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form> -->
-  </div>
-</nav>
+    </div>
+  </nav>
 
 
-<div class="row">
-  <div class="col">
-   
-  </div>
-  <div class="col-10  main-content">
-    
-    <table id='pdtTable'  class="table table-striped table-bordered table-hover   dt-responsive nowrap" cellspacing="0" width="100%">   
+  <div class="row">
+    <div class="col">
+
+    </div>
+    <div class="col-10  main-content">
+
+      <table id='pdtTable' class="table table-striped table-bordered table-hover table-responsive dt-responsive nowrap"  style="width:100%;"
+        >
         <thead>
-            <tr>
-               
-                <th>Product</th>
-               
-                <th>Batch</th>
-                <th>Exp Dt.</th>
-                <th>Mfg Dt.</th>
-                <th>MRP</th>
-                <th># Bought</th>
-                <th># Sold</th>
-                <!-- <th>Discount %</th> -->
-                <th>Seller</th>
-                <th></th>
-                
-                
-            </tr>
-        </thead> 
-        
-           
-        
-            
-    </table>
-    
+          <tr>
 
-    <form id="productUpdateForm" style="display: none;">
-      <input type="hidden"  id="pdtIdHidden" >
-      <div class="form-group row">
-        <label for="pdtNameInput" class="col-sm-2 col-form-label">Product Name</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="pdtNameInput" name="pdtNameInput" data-error="You must have a name." placeholder="Product Name" maxlength="10" minlength="3" required>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="pdtDescInput" class="col-sm-2 col-form-label">Description</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="pdtDescInput" name="pdtDescInput"  placeholder="Description">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="pdtBatchInput" class="col-sm-2 col-form-label">Batch</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="pdtBatchInput" name="pdtBatchInput" placeholder="Batch Id">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="pdtMfgInput" class="col-sm-2 col-form-label">Mfg Date</label>
-        <div class="col-sm-10">
-         
-          <input type="text" class="form-control datepicker" name="pdtMfgInput" id="pdtMfgInput" data-provide="datepicker" placeholder="dd-mm-yyyy" >
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="pdtExpInput" class="col-sm-2 col-form-label">Exp. Date</label>
-        <div class="col-sm-10">
-  
-          <input type="text" class="form-control datepicker" id="pdtExpInput" name="pdtExpInput" data-provide="datepicker" placeholder="dd-mm-yyyy" >
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="pdtMrpInput" class="col-sm-2 col-form-label">MRP</label>
-        <div class="col-sm-10">
-          <input type="" class="form-control" id="pdtMrpInput" name="pdtMrpInput"  placeholder="Price">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="pdtSellerInput" class="col-sm-2 col-form-label">Seller</label>
-        <div class="col-sm-10">
-          <input type="" class="form-control" id="pdtSellerInput" name="pdtSellerInput" placeholder="Seller Name">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="pdtDiscountInput" class="col-sm-2 col-form-label">Discount</label>
-        <div class="col-sm-10">
-          <input type="" class="form-control" id="pdtDiscountInput" name="pdtDiscountInput" placeholder="Discount %">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="pdtMedTypeInput" class="col-sm-2 col-form-label">Medicine Type</label>
-        <div class="col-sm-10">
-          <input type="" class="form-control" id="pdtMedTypeInput" name="pdtMedTypeInput"   placeholder="Medicine Type">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="boxNoBoughtInput" class="col-sm-2 col-form-label"># Box Bought</label>
-        <div class="col-sm-10">
-          <input type="" class="form-control" id="boxNoBoughtInput" name="boxNoBoughtInput" placeholder="No of box bought">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="boxNoSoldInput" class="col-sm-2 col-form-label"># Box Sold</label>
-        <div class="col-sm-10">
-          <input type="" class="form-control" id="boxNoSoldInput" name="boxNoSoldInput" placeholder="No of box sold">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="addNoteInput" class="col-sm-2 col-form-label">Additional Note</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="addNoteInput" name="addNoteInput" placeholder="Provide additional note">
-        </div>
-      </div>
-      
-  
-  
-  
-  
-      
-      <div class="form-group row">
-        <div class="col-sm-10">
-          <button   class="btn btn-primary" id="uploadProduct">Save</button>
-        </div>
-      </div>
-    </form>
+            <th>Product</th>
+
+            <th>Batch</th>
+            <th>Exp Dt.</th>
+            <th>Mfg Dt.</th>
+            <th>MRP</th>
+            <th># Bought</th>
+            <th># Sold</th>
+            <!-- <th>Discount %</th> -->
+            <th>Seller</th>
+            <th></th>
 
 
+          </tr>
+        </thead>
+
+
+
+
+      </table>
+
+      <div class="container" id="pdtUpdateContainer" style="display: none; position: relative;">
+      <h4 class="section-title">Update Medicine Details</h4>
+      <div style="position: absolute; left:15px; top: 20px;">
+        <button class="btn btn-outline-primary btn-sm" id="backToTableFromUpdateForm">
+          <i class="bi-arrow-left"></i>
+          Back To List</button>
+
+    </div>
+      <form id="productUpdateForm" >
+        <input type="hidden" id="pdtIdHidden">
+        <div class="form-group row">
+          <label for="pdtNameInput" class="col-sm-2 col-form-label">Product Name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="pdtNameInput" name="pdtNameInput"
+              data-error="You must have a name." placeholder="Product Name" maxlength="10" minlength="3" required>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="pdtDescInput" class="col-sm-2 col-form-label">Description</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="pdtDescInput" name="pdtDescInput" placeholder="Description">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="pdtBatchInput" class="col-sm-2 col-form-label">Batch</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="pdtBatchInput" name="pdtBatchInput" placeholder="Batch Id">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="pdtMfgInput" class="col-sm-2 col-form-label">Mfg Date</label>
+          <div class="col-sm-10">
+
+            <input type="text" class="form-control datepicker" name="pdtMfgInput" id="pdtMfgInput"
+              data-provide="datepicker" placeholder="dd-mm-yyyy">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="pdtExpInput" class="col-sm-2 col-form-label">Exp. Date</label>
+          <div class="col-sm-10">
+
+            <input type="text" class="form-control datepicker" id="pdtExpInput" name="pdtExpInput"
+              data-provide="datepicker" placeholder="dd-mm-yyyy">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="pdtMrpInput" class="col-sm-2 col-form-label">MRP</label>
+          <div class="col-sm-10">
+            <input type="" class="form-control" id="pdtMrpInput" name="pdtMrpInput" placeholder="Price">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="pdtSellerInput" class="col-sm-2 col-form-label">Seller</label>
+          <div class="col-sm-10">
+            <input type="" class="form-control" id="pdtSellerInput" name="pdtSellerInput" placeholder="Seller Name">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="pdtDiscountInput" class="col-sm-2 col-form-label">Discount</label>
+          <div class="col-sm-10">
+            <input type="" class="form-control" id="pdtDiscountInput" name="pdtDiscountInput" placeholder="Discount %">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="pdtMedTypeInput" class="col-sm-2 col-form-label">Medicine Type</label>
+          <div class="col-sm-10">
+            <input type="" class="form-control" id="pdtMedTypeInput" name="pdtMedTypeInput" placeholder="Medicine Type">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="boxNoBoughtInput" class="col-sm-2 col-form-label"># Box Bought</label>
+          <div class="col-sm-10">
+            <input type="" class="form-control" id="boxNoBoughtInput" name="boxNoBoughtInput"
+              placeholder="No of box bought">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="boxNoSoldInput" class="col-sm-2 col-form-label"># Box Sold</label>
+          <div class="col-sm-10">
+            <input type="" class="form-control" id="boxNoSoldInput" name="boxNoSoldInput" placeholder="No of box sold">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="addNoteInput" class="col-sm-2 col-form-label">Additional Note</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="addNoteInput" name="addNoteInput"
+              placeholder="Provide additional note">
+          </div>
+        </div>
+
+
+
+
+
+
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <button class="btn btn-primary" id="uploadProduct">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+      <div class="container" id="pdtViewContainer" style="display: none; position: relative;">
+        <h4 class="section-title">Medicine Details</h4>
+        <div style="position: absolute; left:15px; top: 20px;">
+          <button class="btn btn-outline-primary btn-sm" id="backToTable">
+            <i class="bi-arrow-left"></i>
+            Back To List</button>
+
+      </div>
+
+        <div>
+            <h4 class="pdt-name" id="pdtNameVal"> Paracetamol 650 mg</h4>
+
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <div class="propGroup col-sm-12 ">
+                    <div class="title" id=""> Description</div>
+                    <div class="value" id="descVal"> </div>
+                </div>
+                <div class="col-sm-12" style="margin-top:20px;">
+                    <img class="img-fluid img-wrap" id="pdtImg" >
+
+                </div>
+
+            </div>
+
+            <div class="col-6">
+                <div class="row">
+                    <div class="propGroup col-sm-6">
+                        <div class="title" id=""> Batch Id</div>
+                        <div class="value" id="batchVal"> B-004-100</div>
+                    </div>
+                    <div class="propGroup col-sm-6">
+                        <div class="title" id=""> Manufacturing Date</div>
+                        <div class="value" id="mfgDtVal"> </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="propGroup col-sm-6">
+                        <div class="title" id=""> Expiry Date</div>
+                        <div class="value" id="expiryDtVal"> </div>
+                    </div>
+
+
+                    <div class="propGroup col-sm-6">
+                        <div class="title" id=""> Price</div>
+                        <div class="value" id="priceVal"> </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="propGroup col-sm-6">
+                        <div class="title" id=""> Price</div>
+                        <div class="value" id=""> </div>
+                    </div>
+
+                    <div class="propGroup col-sm-6">
+                        <div class="title" id=""> Seller</div>
+                        <div class="value" id="sellerVal"> </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="propGroup col-sm-6">
+                        <div class="title" id=""> Discount</div>
+                        <div class="value" id="discountVal"></div>
+                    </div>
+                    <div class="propGroup col-sm-6">
+                        <div class="title" id="">Medicine Type </div>
+                        <div class="value" id="typeVal"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="propGroup col-sm-6">
+                        <div class="title" id=""> Box Bought</div>
+                        <div class="value" id="boxBoughtVal"></div>
+                    </div>
+                    <div class="propGroup col-sm-6">
+                        <div class="title" id=""> Box Sold
+                        </div>
+                        <div class="value" id="boxSoldVal"> </div>
+                    </div>
+                </div>
+                <div class="propGroup">
+                    <div class="title" id="">Additional Note
+                    </div>
+                    <div class="value" id="noteVal"></div>
+                </div>
+            </div>
+            <div class="col-md-12" style="text-align: center; margin-top: 50px;">
+            <button class="btn  btn-success" id="updatePdtBtn"><i class="bi bi-chevron-up"></i> Update Details</button>
+            </div>
+        </div>
+
+    </div>
+
+
+    </div>
+    <div class="col">
+
+    </div>
   </div>
-  <div class="col">
-   
-  </div>
-</div>
-   
-      
+
+
 
 
 
 
 
 </body>
+
 </html>

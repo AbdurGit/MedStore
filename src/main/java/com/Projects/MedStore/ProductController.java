@@ -33,7 +33,7 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 
-	@Value("${application.upload.folder}")
+	@Value("${application.upload.folder.image}")
     private String uploadFolderPath;
 
 	private static Map<String, Product> productRepo = new HashMap<>();
@@ -212,12 +212,12 @@ public ModelAndView home() {
 
 	
 
-	@GetMapping("/showProductDetails")
+	@GetMapping("/viewProduct")
 	public ResponseEntity<Object> showProductDetails() {
 
 		return new ResponseEntity<>(productRepo.values(), HttpStatus.OK);
 	}
-
+//not in use
 	@PostMapping( "/upload")
 	public String upload(@RequestParam("file") MultipartFile file) {
 		String fileName=file.getOriginalFilename();
