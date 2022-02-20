@@ -73,6 +73,10 @@
     margin-bottom: 54px;
     color: #dc3545;
     } 
+    .required:after {
+      content:" *";
+      color:red;
+    }
 
 </style>
 <script>
@@ -85,7 +89,7 @@ $( document ).ready(function() {
     'showUpload':false, 
     'previewFileType':'any',
     maxFileCount: 1,
-    allowedFileExtensions: ["jpg", "png", "gif"]
+    allowedFileExtensions: ["jpg","jpeg", "png", "gif"]
     });
     
   //changeDateFormat();
@@ -281,7 +285,7 @@ if(date!=null || date!=undefined|| date!=""){
   <div class="col-8">
   
     <div class="form-group row">
-      <label for="pdtNameInput" class="col-sm-2 col-form-label">Product Name:</label>
+      <label for="pdtNameInput" class="col-sm-2 col-form-label required">Product Name:</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" id="pdtNameInput" name="pdtNameInput" data-error="You must have a name." placeholder="Product Name" maxlength="20" minlength="3" required>
       </div>
@@ -295,33 +299,33 @@ if(date!=null || date!=undefined|| date!=""){
       </div>
     </div>
     <div class="form-group row">
-      <label for="pdtBatchInput" class="col-sm-2 col-form-label">Batch :</label>
+      <label for="pdtBatchInput" class="col-sm-2 col-form-label required">Batch :</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" id="pdtBatchInput" name="pdtBatchInput" placeholder="Batch Id">
       </div>
     </div>
     <div class="form-group row">
-      <label for="pdtMfgInput" class="col-sm-2 col-form-label">Mfg Date :</label>
+      <label for="pdtMfgInput" class="col-sm-2 col-form-label required">Mfg Date :</label>
       <div class="col-sm-10">
        
         <input type="text" class="form-control datepicker" name="pdtMfgInput" id="pdtMfgInput" data-provide="datepicker" placeholder="dd-mm-yyyy" >
       </div>
     </div>
     <div class="form-group row">
-      <label for="pdtExpInput" class="col-sm-2 col-form-label">Exp. Date :</label>
+      <label for="pdtExpInput" class="col-sm-2 col-form-label required">Exp. Date :</label>
       <div class="col-sm-10">
 
         <input type="text" class="form-control datepicker" id="pdtExpInput" name="pdtExpInput" data-provide="datepicker" placeholder="dd-mm-yyyy" >
       </div>
     </div>
     <div class="form-group row">
-      <label for="pdtMrpInput" class="col-sm-2 col-form-label">MRP :</label>
+      <label for="pdtMrpInput" class="col-sm-2 col-form-label required">MRP :</label>
       <div class="col-sm-10">
         <input type="" class="form-control" id="pdtMrpInput" name="pdtMrpInput"  placeholder="Price">
       </div>
     </div>
     <div class="form-group row">
-      <label for="pdtSellerInput" class="col-sm-2 col-form-label">Seller :</label>
+      <label for="pdtSellerInput" class="col-sm-2 col-form-label required">Seller :</label>
       <div class="col-sm-10">
         <input type="" class="form-control" id="pdtSellerInput" name="pdtSellerInput" placeholder="Seller Name">
       </div>

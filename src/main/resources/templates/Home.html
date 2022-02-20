@@ -147,6 +147,14 @@ $(document).ready(function () {
             var cardColumnHtml="";
             for(var i=0;i<data.length;i++){
               record=data[i];
+              var expDate=record.expDate;
+
+              var currentDate=new Date();
+              var oneDay=24*60*60*1000;
+              var difference=Math.round((currentDate.getTime-(new Date(expDate)).getTime)/oneDay) ;
+              console.log(new Date(expDate))
+              console.log("diff:" +difference);                                  
+
 
               var html="<div class=\"card\">";
                 var html2="";
