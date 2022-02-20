@@ -72,7 +72,7 @@ public ModelAndView home() {
 	
 
 	@PostMapping("/addProduct")
-	public String addProduct( @RequestParam("pdtNameInput") String productName,@RequestParam("pdtDescInput") String productDescription,@RequestParam("pdtMfgInput") String  mfgDate,
+	public String addProduct( @RequestParam ("pdtIdInput") String productId,@RequestParam("pdtNameInput") String productName,@RequestParam("pdtDescInput") String productDescription,@RequestParam("pdtMfgInput") String  mfgDate,
 	@RequestParam("pdtExpInput") String expDate, @RequestParam("pdtBatchInput")String batch, @RequestParam("pdtMrpInput") String mrp, @RequestParam("pdtSellerInput") String seller,
 	@RequestParam("pdtDiscountInput") String discount, @RequestParam("pdtMedTypeInput") String medtype, @RequestParam("boxNoBoughtInput") String boxBought, @RequestParam("boxNoSoldInput") String boxSold,
 	@RequestParam("addNoteInput") String note,@RequestParam("medImg") MultipartFile file,HttpServletResponse httpResponse )  throws Exception {
@@ -80,7 +80,18 @@ public ModelAndView home() {
 		Product pdt = new Product();
 		String formattedMfgDt=null;
 		String formattedExpDt=null;
-		pdt.setId(UUID.randomUUID().toString());
+
+		if(productId==null||productId.equals("")||productId.trim().length()==0){
+			//System.out.println("id present");
+			pdt.setId(UUID.randomUUID().toString());
+			
+
+		}else{
+			//System.out.println("null id");
+			pdt.setId(productId);
+		}
+
+		
 		pdt.setProductName(productName);
 		pdt.setProductDesc(productDescription);
 		if(mfgDate.length()>0){
