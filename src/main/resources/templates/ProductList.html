@@ -256,20 +256,42 @@
       $('#pdtTable').on('click', '.deletepdt', function () {
 
 
-        alert("delete clicked");
+        //alert("delete clicked");
+
+
         var pdtId = $(this).attr("data-id");
+        openDeleteConfirmDialog(pdtId);
+       
+
+
+      })
+      function openDeleteConfirmDialog(pdtId){
+        $("#pdtDeleteConfirmModal").modal("show");
+        $("#hiddenId").val("");
+        $("#hiddenId").val(pdtId);
+
+        
+        
+
+      }
+
+      $("#deleteConfirm").click(function(){
+        var id=$("#hiddenId").val();
+        $('#pdtDeleteConfirmModal').modal('hide');
         $.ajax({
           type: "GET",
           url: "http://192.168.1.102:8080/deleteProduct",
           data: {
-            productId: pdtId
+            productId: id
           },
           success: function (data) {
 
             $('#pdtTable').DataTable().ajax.reload();
+           
 
           },
           error: function (xhr, status, error) {
+           // $('#pdtDeleteConfirmModal').hide('fast')
 
             alert("Exception occured!");
             console.log(xhr.responseText);
@@ -277,8 +299,7 @@
 
         });
 
-
-      })
+      });
 
       $('#pdtTable').on('click', '.editpdt', function () {
 
@@ -771,7 +792,7 @@
         </div>
 
         <div>
-          <h4 class="pdt-name" id="pdtNameVal"> Paracetamol 650 mg</h4>
+          <h4 class="pdt-name" id="pdtNameVal"> </h4>
 
         </div>
         <div class="row">
@@ -792,7 +813,7 @@
             <div class="row">
               <div class="propGroup col-sm-6">
                 <div class="title" id=""> Batch Id</div>
-                <div class="value" id="batchVal"> B-004-100</div>
+                <div class="value" id="batchVal"></div>
               </div>
               <div class="propGroup col-sm-6">
                 <div class="title" id=""> Manufacturing Date</div>
@@ -812,31 +833,30 @@
               </div>
             </div>
             <div class="row">
-              <div class="propGroup col-sm-6">
-                <div class="title" id=""> Price</div>
-                <div class="value" id=""> </div>
-              </div>
+              
 
               <div class="propGroup col-sm-6">
                 <div class="title" id=""> Seller</div>
                 <div class="value" id="sellerVal"> </div>
               </div>
-            </div>
-            <div class="row">
               <div class="propGroup col-sm-6">
                 <div class="title" id=""> Discount</div>
                 <div class="value" id="discountVal"></div>
               </div>
+            </div>
+            <div class="row">
+              
               <div class="propGroup col-sm-6">
                 <div class="title" id="">Medicine Type </div>
                 <div class="value" id="typeVal"></div>
               </div>
-            </div>
-            <div class="row">
               <div class="propGroup col-sm-6">
                 <div class="title" id=""> Box Bought</div>
                 <div class="value" id="boxBoughtVal"></div>
               </div>
+            </div>
+            <div class="row">
+              
               <div class="propGroup col-sm-6">
                 <div class="title" id=""> Box Sold
                 </div>
@@ -850,7 +870,8 @@
             </div>
           </div>
           <div class="col-md-12" style="text-align: center; margin-top: 50px;">
-            <button class="btn  btn-success" id="updatePdtBtn"><i class="bi bi-chevron-up"></i> Update Details</button>
+            <button class="btn  btn-success" id="updatePdtBtn" style="margin-right: 10px;"><i class="bi bi-chevron-up"></i> Update</button>
+            <button class="btn  btn-danger" id="updatePdtBtn"><i class="bi bi-trash3"></i> Delete</button>
           </div>
         </div>
 
@@ -862,6 +883,30 @@
 
     </div>
   </div>
+
+
+  
+
+<div class="modal" tabindex="-1" role="dialog" id="pdtDeleteConfirmModal">
+  <input type="hidden" id="hiddenId">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Record</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure,you want to delete?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="deleteConfirm">Yes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
