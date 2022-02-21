@@ -1,235 +1,353 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="ISO-8859-1">
-<title>Welcome To MedStore</title>
-<script src="lib/jquery-3.6.0.js" ></script>
-<link rel="stylesheet" href="lib/bootstrap-4.0.0-dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="css/header.css">
-<script src="lib/bootstrap-4.0.0-dist/js/bootstrap.min.js" ></script>
-<script src="js/header.js" ></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <meta charset="ISO-8859-1">
+  <title>Welcome To MedStore</title>
+  <script src="lib/jquery-3.6.0.js"></script>
+  <link rel="stylesheet" href="lib/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/header.css">
+  <script src="lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+  <script src="js/header.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
-<style>
- .updatePdt{
-   margin-left: 5px;
- }
-  @media (min-width: 576px) {
-.card-columns {
-  column-count: 2;
-}
-}
-
-@media (min-width: 768px) {
-.card-columns {
-  column-count: 3;
-}
-}
-
-@media (min-width: 992px) {
-.card-columns {
-  column-count: 4;
-}
-}
-
-@media (min-width: 1200px) {
-.card-columns {
-  column-count: 4 ;
-}
-}
-.btnContent{
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-.card:hover{
-box-shadow: 1px 1px 20px #ccc;
-
-
-}
-.card{
-  position:relative;
- transition:  box-shadow 0.3s;
-
-
-}
-.expiry-warning{
-  position:absolute;
-  right: 5px;px;
-  top: 5px;
-  padding-left: 7px;
-  padding-right: 7px;
-  border-radius: 4px;
-  background:#ff4343;
-  color: rgb(255, 255, 255);
-
-}
-.expiry-success{
-  position:absolute;
-  right:5px;
-  top:5px;
-  padding-left: 7px;
-  padding-right: 7px;
-  border-radius: 4px;
-  background:#00b953;
-  color: rgb(255, 255, 255);
-
-}
-
-
-</style>
-<script>
-$(document).ready(function () {
-
-  $(".filter-btn").click(function(){
-    var allClass=$(this).attr("class");
-    var btnId=$(this).attr("id");
-    var allPdtBtn=$("#showAllPdt");
-    var inStoreBtn=$("#showInStorePdt");
-    var expiredBtn=$("#showExpiredPdt");
-    var soldBtn=$("#showSoldPdt");
-      
-    if( allClass.includes("btn-outline-primary")){
-      $(this).removeClass("btn-outline-primary").addClass("btn-primary");
-
-      if(expiredBtn.attr("class").includes("btn-danger")){
-        expiredBtn.removeClass("btn-danger").addClass("btn-outline-danger");
-      }
-
-      if(inStoreBtn.attr("class").includes("btn-success")){
-        inStoreBtn.removeClass("btn-success").addClass("btn-outline-success");
-      }
-
-      if(soldBtn.attr("class").includes("btn-warning")){
-        soldBtn.removeClass("btn-warning").addClass("btn-outline-warning");
-      }
-     
-      
-      
-
-
-    }else if(allClass.includes("btn-outline-danger")){
-      $(this).removeClass("btn-outline-danger").addClass("btn-danger");
-
-      
-      if(allPdtBtn.attr("class").includes("btn-primary")){
-        allPdtBtn.removeClass("btn-primary").addClass("btn-outline-primary");
-      }
-
-      if(inStoreBtn.attr("class").includes("btn-success")){
-        inStoreBtn.removeClass("btn-success").addClass("btn-outline-success");
-      }
-
-      if(soldBtn.attr("class").includes("btn-warning")){
-        soldBtn.removeClass("btn-warning").addClass("btn-outline-warning");
-      }
-
-      
-    }else if(allClass.includes("btn-outline-success")){
-      $(this).removeClass("btn-outline-success").addClass("btn-success");
-
-      if(allPdtBtn.attr("class").includes("btn-primary")){
-        allPdtBtn.removeClass("btn-primary").addClass("btn-outline-primary");
-      }
-
-      if(expiredBtn.attr("class").includes("btn-danger")){
-        expiredBtn.removeClass("btn-danger").addClass("btn-outline-danger");
-      }
-
-      if(soldBtn.attr("class").includes("btn-warning")){
-        soldBtn.removeClass("btn-warning").addClass("btn-outline-warning");
-      }
-
-
-    }else if(allClass.includes("btn-outline-warning")){
-      $(this).removeClass("btn-outline-warning").addClass("btn-warning");
-
-      if(allPdtBtn.attr("class").includes("btn-primary")){
-        allPdtBtn.removeClass("btn-primary").addClass("btn-outline-primary");
-      }
-
-      if(expiredBtn.attr("class").includes("btn-danger")){
-        expiredBtn.removeClass("btn-danger").addClass("btn-outline-danger");
-      }
-
-      if(inStoreBtn.attr("class").includes("btn-success")){
-        inStoreBtn.removeClass("btn-success").addClass("btn-outline-success");
-      }
-
-      
+  <style>
+    .updatePdt {
+      margin-left: 5px;
     }
-  })
 
-  $.ajax({
+    @media (min-width: 576px) {
+      .card-columns {
+        column-count: 2;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .card-columns {
+        column-count: 3;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .card-columns {
+        column-count: 4;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .card-columns {
+        column-count: 4;
+      }
+    }
+
+    .btnContent {
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card:hover {
+      box-shadow: 1px 1px 20px #ccc;
+
+
+    }
+
+    .card {
+      position: relative;
+      transition: box-shadow 0.3s;
+
+
+    }
+
+    .expiry-warning {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      padding-left: 7px;
+      padding-right: 7px;
+      border-radius: 4px;
+      background: #ff4343;
+      color: rgb(255, 255, 255);
+
+    }
+
+    .expiry-success {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      padding-left: 7px;
+      padding-right: 7px;
+      border-radius: 4px;
+      background: #00b953;
+      color: rgb(255, 255, 255);
+
+    }
+
+    .update-count {
+      position: absolute;
+      top: 20px;
+      left: 15px;
+      background-color: #007bff1c;
+      border-radius: 4px;
+      padding-left: 5px;
+      padding-right: 5px;
+      color: #007bff;
+    }
+
+    .main-content {
+      background-color: white;
+      border: 1px solid #ddd;
+      margin-top: 40px;
+      padding-top: 30px;
+      padding-bottom: 30px;
+      border-radius: 5px;
+
+    }
+
+
+    
+
+
+    .error {
+      color: red;
+
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 54px;
+      color: #dc3545;
+
+    }
+
+    .pdt-name {
+      font-weight: 700;
+      color: #636363;
+    }
+
+    .title {
+      font-weight: 600;
+      margin-top: 20px;
+      color: rgb(226 39 95 / 75%);
+
+    }
+
+    .value {
+      margin-top: 5px;
+      color: rgb(151, 151, 151);
+
+    }
+
+    .img-wrap {
+
+      padding: 5px;
+      border: 1px solid #eee;
+      transition: box-shadow 0.5s;
+    }
+
+    .img-wrap:hover {
+      box-shadow: 1px 1px 10px rgb(197, 197, 197);
+    }
+  </style>
+  <script>
+    $(document).ready(function () {
+
+      populateProducts("allProducts");
+
+      $(".filter-btn").click(function () {
+        var allClass = $(this).attr("class");
+        var btnId = $(this).attr("id");
+        var allPdtBtn = $("#showAllPdt");
+        var inStoreBtn = $("#showInStorePdt");
+        var expiredBtn = $("#showExpiredPdt");
+        var soldBtn = $("#showSoldPdt");
+
+        if (allClass.includes("btn-outline-primary")) {
+          $(this).removeClass("btn-outline-primary").addClass("btn-primary");
+
+          if (expiredBtn.attr("class").includes("btn-danger")) {
+            expiredBtn.removeClass("btn-danger").addClass("btn-outline-danger");
+          }
+
+          if (inStoreBtn.attr("class").includes("btn-success")) {
+            inStoreBtn.removeClass("btn-success").addClass("btn-outline-success");
+          }
+
+          if (soldBtn.attr("class").includes("btn-warning")) {
+            soldBtn.removeClass("btn-warning").addClass("btn-outline-warning");
+          }
+          populateProducts("allProducts");
+
+
+
+
+        } else if (allClass.includes("btn-outline-danger")) {
+          $(this).removeClass("btn-outline-danger").addClass("btn-danger");
+
+
+          if (allPdtBtn.attr("class").includes("btn-primary")) {
+            allPdtBtn.removeClass("btn-primary").addClass("btn-outline-primary");
+          }
+
+          if (inStoreBtn.attr("class").includes("btn-success")) {
+            inStoreBtn.removeClass("btn-success").addClass("btn-outline-success");
+          }
+
+          if (soldBtn.attr("class").includes("btn-warning")) {
+            soldBtn.removeClass("btn-warning").addClass("btn-outline-warning");
+          }
+          populateProducts("expired");
+
+        } else if (allClass.includes("btn-outline-success")) {
+          $(this).removeClass("btn-outline-success").addClass("btn-success");
+
+          if (allPdtBtn.attr("class").includes("btn-primary")) {
+            allPdtBtn.removeClass("btn-primary").addClass("btn-outline-primary");
+          }
+
+          if (expiredBtn.attr("class").includes("btn-danger")) {
+            expiredBtn.removeClass("btn-danger").addClass("btn-outline-danger");
+          }
+
+          if (soldBtn.attr("class").includes("btn-warning")) {
+            soldBtn.removeClass("btn-warning").addClass("btn-outline-warning");
+          }
+          populateProducts("inStore");
+
+        } else if (allClass.includes("btn-outline-warning")) {
+          $(this).removeClass("btn-outline-warning").addClass("btn-warning");
+
+          if (allPdtBtn.attr("class").includes("btn-primary")) {
+            allPdtBtn.removeClass("btn-primary").addClass("btn-outline-primary");
+          }
+
+          if (expiredBtn.attr("class").includes("btn-danger")) {
+            expiredBtn.removeClass("btn-danger").addClass("btn-outline-danger");
+          }
+
+          if (inStoreBtn.attr("class").includes("btn-success")) {
+            inStoreBtn.removeClass("btn-success").addClass("btn-outline-success");
+          }
+
+          populateProducts("sold");
+
+
+        }
+      })
+
+      function populateProducts(flag) {
+
+        $.ajax({
           type: "GET",
           url: "/getAllProducts",
-         
+
           success: function (data) {
             console.log(data);
 
-            var cardColumnHtml="";
-            for(var i=0;i<data.length;i++){
-              record=data[i];
-              var expDate=record.expDate;
+            var cardColumnHtml = "";
+            var count = 0;
+            for (var i = 0; i < data.length; i++) {
+              record = data[i];
+              var expDate = record.expDate;
 
-              var currentDate=new Date();
-              var oneDay=24*60*60*1000;
-              var difference=Math.round(((new Date(expDate)).getTime()-currentDate.getTime())/oneDay) ;
+              var currentDate = new Date();
+              var oneDay = 24 * 60 * 60 * 1000;
+              var difference = Math.round(((new Date(expDate)).getTime() - currentDate.getTime()) / oneDay);
+              var boxCount = record.noBoxBought - record.noBoxSold;
 
-              var html="";
-                var html2="";
-              if(difference<0){
-                console.log(new Date(expDate )+"---"+difference+"---"+"Medicine Expired");
-                html="<div class=\"card\"><div class=\"expiry-warning\"><small>Expired</small></div>"
-
-              }else if(difference<30){
-                if(difference==0){
-                  console.log(new Date(expDate )+"---"+difference+"---"+"Medicine Expiring today.");
-                  html="<div class=\"card\"><div class=\"expiry-warning\"><small>Today</small></div>"
-                }else{
-                  console.log(new Date(expDate )+"---"+difference+"---"+"About to expire in "+difference+" days.");
-                  html="<div class=\"card\"><div class=\"expiry-warning\"><small>"+difference+" days</small></div>"
+              if (flag == "expired") {
+                if (difference >= 0) {
+                  continue;
                 }
-               
+              } else if (flag == "inStore") {
+                if (boxCount == 0) {
+                  continue;
+                }
+
+              } else if (flag == "sold") {
+                if (boxCount > 0) {
+                  continue;
+                }
+
+              }
+
+
+
+              count++;
+              var html = "";
+              var html2 = "";
+              if (difference < 0) {
+                console.log(new Date(expDate) + "---" + difference + "---" + "Medicine Expired");
+                html = "<div class=\"card\"><div class=\"expiry-warning\"><small>Expired</small></div>"
+
+              } else if (difference < 30) {
+
+
+                if (difference == 0) {
+                  console.log(new Date(expDate) + "---" + difference + "---" + "Medicine Expiring today.");
+                  html = "<div class=\"card\"><div class=\"expiry-warning\"><small>Today</small></div>";
+                } else {
+                  console.log(new Date(expDate) + "---" + difference + "---" + "About to expire in " +
+                    difference + " days.");
+                  html = "<div class=\"card\"><div class=\"expiry-warning\"><small>" + difference +
+                    " days</small></div>";
+                }
+
+
+
                 //console.log("About to expire in 30 days.");
-              }else{
+              } else {
+
+                console.log(new Date(expDate) + "---" + difference + "---" + "Expiry in more than 30 day.");
+                html = "<div class=\"card\"><div class=\"expiry-success\"><small>" + difference +
+                  " days</small></div>";
+
+
+
                 //console.log("Expiry in more than 30 day");
-                console.log(new Date(expDate )+"---"+difference+"---"+"Expiry in more than 30 day.");
-                html="<div class=\"card\"><div class=\"expiry-success\"><small>"+difference+" days</small></div>"
-              }
-                                        
 
-
-              
-
-
-
-
-
-
-
-              if((record.productImagePath).split(".").pop()=="jpg"||(record.productImagePath).split(".").pop()=="png"||(record.productImagePath).split(".").pop()=="jpeg"){
-                 html2="<img class=\"card-img-top\" src=\""+"images/"+record.productImagePath+"\" alt=\"No Image\">";
               }
 
-              
-              
-              
-              var html3="<div class=\"card-body\"><h5 class=\"card-title\">"+record.productName+"</h5>"+
-                 
-            "<div class=\"prop\"> <i class=\"bi bi-calendar3\"></i> <small>Manufacturing </small><br><small>"+record.mfgDate+"</small> </div> <div class=\"prop\">"+
-            "<i class=\"bi bi-calendar3\"></i><small> Expiry </small><br><small>"+record.expDate+" </small></div><small class=\"card-text\">"+record.productDesc+"</small>"+
-          "<div style=\"margin-top: 10px;\"><a href=\"#\" class=\"btn btn-sm btn-outline-primary viewpdt\" id=\"viewpdt\" data-id=\""+record.id+"\">Open</a><a href=\"#\" class=\"btn btn-sm btn-outline-primary updatePdt\" id=\"updatePdt\" data-id=\""+record.id+"\">Update</a>"+
-            "</div> </div></div>";
-            html=html+html2+html3;
-            cardColumnHtml+=html;
+              if ((record.productImagePath).split(".").pop() == "jpg" || (record.productImagePath).split(".")
+                .pop() == "png" || (record.productImagePath).split(".").pop() == "jpeg") {
+                html2 = "<img class=\"card-img-top\" src=\"" + "images/" + record.productImagePath +
+                  "\" alt=\"No Image\">";
+              }
+
+              var html3 = "<div class=\"card-body\"><h5 class=\"card-title\">" + record.productName +
+                "</h5>" +
+
+                "<div class=\"prop\"> <i class=\"bi bi-calendar3\"></i> <small>Manufacturing </small><br><small>" +
+                record.mfgDate + "</small> </div> <div class=\"prop\">" +
+                "<i class=\"bi bi-calendar3\"></i><small> Expiry </small><br><small>" + record.expDate +
+                " </small></div><small class=\"card-text\">" + record.productDesc + "</small>" +
+                "<div style=\"margin-top: 10px;\"><button  class=\"btn btn-sm btn-outline-primary viewpdt\"  data-id=\"" +
+                record.id +
+                "\">Open</button><a href=\"javascript:void(0)\" class=\"btn btn-sm btn-outline-primary updatePdt\"  data-id=\"" +
+                record.id + "\">Update</a>" +
+                "</div> </div></div>";
+              html = html + html2 + html3;
+              cardColumnHtml += html;
             }
-
+            $("#cardColumnContainer").html("");
             $("#cardColumnContainer").html(cardColumnHtml);
 
+            $("#updateCount").html("");
+            if (flag == "allProducts") {
+              $("#updateCount").html("<div class=\"count-text\">Total " + count + " records</div>");
+            } else if (flag == "inStore") {
+              $("#updateCount").html("<div class=\"count-text\"> " + count + " medicines in store</div>");
+            } else if (flag == "sold") {
+              $("#updateCount").html("<div class=\"count-text\"> " + count + " medicines sold out</div>");
+            } else if (flag == "expired") {
+              $("#updateCount").html("<div class=\"count-text\"> " + count + " medicines expired</div>");
+            }
 
 
-            
+
+
+
+
 
           },
           error: function (xhr, status, error) {
@@ -240,11 +358,145 @@ $(document).ready(function () {
 
         });
 
+      }
+      $('#cardContainer').on('click', '.viewpdt', function () {
+     // $(".viewpdt").click(function () {
+        var pdtId = $(this).attr("data-id");
+        $.ajax({
+          type: "GET",
+          url: "/getProductById/" + pdtId,
+
+          success: function (data) {
+            $("#pdtViewContainer").show("fast");
+            $("#cardContainer").hide("fast");
+            console.log(data);
+
+            document.getElementById("pdtImg").src = "images/" + data.productImagePath;
+
+
+
+            $("#pdtNameVal").text("");
+            $("#descVal").text("");
+
+            $("#batchVal").text("");
+            $("#priceVal").text("");
+            $("#sellerVal").text("");
+            $("#discountVal").text("");
+            $("#typeVal").text("");
+
+            $("#boxBoughtVal").text("");
+            $("#boxSoldVal").text("");
+            $("#noteVal").text("");
+            $("#mfgDtVal").text("");
+            $("#expiryDtVal").text("");
+
+
+
+
+            $("#pdtNameVal").text(data.productName);
+            $("#descVal").text(data.productDesc);
+
+            $("#batchVal").text(data.batch);
+            $("#priceVal").text(data.mrp);
+            $("#sellerVal").text(data.sellerName);
+            $("#discountVal").text(data.percentageDiscount);
+            $("#typeVal").text(data.medType);
+
+            $("#boxBoughtVal").text(data.noBoxBought);
+            $("#boxSoldVal").text(data.noBoxSold);
+            $("#noteVal").text(data.additionalNotes);
+            $("#mfgDtVal").text((data.mfgDate));
+            $("#expiryDtVal").text((data.expDate));
+
+
+            $("#updatePdtBtn").attr("data-id","");
+            $("#updatePdtBtn").attr("data-id",pdtId);
+
+            $("#deletePdtBtn").attr("data-id","");
+            $("#deletePdtBtn").attr("data-id",pdtId);
+
+            
+
+
+
+
+          },
+          error: function (xhr, status, error) {
+
+            alert("Exception occured!");
+            console.log(xhr.responseText);
+          }
+
+        });
+
+        
+      })
+
+      $("#backToCardContainer").click(function () {
+
+
+        $("#pdtViewContainer").hide("fast");
+        $("#cardContainer").show("fast");
+      
+      })
+
+
+
+      $('#deletePdtBtn').click( function () {
+
+
+//alert("delete clicked");
+
+
+var pdtId = $(this).attr("data-id");
+openDeleteConfirmDialog(pdtId);
+
+
+
+})
+function openDeleteConfirmDialog(pdtId){
+$("#pdtDeleteConfirmModal").modal("show");
+$("#hiddenId").val("");
+$("#hiddenId").val(pdtId);
+
+
+
+
+}
+
+$("#deleteConfirm").click(function(){
+var id=$("#hiddenId").val();
+$('#pdtDeleteConfirmModal').modal('hide');
+$.ajax({
+  type: "GET",
+  url: "/deleteProduct",
+  data: {
+    productId: id
+  },
+  success: function (data) {
+    $("#pdtViewContainer").hide("fast");
+        
+    
+            $("#cardContainer").show("fast");
+            populateProducts("allProducts");
+   
+   
+
+  },
+  error: function (xhr, status, error) {
+   // $('#pdtDeleteConfirmModal').hide('fast')
+
+    alert("Exception occured!");
+    console.log(xhr.responseText);
+  }
+
+});
 
 });
 
 
-</script>
+    });
+  </script>
 
 </head>
 
@@ -259,13 +511,12 @@ $(document).ready(function () {
 
     <div class="collapse navbar-collapse navbar-center" id="navbarTogglerDemo02">
       <ul class="navbar-nav  mr-auto mt-2 mt-lg-0 navul">
-      <li class="nav-item liclicked">
+        <li class="nav-item liclicked">
           <a class="nav-link navclicked" href="/medstore" id="loadHomePage">Home <span
               class="sr-only">(current)</span></a>
-        </li> 
+        </li>
         <li class="nav-item ">
-          <a class="nav-link " href="/pdtListPage"
-            id="loadAllProductsPage">Products</a>
+          <a class="nav-link " href="/pdtListPage" id="loadAllProductsPage">Products</a>
         </li>
         <!-- <li class="nav-item">
           <a class="nav-link" href="#">Category</a>
@@ -285,26 +536,149 @@ $(document).ready(function () {
     </form> -->
     </div>
   </nav>
-  <div class="container">
+  <div class="container" id="cardContainer" style="position: relative;">
     <div class="btnContent">
       <button class="btn btn-sm btn-primary filter-btn" id="showAllPdt">All</button>
-   
-    
       <button class="btn btn-sm btn-outline-success filter-btn" id="showInStorePdt">In Store</button>
-   
-    
-      <button class="btn btn-sm btn-outline-danger filter-btn" id="showExpiredPdt">Expired</button>
-    
-  
       <button class="btn btn-sm btn-outline-warning filter-btn" id="showSoldPdt">Sold</button>
+      <button class="btn btn-sm btn-outline-danger filter-btn" id="showExpiredPdt">Expired</button>
+
     </div>
-    
-    
+    <div id="updateCount" class="update-count"></div>
+
+
     <div class="card-columns" id="cardColumnContainer">
 
-      </div>
-   
+
+    </div>
+  </div>
+<div class="row" id="pdtViewContainer" style="display: none;">
+  <div class="col">
+    </div>
+    <div class="col-10 main-content">
     
 
+  <div class="container"  style=" position: relative;">
+    <h4 class="section-title">Medicine Details</h4>
+    <div style="position: absolute; left:15px; top: 20px;">
+      <button class="btn btn-outline-primary btn-sm" id="backToCardContainer">
+        <i class="bi-arrow-left"></i>
+        Back To List</button>
+
+    </div>
+
+    <div>
+      <h4 class="pdt-name" id="pdtNameVal"> </h4>
+
+    </div>
+    <div class="row">
+      <div class="col-6">
+
+        <div class="propGroup col-sm-12 ">
+          <div class="title" id=""> Description</div>
+          <div class="value" id="descVal"> </div>
+        </div>
+        <div class="col-sm-12" style="margin-top:20px;">
+          <img class="img-fluid img-wrap" id="pdtImg">
+
+        </div>
+
+      </div>
+
+      <div class="col-6">
+        <div class="row">
+          <div class="propGroup col-sm-6">
+            <div class="title" id=""> Batch Id</div>
+            <div class="value" id="batchVal"></div>
+          </div>
+          <div class="propGroup col-sm-6">
+            <div class="title" id=""> Manufacturing Date</div>
+            <div class="value" id="mfgDtVal"> </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="propGroup col-sm-6">
+            <div class="title" id=""> Expiry Date</div>
+            <div class="value" id="expiryDtVal"> </div>
+          </div>
+
+
+          <div class="propGroup col-sm-6">
+            <div class="title" id=""> Price</div>
+            <div class="value" id="priceVal"> </div>
+          </div>
+        </div>
+        <div class="row">
+
+
+          <div class="propGroup col-sm-6">
+            <div class="title" id=""> Seller</div>
+            <div class="value" id="sellerVal"> </div>
+          </div>
+          <div class="propGroup col-sm-6">
+            <div class="title" id=""> Discount</div>
+            <div class="value" id="discountVal"></div>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="propGroup col-sm-6">
+            <div class="title" id="">Medicine Type </div>
+            <div class="value" id="typeVal"></div>
+          </div>
+          <div class="propGroup col-sm-6">
+            <div class="title" id=""> Box Bought</div>
+            <div class="value" id="boxBoughtVal"></div>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="propGroup col-sm-6">
+            <div class="title" id=""> Box Sold
+            </div>
+            <div class="value" id="boxSoldVal"> </div>
+          </div>
+        </div>
+        <div class="propGroup">
+          <div class="title" id="">Additional Note
+          </div>
+          <div class="value" id="noteVal"></div>
+        </div>
+      </div>
+      <div class="col-md-12" style="text-align: center; margin-top: 50px;">
+        <button class="btn  btn-success" id="updatePdtBtn" style="margin-right: 10px;"><i class="bi bi-chevron-up"></i>
+          Update</button>
+        <button class="btn  btn-danger" id="deletePdtBtn"><i class="bi bi-trash3"></i> Delete</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+  <div class="col">
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="pdtDeleteConfirmModal">
+  <input type="hidden" id="hiddenId">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Record</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure,you want to delete?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="deleteConfirm">Yes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
+
 </html>
