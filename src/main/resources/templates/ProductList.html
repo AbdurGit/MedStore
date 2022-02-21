@@ -102,7 +102,7 @@
 
       $('#pdtTable').DataTable({
         ajax: {
-          url: 'http://192.168.1.102:8080/getAllProducts',
+          url: '/getAllProducts',
           dataSrc: ''
         },
 
@@ -190,7 +190,7 @@
         var pdtId = $(this).attr("data-id");
         $.ajax({
           type: "GET",
-          url: "http://192.168.1.102:8080/getProductById/" + pdtId,
+          url: "/getProductById/" + pdtId,
 
           success: function (data) {
             $("#pdtViewContainer").show("fast");
@@ -280,7 +280,7 @@
         $('#pdtDeleteConfirmModal').modal('hide');
         $.ajax({
           type: "GET",
-          url: "http://192.168.1.102:8080/deleteProduct",
+          url: "/deleteProduct",
           data: {
             productId: id
           },
@@ -319,7 +319,7 @@
       function populateForm(productId) {
         $.ajax({
           type: "GET",
-          url: "http://192.168.1.102:8080/getProductById/" + productId,
+          url: "/getProductById/" + productId,
 
           success: function (data) {
 
@@ -616,18 +616,18 @@
     <div class="collapse navbar-collapse navbar-center" id="navbarTogglerDemo02">
       <ul class="navbar-nav  mr-auto mt-2 mt-lg-0 navul">
         <li class="nav-item">
-          <a class="nav-link" href="http://192.168.1.102:8080/medstore" id="loadHomePage">Home <span
+          <a class="nav-link" href="/medstore" id="loadHomePage">Home <span
               class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item liclicked">
-          <a class="nav-link navclicked" href="http://192.168.1.102:8080/pdtListPage"
+          <a class="nav-link navclicked" href="/pdtListPage"
             id="loadAllProductsPage">Products</a>
         </li>
         <!-- <li class="nav-item">
           <a class="nav-link" href="#">Category</a>
         </li> -->
         <li class="nav-item">
-          <a class="nav-link" href="http://192.168.1.102:8080/pdtUploadPage" id="loadProductUploadPage">Upload</a>
+          <a class="nav-link" href="/pdtUploadPage" id="loadProductUploadPage">Upload</a>
         </li>
         <!-- <li class="nav-item">
           <a class="nav-link" href="http://192.168.1.102:8080/advancedSearchPage" id="loadAdvSearchPage">Advanced

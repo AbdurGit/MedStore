@@ -48,8 +48,31 @@ box-shadow: 1px 1px 20px #ccc;
 
 }
 .card{
+  position:relative;
  transition:  box-shadow 0.3s;
 
+
+}
+.expiry-warning{
+  position:absolute;
+  right: 5px;px;
+  top: 5px;
+  padding-left: 7px;
+  padding-right: 7px;
+  border-radius: 4px;
+  background:#ff4343;
+  color: rgb(255, 255, 255);
+
+}
+.expiry-success{
+  position:absolute;
+  right:5px;
+  top:5px;
+  padding-left: 7px;
+  padding-right: 7px;
+  border-radius: 4px;
+  background:#00b953;
+  color: rgb(255, 255, 255);
 
 }
 
@@ -139,7 +162,7 @@ $(document).ready(function () {
 
   $.ajax({
           type: "GET",
-          url: "http://192.168.1.102:8080/getAllProducts",
+          url: "/getAllProducts",
          
           success: function (data) {
             console.log(data);
@@ -151,13 +174,40 @@ $(document).ready(function () {
 
               var currentDate=new Date();
               var oneDay=24*60*60*1000;
-              var difference=Math.round((currentDate.getTime-(new Date(expDate)).getTime)/oneDay) ;
-              console.log(new Date(expDate))
-              console.log("diff:" +difference);                                  
+              var difference=Math.round(((new Date(expDate)).getTime()-currentDate.getTime())/oneDay) ;
 
-
-              var html="<div class=\"card\">";
+              var html="";
                 var html2="";
+              if(difference<0){
+                console.log(new Date(expDate )+"---"+difference+"---"+"Medicine Expired");
+                html="<div class=\"card\"><div class=\"expiry-warning\"><small>Expired</small></div>"
+
+              }else if(difference<30){
+                if(difference==0){
+                  console.log(new Date(expDate )+"---"+difference+"---"+"Medicine Expiring today.");
+                  html="<div class=\"card\"><div class=\"expiry-warning\"><small>Today</small></div>"
+                }else{
+                  console.log(new Date(expDate )+"---"+difference+"---"+"About to expire in "+difference+" days.");
+                  html="<div class=\"card\"><div class=\"expiry-warning\"><small>"+difference+" days</small></div>"
+                }
+               
+                //console.log("About to expire in 30 days.");
+              }else{
+                //console.log("Expiry in more than 30 day");
+                console.log(new Date(expDate )+"---"+difference+"---"+"Expiry in more than 30 day.");
+                html="<div class=\"card\"><div class=\"expiry-success\"><small>"+difference+" days</small></div>"
+              }
+                                        
+
+
+              
+
+
+
+
+
+
+
               if((record.productImagePath).split(".").pop()=="jpg"||(record.productImagePath).split(".").pop()=="png"||(record.productImagePath).split(".").pop()=="jpeg"){
                  html2="<img class=\"card-img-top\" src=\""+"images/"+record.productImagePath+"\" alt=\"No Image\">";
               }
@@ -210,18 +260,18 @@ $(document).ready(function () {
     <div class="collapse navbar-collapse navbar-center" id="navbarTogglerDemo02">
       <ul class="navbar-nav  mr-auto mt-2 mt-lg-0 navul">
       <li class="nav-item liclicked">
-          <a class="nav-link navclicked" href="http://192.168.1.102:8080/medstore" id="loadHomePage">Home <span
+          <a class="nav-link navclicked" href="/medstore" id="loadHomePage">Home <span
               class="sr-only">(current)</span></a>
         </li> 
         <li class="nav-item ">
-          <a class="nav-link " href="http://192.168.1.102:8080/pdtListPage"
+          <a class="nav-link " href="/pdtListPage"
             id="loadAllProductsPage">Products</a>
         </li>
         <!-- <li class="nav-item">
           <a class="nav-link" href="#">Category</a>
         </li> -->
         <li class="nav-item">
-          <a class="nav-link" href="http://192.168.1.102:8080/pdtUploadPage" id="loadProductUploadPage">Upload</a>
+          <a class="nav-link" href="/pdtUploadPage" id="loadProductUploadPage">Upload</a>
         </li>
         <!-- <li class="nav-item">
           <a class="nav-link" href="http://192.168.1.102:8080/advancedSearchPage" id="loadAdvSearchPage">Advanced
