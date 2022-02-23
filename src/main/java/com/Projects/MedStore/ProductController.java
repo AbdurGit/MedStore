@@ -72,7 +72,7 @@ public ModelAndView home() {
 	
 
 	@PostMapping("/addProduct")
-	public String addProduct( @RequestParam ("pdtIdInput") String productId,@RequestParam("pdtNameInput") String productName,@RequestParam("pdtDescInput") String productDescription,@RequestParam("pdtMfgInput") String  mfgDate,
+	public String addProduct( @RequestParam ("pageFlag") String backFlag,@RequestParam ("pdtIdInput") String productId,@RequestParam("pdtNameInput") String productName,@RequestParam("pdtDescInput") String productDescription,@RequestParam("pdtMfgInput") String  mfgDate,
 	@RequestParam("pdtExpInput") String expDate, @RequestParam("pdtBatchInput")String batch, @RequestParam("pdtMrpInput") String mrp, @RequestParam("pdtSellerInput") String seller,
 	@RequestParam("pdtDiscountInput") String discount, @RequestParam("pdtMedTypeInput") String medtype, @RequestParam("boxNoBoughtInput") String boxBought, @RequestParam("boxNoSoldInput") String boxSold,
 	@RequestParam("addNoteInput") String note,@RequestParam("medImg") MultipartFile file,HttpServletResponse httpResponse )  throws Exception {
@@ -149,7 +149,12 @@ public ModelAndView home() {
 		pdt.setProductImagePath(fileName);
 		productService.addProduct(pdt);
 		//return pdt.getId();
-		httpResponse.sendRedirect("/pdtListPage");
+		if(backFlag.equals("backToCard")){
+			httpResponse.sendRedirect("/medstore");
+		} else if(backFlag.equals("backToTable")){
+			httpResponse.sendRedirect("/pdtListPage");
+		}
+		
         return null;
 		//return "redirect:/getAllProducts";
 	}

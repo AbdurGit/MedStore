@@ -1,217 +1,225 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="ISO-8859-1">
-<title>Upload or Update Product</title>
-<link rel="stylesheet" href="lib/bootstrap-4.0.0-dist/css/bootstrap.min.css">
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css" crossorigin="anonymous">
+  <meta charset="ISO-8859-1">
+  <title>Upload or Update Product</title>
+  <link rel="stylesheet" href="lib/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css"
+    crossorigin="anonymous">
 
 
-<link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
-<script src="lib/jquery-3.6.0.js" ></script>
-<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/piexif.min.js" type="text/javascript"></script>
-<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/sortable.min.js" type="text/javascript"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/css/fileinput.min.css" media="all"
+    rel="stylesheet" type="text/css" />
+  <script src="lib/jquery-3.6.0.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/piexif.min.js"
+    type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/plugins/sortable.min.js"
+    type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+  </script>
 
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">  -->
-
-
-
-
-<script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/fileinput.min.js"></script>
-
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">  -->
 
 
 
 
-<link rel="stylesheet" href="css/header.css">
-<script src="lib/bootstrap-4.0.0-dist/js/bootstrap.min.js" ></script>
-<script src="js/header.js" ></script>
+  <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/fileinput.min.js"></script>
 
 
 
 
 
+  <link rel="stylesheet" href="css/header.css">
+  <script src="lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+  <script src="js/header.js"></script>
 
 
 
 
 
 
-<link rel="stylesheet" href="lib/datepicker/css/bootstrap-datepicker.css">
-<script src="lib/datepicker/js/bootstrap-datepicker.js" ></script>  
 
 
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 
 
-<style>
-    .main-content{
-        background-color: white;
-        border:1px solid #ddd;
-        margin-top: 40px;
-        padding-top:30px;
-        padding-bottom: 30px;
-        border-radius: 5px;
-        padding-left: 40px;
-        padding-right: 40px;
+  <link rel="stylesheet" href="lib/datepicker/css/bootstrap-datepicker.css">
+  <script src="lib/datepicker/js/bootstrap-datepicker.js"></script>
+
+
+
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
+
+  <style>
+    .main-content {
+      background-color: white;
+      border: 1px solid #ddd;
+      margin-top: 40px;
+      padding-top: 30px;
+      padding-bottom: 30px;
+      border-radius: 5px;
+      padding-left: 40px;
+      padding-right: 40px;
     }
+
     .has-error label,
-        .has-error input,
-        .has-error textarea {
-            color: red;
-            border-color: red;
-        }
-        .error{
-          color: red; 
-
-        }
-    .form-title{
-      text-align: center;
-    margin-bottom: 54px;
-    color: #dc3545;
-    } 
-    .required:after {
-      content:" *";
-      color:red;
+    .has-error input,
+    .has-error textarea {
+      color: red;
+      border-color: red;
     }
 
-</style>
-<script>
+    .error {
+      color: red;
 
-$( document ).ready(function() {
- 
+    }
+
+    .form-title {
+      text-align: center;
+      margin-bottom: 54px;
+      color: #dc3545;
+    }
+
+    .required:after {
+      content: " *";
+      color: red;
+    }
+  </style>
+  <script>
+    $(document).ready(function () {
 
 
-  $("#medImg").fileinput({
-    'showUpload':false, 
-    'previewFileType':'any',
-    maxFileCount: 1,
-    allowedFileExtensions: ["jpg","jpeg", "png", "gif"]
+
+      $("#medImg").fileinput({
+        'showUpload': false,
+        'previewFileType': 'any',
+        maxFileCount: 1,
+        allowedFileExtensions: ["jpg", "jpeg", "png", "gif"]
+      });
+
+      //changeDateFormat();
+
+      $('.datepicker').datepicker({
+
+        format: 'dd-mm-yyyy',
+        startDate: '-3d'
+      });
+      // jQuery.validator.setDefaults({
+      //   debug:true,
+      //   success:"valid"
+      // })
+
+
+
+
+
+
+
+      $("#productForm").validate({
+        rules: {
+          pdtNameInput: {
+            required: true,
+          },
+          pdtMfgInput: {
+            required: true,
+          },
+          pdtBatchInput: {
+            required: true,
+          },
+          pdtExpInput: {
+            required: true,
+          },
+          pdtMrpInput: {
+            required: true,
+            number: true
+          },
+          pdtDiscountInput: {
+
+            number: true
+
+          },
+          pdtSellerInput: {
+            required: true,
+          },
+          boxNoBoughtInput: {
+
+            digits: true
+          },
+          boxNoSoldInput: {
+
+            digits: true
+          },
+
+
+
+        },
+        messages: {
+          pdtNameInput: {
+            required: "Please enter product Name",
+          },
+          pdtMfgInput: {
+            required: "Please enter mfg date",
+          },
+          pdtBatchInput: {
+            required: "Please enter batch number",
+          },
+          pdtExpInput: {
+            required: "Please enter exp date",
+          },
+          pdtMrpInput: {
+            required: "Please enter Price",
+            number: "Provide a valid number"
+          },
+          pdtSellerInput: {
+            required: "Please enter seller name",
+          },
+
+
+          pdtDiscountInput: {
+
+            number: "Provide a valid number"
+
+          },
+
+          boxNoBoughtInput: {
+
+            digits: "Provide a valid integer number"
+          },
+          boxNoSoldInput: {
+
+            digits: "Provide a valid integer number"
+          },
+        },
+
+
+
+        submitHandler: function (form) {
+          form.submit();
+
+
+        }
+
+      });
+
+
+      function changeDateFormat(date) {
+        var changedFormat = '';
+
+        if (date != null || date != undefined || date != "") {
+          var dtArray = date.split("-");
+          changedFormat = dtArray[2] + '-' + dtArray[1] + '-' + dtArray[0];
+        }
+
+
+        return changedFormat;
+
+      }
     });
-    
-  //changeDateFormat();
-
-  $('.datepicker').datepicker({
-   
-    format: 'dd-mm-yyyy',
-    startDate: '-3d'
-});
-// jQuery.validator.setDefaults({
-//   debug:true,
-//   success:"valid"
-// })
-   
-
-    
-
-
-
-
-$("#productForm").validate({
-    rules: {
-      pdtNameInput: {
-                required: true,
-            },
-      pdtMfgInput:{
-                required: true,
-            },
-      pdtBatchInput:{
-                required: true,
-            },
-      pdtExpInput:{
-                required: true,
-            },
-      pdtMrpInput:{
-                required: true,
-                number:true
-            },
-      pdtDiscountInput:{
-              
-              number:true
-
-            },
-      pdtSellerInput:{
-                required: true,
-            },
-            boxNoBoughtInput:{
-                
-              digits:true
-            },
-            boxNoSoldInput:{
-               
-              digits:true
-            },
-          
-               
-       
-    },
-    messages: {
-      pdtNameInput: {
-                required: "Please enter product Name",
-            },
-      pdtMfgInput: {
-                required: "Please enter mfg date",
-            }, 
-      pdtBatchInput: {
-                required: "Please enter batch number",
-            },
-      pdtExpInput: {
-                required: "Please enter exp date",
-            },
-      pdtMrpInput:{
-                required: "Please enter Price",
-                number: "Provide a valid number"
-            },
-      pdtSellerInput:{
-                required: "Please enter seller name",
-            },
-            
-            
-      pdtDiscountInput:{
-              
-        number: "Provide a valid number"
-
-            },
-     
-            boxNoBoughtInput:{
-                
-              digits: "Provide a valid integer number"
-            },
-            boxNoSoldInput:{
-                
-              digits: "Provide a valid integer number"
-            },
-    },
-   
-       
-   
-    submitHandler: function(form) {
-     form.submit();
-   
-    
-}      
-       
-});
-
-
-function changeDateFormat(date){
-  var  changedFormat='';
- 
-if(date!=null || date!=undefined|| date!=""){
-  var dtArray=date.split("-");
-  changedFormat=dtArray[2]+'-'+dtArray[1]+'-'+dtArray[0];
-}
-
-
-  return changedFormat;
-
-}
-});
- 
-</script>
+  </script>
 
 </head>
 
@@ -220,7 +228,7 @@ if(date!=null || date!=undefined|| date!=""){
 <body style="background: #eee;">
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="box-shadow: 1px 1px 11px #ddd;position: relative;">
-    <a class="navbar-brand" href="#" style="color: #dc3563;">Med Store</a>
+    <a class="navbar-brand" href="/medstore" style="color: #dc3563;">Med Store</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
       aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -229,12 +237,10 @@ if(date!=null || date!=undefined|| date!=""){
     <div class="collapse navbar-collapse navbar-center" id="navbarTogglerDemo02">
       <ul class="navbar-nav  mr-auto mt-2 mt-lg-0 navul">
         <li class="nav-item ">
-          <a class="nav-link " href="/medstore" id="loadHomePage">Home <span
-              class="sr-only">(current)</span></a>
+          <a class="nav-link " href="/medstore" id="loadHomePage">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link " href="/pdtListPage"
-            id="loadAllProductsPage">Products</a>
+          <a class="nav-link " href="/pdtListPage" id="loadAllProductsPage">Products</a>
         </li>
         <!-- <li class="nav-item">
           <a class="nav-link" href="#">Category</a>
@@ -254,161 +260,186 @@ if(date!=null || date!=undefined|| date!=""){
     </form> -->
     </div>
   </nav>
-<div class="container-fluid">
-<div class="row">
-    <div class="col">
-     
-    </div>
-    <div class="col-10  main-content">
-     
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+
+      </div>
+      <div class="col-10  main-content">
+
         <div class="container">
           <h4 class="form-title">Upload Medicine</h4>
-             
-                
-<form id="productForm"  method="post" enctype="multipart/form-data" action="/addProduct">
-  <div class="row">
-  <div class="col-4">
-                
-    <!-- <button type="button" class="btn btn-primary" >Upload</button>
+
+
+          <form id="productForm" method="post" enctype="multipart/form-data" action="/addProduct">
+            <div class="row">
+              <div class="col-6">
+
+                <!-- <button type="button" class="btn btn-primary" >Upload</button>
 
     <button type="button" class="btn btn-secondary" >Remove</button> -->
 
-    <div class="form-group row">
-      
-      <div class="col-sm-12">
-        <input type="file" id="medImg" name="medImg">
-        <input type="hidden"  id="pdtIdInput" name="pdtIdInput" >
-      </div>
-    </div>
+                <div class="form-group ">
 
+                  <div class="col-sm-12">
+                    <input type="file" id="medImg" name="medImg">
+                    <input type="hidden" id="pdtIdInput" name="pdtIdInput">
+                    <input type="hidden" id="pageFlag" name="pageFlag" value="backToTable">
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label for="pdtDescInput" class="col-sm-10 col-form-label">Description :</label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" id="pdtDescInput" name="pdtDescInput"
+                      placeholder="Description">
+                  </div>
+                </div>
+
+                <div class="form-group ">
+                  <label for="boxNoBoughtInput" class="col-sm-10 col-form-label">Box Bought :</label>
+                  <div class="col-sm-12">
+                    <input type="" class="form-control" id="boxNoBoughtInput" name="boxNoBoughtInput"
+                      placeholder="No of box bought">
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label for="boxNoSoldInput" class="col-sm-10 col-form-label">Box Sold :</label>
+                  <div class="col-sm-12">
+                    <input type="" class="form-control" id="boxNoSoldInput" name="boxNoSoldInput"
+                      placeholder="No of box sold">
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label for="addNoteInput" class="col-sm-10 col-form-label">Note :</label>
+                  <div class="col-sm-12">
+                    <!-- <input type="textarea" class="form-control" id="addNoteInput" name="addNoteInput" placeholder="Provide additional note"> -->
+                    <textarea type="textarea" class="form-control" id="addNoteInput" name="addNoteInput"
+                      placeholder="Provide additional note"></textarea>
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="col-6">
+
+                <div class="form-group">
+                  <label for="pdtNameInput" class="col-sm-10 col-form-label required">Product Name:</label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" id="pdtNameInput" name="pdtNameInput"
+                      data-error="You must have a name." placeholder="Product Name" maxlength="20" minlength="3"
+                      required>
+                  </div>
+                </div>
+
+
+
+                <div class="form-group ">
+                  <label for="pdtBatchInput" class="col-sm-10 col-form-label required">Batch :</label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" id="pdtBatchInput" name="pdtBatchInput"
+                      placeholder="Batch Id">
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label for="pdtMfgInput" class="col-sm-10 col-form-label required">Mfg Date :</label>
+                  <div class="col-sm-12">
+
+                    <input type="text" class="form-control datepicker" name="pdtMfgInput" id="pdtMfgInput"
+                      data-provide="datepicker" placeholder="dd-mm-yyyy">
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label for="pdtExpInput" class="col-sm-10 col-form-label required">Exp. Date :</label>
+                  <div class="col-sm-12">
+
+                    <input type="text" class="form-control datepicker" id="pdtExpInput" name="pdtExpInput"
+                      data-provide="datepicker" placeholder="dd-mm-yyyy">
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label for="pdtMrpInput" class="col-sm-10 col-form-label required">MRP :</label>
+                  <div class="col-sm-12">
+                    <input type="" class="form-control" id="pdtMrpInput" name="pdtMrpInput" placeholder="Price">
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label for="pdtSellerInput" class="col-sm-10 col-form-label required">Seller :</label>
+                  <div class="col-sm-12">
+                    <input type="" class="form-control" id="pdtSellerInput" name="pdtSellerInput"
+                      placeholder="Seller Name">
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label for="pdtDiscountInput" class="col-sm-10 col-form-label">Discount :</label>
+                  <div class="col-sm-12">
+                    <input type="" class="form-control" id="pdtDiscountInput" name="pdtDiscountInput"
+                      placeholder="Discount %">
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label for="pdtMedTypeInput" class="col-sm-10 col-form-label">Type :</label>
+                  <div class="col-sm-12">
+                    <input type="" class="form-control" id="pdtMedTypeInput" name="pdtMedTypeInput"
+                      placeholder="Medicine Type">
+                  </div>
+                </div>
+
+
+
+
+
+
+
+
+
+              </div>
+
+            </div>
+            <div class="row">
+
+              <div class="col-sm-12" style="text-align: center; margin-top: 20px;">
+                <button type="submit" class="btn btn-success" id="uploadProduct"
+                  style="padding-left: 30px;padding-right: 30px;">Save</button>
+
+              </div>
+            </div>
+          </form>
+
+
+        </div>
+
+      </div>
+      <div class="col">
+
+      </div>
+
+    </div>
   </div>
-  <div class="col-8">
-  
-    <div class="form-group row">
-      <label for="pdtNameInput" class="col-sm-2 col-form-label required">Product Name:</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="pdtNameInput" name="pdtNameInput" data-error="You must have a name." placeholder="Product Name" maxlength="20" minlength="3" required>
-      </div>
-    </div>
-  
-   
-    <div class="form-group row">
-      <label for="pdtDescInput" class="col-sm-2 col-form-label">Description :</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="pdtDescInput" name="pdtDescInput"  placeholder="Description">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="pdtBatchInput" class="col-sm-2 col-form-label required">Batch :</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="pdtBatchInput" name="pdtBatchInput" placeholder="Batch Id">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="pdtMfgInput" class="col-sm-2 col-form-label required">Mfg Date :</label>
-      <div class="col-sm-10">
-       
-        <input type="text" class="form-control datepicker" name="pdtMfgInput" id="pdtMfgInput" data-provide="datepicker" placeholder="dd-mm-yyyy" >
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="pdtExpInput" class="col-sm-2 col-form-label required">Exp. Date :</label>
-      <div class="col-sm-10">
-
-        <input type="text" class="form-control datepicker" id="pdtExpInput" name="pdtExpInput" data-provide="datepicker" placeholder="dd-mm-yyyy" >
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="pdtMrpInput" class="col-sm-2 col-form-label required">MRP :</label>
-      <div class="col-sm-10">
-        <input type="" class="form-control" id="pdtMrpInput" name="pdtMrpInput"  placeholder="Price">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="pdtSellerInput" class="col-sm-2 col-form-label required">Seller :</label>
-      <div class="col-sm-10">
-        <input type="" class="form-control" id="pdtSellerInput" name="pdtSellerInput" placeholder="Seller Name">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="pdtDiscountInput" class="col-sm-2 col-form-label">Discount :</label>
-      <div class="col-sm-10">
-        <input type="" class="form-control" id="pdtDiscountInput" name="pdtDiscountInput" placeholder="Discount %">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="pdtMedTypeInput" class="col-sm-2 col-form-label">Type :</label>
-      <div class="col-sm-10">
-        <input type="" class="form-control" id="pdtMedTypeInput" name="pdtMedTypeInput"   placeholder="Medicine Type">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="boxNoBoughtInput" class="col-sm-2 col-form-label">Box Bought :</label>
-      <div class="col-sm-10">
-        <input type="" class="form-control" id="boxNoBoughtInput" name="boxNoBoughtInput" placeholder="No of box bought">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="boxNoSoldInput" class="col-sm-2 col-form-label">Box Sold :</label>
-      <div class="col-sm-10">
-        <input type="" class="form-control" id="boxNoSoldInput" name="boxNoSoldInput" placeholder="No of box sold">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="addNoteInput" class="col-sm-2 col-form-label">Note :</label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="addNoteInput" name="addNoteInput" placeholder="Provide additional note">
-      </div>
-    </div>
-    
 
 
+  <div class="modal fade" id="uploadSuccessModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Product Upload</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          New product uploaded successfully!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-
-    
-    <div class="form-group row">
-      <div class="col-sm-10" style="text-align: center;">
-        <button   type="submit" class="btn btn-primary" id="uploadProduct">Save</button>
+        </div>
       </div>
     </div>
   </div>
-
-</div>
-  </form>   
-
-
-</div>
-
-</div>
-<div class="col">
-     
-</div>
-
-</div>
-</div>
-
-
-<div class="modal fade" id="uploadSuccessModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Product Upload</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       New product uploaded successfully!
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-       
-      </div>
-    </div>
-  </div>
-</div>
 
 
 
 </body>
+
 </html>
