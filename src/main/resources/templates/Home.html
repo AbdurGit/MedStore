@@ -292,7 +292,11 @@
             var count = 0;
             for (var i = 0; i < data.length; i++) {
               record = data[i];
+              var mfgDate = record.mfgDate;
               var expDate = record.expDate;
+              
+              var formattedMfgDt=formatDate(mfgDate);
+              var formattedExpDt=formatDate(expDate);
 
               var currentDate = new Date();
               var oneDay = 24 * 60 * 60 * 1000;
@@ -357,13 +361,13 @@
                 html2 = "<img class=\"card-img-top\" src=\"" + "images/" + record.productImagePath +
                   "\" alt=\"No Image\">";
               }
-
+              
               var html3 = "<div class=\"card-body\"><h5 class=\"card-title\">" + record.productName +
                 "</h5>" +
 
                 "<div class=\"prop\"> <i class=\"bi bi-calendar3\"></i> <small>Manufacturing </small><br><small>" +
-                record.mfgDate + "</small> </div> <div class=\"prop\">" +
-                "<i class=\"bi bi-calendar3\"></i><small> Expiry </small><br><small>" + record.expDate +
+                  formattedMfgDt + "</small> </div> <div class=\"prop\">" +
+                "<i class=\"bi bi-calendar3\"></i><small> Expiry </small><br><small>" + formattedExpDt +
                 " </small></div><small class=\"card-text\">" + record.productDesc + "</small>" +
                 "<div style=\"margin-top: 10px;\"><button  class=\"btn btn-sm btn-outline-primary viewpdt\"  data-id=\"" +
                 record.id +
@@ -387,12 +391,6 @@
               $("#updateCount").html("<div class=\"count-text\"> " + count + " medicines expired</div>");
             }
 
-
-
-
-
-
-
           },
           error: function (xhr, status, error) {
 
@@ -403,6 +401,10 @@
         });
 
       }
+      function formatDate(date){
+        return moment(date).format("DD-MM-YYYY");
+      }
+
       $('#cardContainer').on('click', '.viewpdt', function () {
         // $(".viewpdt").click(function () {
         var pdtId = $(this).attr("data-id");
@@ -449,8 +451,11 @@
             $("#boxBoughtVal").text(data.noBoxBought);
             $("#boxSoldVal").text(data.noBoxSold);
             $("#noteVal").text(data.additionalNotes);
-            $("#mfgDtVal").text((data.mfgDate));
-            $("#expiryDtVal").text((data.expDate));
+
+
+
+            $("#mfgDtVal").text(formatDate(data.mfgDate));
+            $("#expiryDtVal").text(formatDate(data.expDate));
 
 
             $("#updatePdtBtn").attr("data-id", "");
@@ -600,9 +605,11 @@
             $('#pdtIdHidden').val(data.id);
             $("#pdtNameInput").val(data.productName);
             $("#pdtDescInput").val(data.productDesc);
-            $("#pdtMfgInput").val((data.mfgDate));
-            // $("#pdtExpInput").val(changeDateFormat(data.expDate));
-            $("#pdtExpInput").val((data.expDate));
+
+
+            $("#pdtMfgInput").val(formatDate(data.mfgDate));
+           
+            $("#pdtExpInput").val(formatDate(data.expDate));
             $("#pdtBatchInput").val(data.batch);
             $("#pdtMrpInput").val(data.mrp);
             $("#pdtSellerInput").val(data.sellerName);
@@ -616,7 +623,7 @@
             $('.datepicker').datepicker({
 
               format: 'dd-mm-yyyy',
-              startDate: '-3d'
+              startDate: '-3y'
             });
 
           },
@@ -715,7 +722,7 @@
         }
 
       });
-
+      
 
     });
   </script>
@@ -724,12 +731,12 @@
 
 <body style="background: #eee;">
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="box-shadow: 1px 1px 11px #ddd;position: relative;">
+  <nav class="navbar navbar-expand navbar-light bg-light" style="box-shadow: 1px 1px 11px #ddd;position: relative;">
     <a class="navbar-brand" href="/medstore" style="color: #dc3563;">Med Store</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
       aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-    </button>
+    </button> -->
 
     <div class="collapse navbar-collapse navbar-center" id="navbarTogglerDemo02">
       <ul class="navbar-nav  mr-auto mt-2 mt-lg-0 navul">

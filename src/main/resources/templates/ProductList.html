@@ -257,8 +257,9 @@
             $("#boxBoughtVal").text(data.noBoxBought);
             $("#boxSoldVal").text(data.noBoxSold);
             $("#noteVal").text(data.additionalNotes);
-            $("#mfgDtVal").text((data.mfgDate));
-            $("#expiryDtVal").text((data.expDate));
+            
+            $("#mfgDtVal").text(formatDate(data.mfgDate));
+            $("#expiryDtVal").text(formatDate(data.expDate));
 
             $("#updatePdtBtn").attr("data-id","");
             $("#updatePdtBtn").attr("data-id",pdtId);
@@ -381,9 +382,9 @@ openDeleteConfirmDialog(pdtId);
             $('#pdtIdHidden').val(data.id);
             $("#pdtNameInput").val(data.productName);
             $("#pdtDescInput").val(data.productDesc);
-            $("#pdtMfgInput").val((data.mfgDate));
-            // $("#pdtExpInput").val(changeDateFormat(data.expDate));
-            $("#pdtExpInput").val((data.expDate));
+            $("#pdtMfgInput").val(formatDate(data.mfgDate));
+            
+            $("#pdtExpInput").val(formatDate(data.expDate));
             $("#pdtBatchInput").val(data.batch);
             $("#pdtMrpInput").val(data.mrp);
             $("#pdtSellerInput").val(data.sellerName);
@@ -397,7 +398,7 @@ openDeleteConfirmDialog(pdtId);
             $('.datepicker').datepicker({
 
               format: 'dd-mm-yyyy',
-              startDate: '-3d'
+              startDate: '-3y'
             });
 
           },
@@ -648,7 +649,9 @@ openDeleteConfirmDialog(pdtId);
 
       });
 
-
+      function formatDate(date){
+        return moment(date).format("DD-MM-YYYY");
+      }
 
     });
   </script>
@@ -659,12 +662,12 @@ openDeleteConfirmDialog(pdtId);
 
 <body style="background: #eee;">
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="box-shadow: 1px 1px 11px #ddd;position: relative;">
+  <nav class="navbar navbar-expand navbar-light bg-light" style="box-shadow: 1px 1px 11px #ddd;position: relative;">
     <a class="navbar-brand" href="/medstore" style="color: #dc3563;">Med Store</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
       aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-    </button>
+    </button> -->
 
     <div class="collapse navbar-collapse navbar-center" id="navbarTogglerDemo02">
       <ul class="navbar-nav  mr-auto mt-2 mt-lg-0 navul">
