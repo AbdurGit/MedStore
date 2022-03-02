@@ -75,7 +75,10 @@ public ModelAndView home() {
 	public String addProduct( @RequestParam ("pageFlag") String backFlag,@RequestParam ("pdtIdInput") String productId,@RequestParam("pdtNameInput") String productName,@RequestParam("pdtDescInput") String productDescription,@RequestParam("pdtMfgInput") String  mfgDate,
 	@RequestParam("pdtExpInput") String expDate, @RequestParam("pdtBatchInput")String batch, @RequestParam("pdtMrpInput") String mrp, @RequestParam("pdtSellerInput") String seller,
 	@RequestParam("pdtDiscountInput") String discount, @RequestParam("pdtMedTypeInput") String medtype, @RequestParam("boxNoBoughtInput") String boxBought, @RequestParam("boxNoSoldInput") String boxSold,
-	@RequestParam("addNoteInput") String note,@RequestParam("medImg") MultipartFile file,HttpServletResponse httpResponse )  throws Exception {
+	@RequestParam("addNoteInput") String note,@RequestParam("medImg") MultipartFile file,HttpServletResponse httpResponse,
+	@RequestParam("pdtBonusInput") String bonus,
+	@RequestParam("pdtBrandInput") String brand,
+	@RequestParam("pdtCompositionInput") String composition )  throws Exception {
 		//System.out.println("fuction called");
 		Product pdt = new Product();
 		String formattedMfgDt=null;
@@ -128,10 +131,17 @@ public ModelAndView home() {
 		}else{
 			pdt.setNoBoxSold(0);
 		}
+		if(bonus.trim().length()>0){
+			pdt.setBonus(Integer.parseInt(bonus.trim()));
+		}else{
+			pdt.setNoBoxSold(0);
+		}
 		
 		
 		pdt.setAdditionalNotes(note);
-
+		//pdt.setBonus(Integer.parseInt(bonus));
+		pdt.setBrand(brand);
+		pdt.setComposition(composition);
 		
 		String randomFileId=UUID.randomUUID().toString();
 		//String fileName=file.getOriginalFilename();

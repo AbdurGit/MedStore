@@ -42,17 +42,19 @@ public class Product implements Serializable {
 	private int noBoxSold;
 	private String additionalNotes;
 	private String productImagePath;
+	private int bonus;
+	private String brand;
+	private String composition;
 	
 	
 	public Product() {
 		
 	}
-	
-	
+
+
 	public Product(String id, String productName, String productDesc, String batch, Date mfgDate, Date expDate,
 			double mrp, String sellerName, String medType, double percentageDiscount, int noBoxBought, int noBoxSold,
-			String additionalNotes) {
-		super();
+			String additionalNotes, String productImagePath, int bonus, String brand, String composition) {
 		this.id = id;
 		this.productName = productName;
 		this.productDesc = productDesc;
@@ -66,6 +68,10 @@ public class Product implements Serializable {
 		this.noBoxBought = noBoxBought;
 		this.noBoxSold = noBoxSold;
 		this.additionalNotes = additionalNotes;
+		this.productImagePath = productImagePath;
+		this.bonus = bonus;
+		this.brand = brand;
+		this.composition = composition;
 	}
 
 
@@ -74,8 +80,8 @@ public class Product implements Serializable {
 	}
 
 
-	public void setId(String uuid) {
-		this.id = uuid;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 
@@ -106,6 +112,26 @@ public class Product implements Serializable {
 
 	public void setBatch(String batch) {
 		this.batch = batch;
+	}
+
+
+	public Date getMfgDate() {
+		return mfgDate;
+	}
+
+
+	public void setMfgDate(Date mfgDate) {
+		this.mfgDate = mfgDate;
+	}
+
+
+	public Date getExpDate() {
+		return expDate;
+	}
+
+
+	public void setExpDate(Date expDate) {
+		this.expDate = expDate;
 	}
 
 
@@ -179,26 +205,6 @@ public class Product implements Serializable {
 	}
 
 
-	public Date getMfgDate() {
-		return mfgDate;
-	}
-
-
-	public void setMfgDate(Date mfgDate) {
-		this.mfgDate = mfgDate;
-	}
-
-
-	public Date getExpDate() {
-		return expDate;
-	}
-
-
-	public void setExpDate(Date expDate) {
-		this.expDate = expDate;
-	}
-
-
 	public String getProductImagePath() {
 		return productImagePath;
 	}
@@ -207,6 +213,42 @@ public class Product implements Serializable {
 	public void setProductImagePath(String productImagePath) {
 		this.productImagePath = productImagePath;
 	}
+
+
+	public int getBonus() {
+		return bonus;
+	}
+
+
+	public void setBonus(int bonus) {
+		this.bonus = bonus;
+	}
+
+
+	public String getBrand() {
+		return brand;
+	}
+
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+
+	public String getComposition() {
+		return composition;
+	}
+
+
+	public void setComposition(String composition) {
+		this.composition = composition;
+	}
+	
+	
+	
+
+
+	
 	
 
 

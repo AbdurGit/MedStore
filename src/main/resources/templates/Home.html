@@ -311,16 +311,11 @@
                 if (boxCount == 0) {
                   continue;
                 }
-
               } else if (flag == "sold") {
                 if (boxCount > 0) {
                   continue;
                 }
-
               }
-
-
-
               count++;
               var html = "";
               var html2 = "";
@@ -329,8 +324,6 @@
                 html = "<div class=\"card\"><div class=\"expiry-warning\"><small>Expired</small></div>"
 
               } else if (difference < 30) {
-
-
                 if (difference == 0) {
                   console.log(new Date(expDate) + "---" + difference + "---" + "Medicine Expiring today.");
                   html = "<div class=\"card\"><div class=\"expiry-warning\"><small>Today</small></div>";
@@ -340,20 +333,13 @@
                   html = "<div class=\"card\"><div class=\"expiry-warning\"><small>" + difference +
                     " days</small></div>";
                 }
-
-
-
                 //console.log("About to expire in 30 days.");
               } else {
 
                 console.log(new Date(expDate) + "---" + difference + "---" + "Expiry in more than 30 day.");
                 html = "<div class=\"card\"><div class=\"expiry-success\"><small>" + difference +
                   " days</small></div>";
-
-
-
                 //console.log("Expiry in more than 30 day");
-
               }
 
               if ((record.productImagePath).split(".").pop() == "jpg" || (record.productImagePath).split(".")
@@ -379,7 +365,6 @@
             }
             $("#cardColumnContainer").html("");
             $("#cardColumnContainer").html(cardColumnHtml);
-
             $("#updateCount").html("");
             if (flag == "allProducts") {
               $("#updateCount").html("<div class=\"count-text\">Total " + count + " records</div>");
@@ -390,16 +375,12 @@
             } else if (flag == "expired") {
               $("#updateCount").html("<div class=\"count-text\"> " + count + " medicines expired</div>");
             }
-
           },
           error: function (xhr, status, error) {
-
             alert("Exception occured!");
             console.log(xhr.responseText);
           }
-
         });
-
       }
       function formatDate(date){
         return moment(date).format("DD-MM-YYYY");
@@ -411,74 +392,54 @@
         $.ajax({
           type: "GET",
           url: "/getProductById/" + pdtId,
-
           success: function (data) {
             $("#pdtViewContainer").show("fast");
             $("#cardContainer").hide("fast");
             console.log(data);
-
             document.getElementById("pdtImg").src = "images/" + data.productImagePath;
-
-
-
             $("#pdtNameVal").text("");
             $("#descVal").text("");
-
             $("#batchVal").text("");
             $("#priceVal").text("");
             $("#sellerVal").text("");
             $("#discountVal").text("");
             $("#typeVal").text("");
-
             $("#boxBoughtVal").text("");
             $("#boxSoldVal").text("");
             $("#noteVal").text("");
             $("#mfgDtVal").text("");
             $("#expiryDtVal").text("");
-
-
-
+            $("#bonusVal").text("");
+            $("#compositionVal").text("");
+            $("#brandVal").text("");
+            
 
             $("#pdtNameVal").text(data.productName);
             $("#descVal").text(data.productDesc);
-
             $("#batchVal").text(data.batch);
             $("#priceVal").text(data.mrp);
             $("#sellerVal").text(data.sellerName);
             $("#discountVal").text(data.percentageDiscount);
             $("#typeVal").text(data.medType);
-
             $("#boxBoughtVal").text(data.noBoxBought);
             $("#boxSoldVal").text(data.noBoxSold);
             $("#noteVal").text(data.additionalNotes);
-
-
-
             $("#mfgDtVal").text(formatDate(data.mfgDate));
             $("#expiryDtVal").text(formatDate(data.expDate));
-
-
+            $("#bonusVal").text(data.bonus);
+            $("#compositionVal").text(data.composition);
+            $("#brandVal").text(data.brand);
             $("#updatePdtBtn").attr("data-id", "");
             $("#updatePdtBtn").attr("data-id", pdtId);
-
             $("#deletePdtBtn").attr("data-id", "");
             $("#deletePdtBtn").attr("data-id", pdtId);
-
-
-
-
-
-
           },
           error: function (xhr, status, error) {
 
             alert("Exception occured!");
             console.log(xhr.responseText);
           }
-
         });
-
-
       })
 
       $("#backToCardContainer").click(function () {
@@ -489,35 +450,18 @@
 
       })
 
-
-
       $('#deletePdtBtn').click(function () {
-
-
-        //alert("delete clicked");
-
-
         var pdtId = $(this).attr("data-id");
         openDeleteConfirmDialog(pdtId);
-
-
-
       })
 
       function openDeleteConfirmDialog(pdtId) {
         $("#pdtDeleteConfirmModal").modal("show");
         $("#hiddenId").val("");
         $("#hiddenId").val(pdtId);
-
-
-
-
       }
-
-
       $(".closeModalBtn").click(function(){
         $("#pdtDeleteConfirmModal").modal("hide");
-
       });
 
       $("#deleteConfirm").click(function () {
@@ -531,13 +475,8 @@
           },
           success: function (data) {
             $("#pdtViewContainer").hide("fast");
-
-
             $("#cardContainer").show("fast");
             populateProducts("allProducts");
-
-
-
           },
           error: function (xhr, status, error) {
             // $('#pdtDeleteConfirmModal').hide('fast')
@@ -545,96 +484,56 @@
             alert("Exception occured!");
             console.log(xhr.responseText);
           }
-
         });
-
       });
 
       $('#cardContainer').on('click', '.updatePdt', function () {
-
-
         var pdtId = $(this).attr("data-id");
-
-
-
         $('#cardContainer').hide("fast");
         $("#pdtViewContainer").hide("fast");
         $('#pdtUpdateContainer').show("fast");
-
-
-
-
         populateForm(pdtId);
-
-
       })
-
 
       $('#updatePdtBtn').click(function () {
-
-
         var pdtId = $(this).attr("data-id");
-
-
-
-
         $("#pdtViewContainer").hide("fast");
         $('#pdtUpdateContainer').show("fast");
-
-
-
-
         populateForm(pdtId);
-
-
       })
-
-
-
-
 
       function populateForm(productId) {
         $.ajax({
           type: "GET",
           url: "/getProductById/" + productId,
-
           success: function (data) {
-
-
             console.log(data);
             $('#pdtIdHidden').val(data.id);
             $("#pdtNameInput").val(data.productName);
             $("#pdtDescInput").val(data.productDesc);
-
-
             $("#pdtMfgInput").val(formatDate(data.mfgDate));
-           
             $("#pdtExpInput").val(formatDate(data.expDate));
             $("#pdtBatchInput").val(data.batch);
             $("#pdtMrpInput").val(data.mrp);
             $("#pdtSellerInput").val(data.sellerName);
             $("#pdtDiscountInput").val(data.percentageDiscount);
             $("#pdtMedTypeInput").val(data.medType);
-
             $("#boxNoBoughtInput").val(data.noBoxBought);
             $("#boxNoSoldInput").val(data.noBoxSold);
             $("#addNoteInput").val(data.additionalNotes);
-
+            $("#pdtBrandInput").val(data.brand);
+            $("#pdtCompositionInput").val(data.composition);
+            $("#pdtBonusInput").val(data.bonus);
             $('.datepicker').datepicker({
-
               format: 'dd-mm-yyyy',
               startDate: '-3y'
             });
-
           },
           error: function (xhr, status, error) {
-
             alert("Exception occured!");
             console.log(xhr.responseText);
           }
-
         });
-
       }
 
       $("#productUpdateForm").validate({
@@ -656,9 +555,7 @@
             number: true
           },
           pdtDiscountInput: {
-
             number: true
-
           },
           pdtSellerInput: {
             required: true,
@@ -671,9 +568,6 @@
 
             digits: true
           },
-
-
-
         },
         messages: {
           pdtNameInput: {
@@ -695,35 +589,21 @@
           pdtSellerInput: {
             required: "Please enter seller name",
           },
-
-
           pdtDiscountInput: {
-
             number: "Provide a valid number"
-
           },
-
           boxNoBoughtInput: {
-
             digits: "Provide a valid integer number"
           },
           boxNoSoldInput: {
-
             digits: "Provide a valid integer number"
           },
         },
-
-
-
         submitHandler: function (form) {
           form.submit();
-
-
         }
-
       });
-      
-
+ 
     });
   </script>
 
@@ -867,6 +747,22 @@
                 </div>
                 <div class="value" id="boxSoldVal"> </div>
               </div>
+              <div class="propGroup col-sm-6">
+                <div class="title" id=""> Brand
+                </div>
+                <div class="value" id="brandVal"> </div>
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="propGroup col-sm-6">
+                <div class="title" id="">Bonus </div>
+                <div class="value" id="bonusVal"></div>
+              </div>
+              <div class="propGroup col-sm-6">
+                <div class="title" id="">Composition</div>
+                <div class="value" id="compositionVal"></div>
+              </div>
             </div>
             <div class="propGroup">
               <div class="title" id="">Additional Note
@@ -939,6 +835,13 @@
                 </div>
               </div>
               <div class="form-group ">
+                <label for="pdtBonusInput" class="col-sm-10 col-form-label">Bonus </label>
+                <div class="col-sm-12">
+                  <input type="" class="form-control" id="pdtBonusInput" name="pdtBonusInput"
+                    placeholder="Bonus">
+                </div>
+              </div>
+              <div class="form-group ">
                 <label for="addNoteInput" class="col-sm-10 col-form-label">Note :</label>
                 <div class="col-sm-12">
                   <!-- <input type="textarea" class="form-control" id="addNoteInput" name="addNoteInput" placeholder="Provide additional note"> -->
@@ -959,6 +862,21 @@
                     data-error="You must have a name." placeholder="Product Name" maxlength="20" minlength="3" required>
                 </div>
               </div>
+              <div class="form-group ">
+                <label for="pdtBrandInput" class="col-sm-10 col-form-label required">Brand </label>
+                <div class="col-sm-12">
+                  <input type="" class="form-control" id="pdtBrandInput" name="pdtBrandInput"
+                    placeholder="Brand name">
+                </div>
+              </div>
+              <div class="form-group ">
+                <label for="pdtCompositionInput" class="col-sm-10 col-form-label">Composition </label>
+                <div class="col-sm-12">
+                  <input type="" class="form-control" id="pdtCompositionInput" name="pdtCompositionInput"
+                    placeholder="provide medicine composition">
+                </div>
+              </div>
+
 
 
 
@@ -1008,8 +926,15 @@
               <div class="form-group ">
                 <label for="pdtMedTypeInput" class="col-sm-10 col-form-label">Type :</label>
                 <div class="col-sm-12">
-                  <input type="" class="form-control" id="pdtMedTypeInput" name="pdtMedTypeInput"
-                    placeholder="Medicine Type">
+                  <select type="dropdown" class="form-control" id="pdtMedTypeInput" name="pdtMedTypeInput"
+                      placeholder="Medicine Type">
+                      <option value="Tablet">Tablet</option>
+                      <option value="Capsule">Capsule</option>
+                      <option value="Syrup">Syrup</option>
+                      <option value="Injection">Injection</option>
+                      <option value="Drop">Drop</option>
+                      <option value="Oral">Oral</option>
+                      </select>
                 </div>
               </div>
 
