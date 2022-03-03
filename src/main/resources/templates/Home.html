@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="ISO-8859-1">
@@ -37,6 +37,13 @@
   <style>
     .updatePdt {
       margin-left: 4px;
+    }
+    .usericon{
+      padding: 3px 6px;
+      
+      border-radius: 50%;
+     color: white;
+      background:#007bff;
     }
 
     @media (min-width: 576px) {
@@ -179,6 +186,24 @@
   </style>
   <script>
     $(document).ready(function () {
+     
+        $.ajax({
+          type: "GET",
+          url: "/resource" ,
+          success: function (data) {
+           console.log(data);
+           $("#userName").text("");
+           $("#userName").text(data);
+           
+           
+          },
+          error: function (xhr, status, error) {
+
+            alert("Exception occured!");
+            console.log(xhr.responseText);
+          }
+        });
+     
 
       populateProducts("allProducts");
       $("#medImg").fileinput({
@@ -612,7 +637,7 @@
 <body style="background: #eee;">
 
   <nav class="navbar navbar-expand navbar-light bg-light" style="box-shadow: 1px 1px 11px #ddd;position: relative;">
-    <a class="navbar-brand" href="/medstore" style="color: #dc3563;">Med Store</a>
+    <div class="logo"><img src="img/logo.png" alt="logo" style="height: 3rem;"></div><a class="navbar-brand" href="/medstore" style="color: #dc3563;">Med Store</a>
     <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
       aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -639,11 +664,22 @@
         </li> -->
 
       </ul>
-      <!-- <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form> -->
+      
+     
     </div>
+    <div class="" style="position: absolute;right: 1rem;">
+      <div class="" style="display: inline; color: #007bff;"><i class="bi bi-bell"></i></div>
+        <div class="usericon" style="display: inline;margin-left: 1rem;"><i class="bi bi-person"></i></div>
+      <div class="userDetail" id="userName" style="display: inline;"></div>
+      <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}" style="display: inline;margin-left: 1rem;">
+       
+        <button class="btn btn-sm btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+      </form>
+    
+    </div>
+    
+    
+  
   </nav>
   <div class="container" id="cardContainer" style="position: relative;">
     <div class="btnContent">

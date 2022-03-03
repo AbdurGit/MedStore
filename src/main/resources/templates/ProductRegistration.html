@@ -55,6 +55,13 @@
 
 
   <style>
+     .usericon{
+      padding: 3px 6px;
+      
+      border-radius: 50%;
+     color: white;
+      background:#007bff;
+    }
     .main-content {
       background-color: white;
       border: 1px solid #ddd;
@@ -91,7 +98,22 @@
   </style>
   <script>
     $(document).ready(function () {
+      $.ajax({
+          type: "GET",
+          url: "/resource" ,
+          success: function (data) {
+           console.log(data);
+           $("#userName").text("");
+           $("#userName").text(data);
+           
+           
+          },
+          error: function (xhr, status, error) {
 
+            alert("Exception occured!");
+            console.log(xhr.responseText);
+          }
+        });
 
 
       $("#medImg").fileinput({
@@ -276,6 +298,16 @@ pdtBrandInput: {
       <input class="form-control mr-sm-2" type="search" placeholder="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form> -->
+    </div>
+    <div class="" style="position: absolute;right: 1rem;">
+      <div class="" style="display: inline; color: #007bff;"><i class="bi bi-bell"></i></div>
+        <div class="usericon" style="display: inline;margin-left: 1rem;"><i class="bi bi-person"></i></div>
+      <div class="userDetail" id="userName" style="display: inline;"></div>
+      <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}" style="display: inline;margin-left: 1rem;">
+       
+        <button class="btn btn-sm btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+      </form>
+    
     </div>
   </nav>
   <div class="container-fluid">

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="lib/jquery-3.6.0.js"></script>
+  <link rel="stylesheet" href="lib/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+
+  <script src="lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function () {
+
+      $("#registerLink").click(function () {
+        $("#login").hide("fast");
+        $("#registration").show("fast");
+      })
+
+      $("#backToLogin").click(function () {
+        $("#registration").hide("fast");
+        $("#login").show("fast");
+
+      })
+
+
+
+    });
+  </script>
+</head>
+
+<body style="background: #eee;">
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <h3>Welcome To Med Store</h3>
+    </div>
+    <div class="row align-items-center justify-content-center" id="login" style="height: 500px; ">
+
+
+      <form th:action="@{/login}" method="post" id="userLoginForm" class="col-md-4 col-sm-6 border"
+        style="padding: 30px; background-color: #fff; border-radius: 7px;">
+        <div th:if="${param.error}" class="alert alert-error" style="background-color: bisque;">
+          Invalid username and password.
+        </div>
+        <div th:if="${param.logout}" class="alert alert-success">
+          You have logged out.
+        </div>
+
+        <div class="form-group">
+          <label for="userName">User Name</label>
+          <input type="userName" class="form-control" id="username" name="username" placeholder="Enter user name">
+
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Log In</button>
+        <div style="margin-top: 1rem;">New user <a href="javascript:void(0)" id="registerLink" class="">Register
+            Here</a></div>
+      </form>
+
+
+    </div>
+    <div class="row justify-content-center" style="display:none;" id="registration">
+      <form th:action="@{/addUser}" method="post" id="userRegistrationForm" class="col-md-6 border"
+        style="padding: 50px; background-color: #fff; border-radius: 7px;margin-top: 20px;margin-bottom: 20px;">
+        <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)" id="backToLogin">Back to Login</a>
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter first name">
+
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter last name">
+
+        </div>
+        <div class="form-group">
+          <label for="userName">User Name</label>
+          <input type="userName" class="form-control" id="userName" name="userName" placeholder="Enter user name">
+
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Confirm Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+      </form>
+    </div>
+  </div>
+
+</body>
+
+</html>
