@@ -10,6 +10,15 @@
   <link rel="stylesheet" href="lib/bootstrap-4.0.0-dist/css/bootstrap.min.css">
 
   <script src="lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+  <style>
+    .error{
+      color: red;
+    }
+  </style>
   <script>
     $(document).ready(function () {
 
@@ -23,6 +32,66 @@
         $("#login").show("fast");
 
       })
+
+      $("#userRegistrationForm").validate({
+        rules: {
+          firstName: {
+            required: true,
+          },
+          lastName: {
+            required: true,
+          },
+          userName: {
+            required: true,
+          },
+          email: {
+            required: true,
+          },
+          password: {
+            required: true,
+           
+          },
+          confirmPassword: {
+
+            required: true,
+
+          },
+        
+        },
+        messages: {
+          firstName: {
+            required: "Please enter first name.",
+          },
+          lastName: {
+            required: "Please enter last name.",
+          },
+          userName: {
+            required: "Please enter user name.",
+          },
+          email: {
+            required: "Please enter email.",
+          },
+          password: {
+            required: "Please enter a password.",
+           
+          },
+          confirmPassword: {
+
+            required: "Please confirm password.",
+
+          },
+          
+        },
+
+
+
+        submitHandler: function (form) {
+          form.submit();
+
+
+        }
+
+      });
 
 
 
@@ -97,7 +166,7 @@
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Confirm Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password">
+          <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
