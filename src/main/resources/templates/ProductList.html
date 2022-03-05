@@ -120,10 +120,13 @@
     }
   </style>
   <script>
+
     $(document).ready(function () {
+      //var rootUrl="/MedStore"
+      var rootUrl="";
       $.ajax({
           type: "GET",
-          url: "/resource" ,
+          url: rootUrl+"/resource" ,
           success: function (data) {
            console.log(data);
            $("#userName").text("");
@@ -148,7 +151,7 @@
 
       $('#pdtTable').DataTable({
         ajax: {
-          url: '/getAllProducts',
+          url: rootUrl+'/getAllProducts',
           dataSrc: ''
         },
 
@@ -238,7 +241,7 @@
         var pdtId = $(this).attr("data-id");
         $.ajax({
           type: "GET",
-          url: "/getProductById/" + pdtId,
+          url: rootUrl+"/getProductById/" + pdtId,
 
           success: function (data) {
             $("#pdtViewContainer").show("fast");
@@ -343,7 +346,7 @@ openDeleteConfirmDialog(pdtId);
         $('#pdtDeleteConfirmModal').modal('hide');
         $.ajax({
           type: "GET",
-          url: "/deleteProduct",
+          url: rootUrl+"/deleteProduct",
           data: {
             productId: id
           },
@@ -402,7 +405,7 @@ openDeleteConfirmDialog(pdtId);
       function populateForm(productId) {
         $.ajax({
           type: "GET",
-          url: "/getProductById/" + productId,
+          url: rootUrl+"/getProductById/" + productId,
 
           success: function (data) {
 
@@ -779,7 +782,7 @@ openDeleteConfirmDialog(pdtId);
             Back To List</button>
 
         </div>
-        <form id="productUpdateForm" method="post" enctype="multipart/form-data" action="/addProduct">
+        <form id="productUpdateForm" method="post" enctype="multipart/form-data" th:action="@{/addProduct}">
           
 
 

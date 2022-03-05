@@ -1,6 +1,9 @@
 package com.Projects.MedStore;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +64,7 @@ public ModelAndView home() {
 	return modelAndView;    
 	}
 
-
+//not in use
 	@GetMapping("/advancedSearchPage")    
 	public ModelAndView showAdvSearchPage()  {    
 	ModelAndView modelAndView = new ModelAndView();    
@@ -192,7 +195,7 @@ public ModelAndView home() {
 		return productService.getProductById(productId);
 	}
 
-	
+	//not in use
 	@GetMapping("/updateProduct")
 	public String updateProduct( @RequestParam String productId, @RequestParam String productName,@RequestParam String productDescription,@RequestParam String  mfgDate,
 	@RequestParam String expDate, @RequestParam String batch, @RequestParam String mrp, @RequestParam String seller,
@@ -237,7 +240,7 @@ public ModelAndView home() {
 	
 
 	
-
+//not in use
 	@GetMapping("/viewProduct")
 	public ResponseEntity<Object> showProductDetails() {
 
@@ -268,5 +271,28 @@ public ModelAndView home() {
 		return outDt;
 
 	}
+
+public static void main(String[] args) throws IOException {
+	String allPdt="";
+	
+	for(int i=1;i<=1000;i++){
+		String id=UUID.randomUUID().toString();
+		String a="(\'"+id+"\', \'\', \'B-302\', \'2022-03-11\', \'\', \'2021-02-02\', 100, 0, 0, 0, \'\', \'\', \'Test-e"+i+"\', \'seller 2\', 0, NULL, NULL),\n";
+		allPdt+=a;
+	}
+	System.out.println(allPdt);
+	//String str = "Hello";
+    BufferedWriter writer = new BufferedWriter(new FileWriter("D:\\test.txt"));
+    try {
+		writer.write(allPdt);
+	} catch (IOException e) {
+		
+		e.printStackTrace();
+	}finally{
+		writer.close();
+	}
+    
+    
+}
 
 }

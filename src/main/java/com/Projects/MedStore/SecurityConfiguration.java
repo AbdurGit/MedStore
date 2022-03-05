@@ -26,12 +26,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.csrf().disable()     //csrf token disabled because of the post request failing in spring security
+        .authorizeRequests()
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/medstore").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/pdtListPage").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/pdtUploadPage").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/addProduct").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/getAllProducts").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/deleteProduct").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/getProductById").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/addUser").permitAll()
             .and().formLogin()
                 .loginPage("/login").permitAll()
@@ -41,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login");
-                
+      http.csrf().disable();          
 
                 
                 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="ISO-8859-1">
@@ -321,7 +321,7 @@ pdtBrandInput: {
           <h4 class="form-title">Upload Medicine</h4>
 
 
-          <form id="productForm" method="post" enctype="multipart/form-data" action="/addProduct">
+          <form id="productForm" method="post" enctype="multipart/form-data" th:action="@{/addProduct}">
             <div class="row">
               <div class="col-6">
 

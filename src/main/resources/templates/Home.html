@@ -183,6 +183,54 @@
       content: " *";
       color: red;
     }
+
+
+    /* spinner css */
+    .lds-dual-ring.hidden {
+        display: none;
+    }
+
+    /*Add an overlay to the entire page blocking any further presses to buttons or other elements.*/
+    .overlay {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100vh;
+        /* background: rgba(0,0,0,.8); */
+        z-index: 999;
+        opacity: 1;
+        transition: all 0.5s;
+    }
+    
+    /*Spinner Styles*/
+    .lds-dual-ring {
+        display: inline-block;
+        width: 80px;
+        height: 80px;
+    }
+    .lds-dual-ring:after {
+        content: " ";
+        display: block;
+        width: 64px;
+        height: 64px;
+        margin: 5% auto;
+        border-radius: 50%;
+        border: 6px solid #fff;
+        border-color: rgb(252, 138, 138) transparent rgb(252, 138, 138) transparent;
+        animation: lds-dual-ring 1.2s linear infinite;
+    }
+    @keyframes lds-dual-ring {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    .opaque{
+      opacity: 0.5;
+    }
   </style>
   <script>
     $(document).ready(function () {
@@ -309,9 +357,17 @@
         $.ajax({
           type: "GET",
           url: "/getAllProducts",
+          beforeSend: function () {
+            $('#loader').removeClass('hidden');
+            $('#cardContainer').addClass('opaque');
+
+            },
 
           success: function (data) {
-            console.log(data);
+            $('#loader').addClass('hidden');
+           $('#cardContainer').removeClass('opaque');
+            
+           // console.log(data);
 
             var cardColumnHtml = "";
             var count = 0;
@@ -345,23 +401,23 @@
               var html = "";
               var html2 = "";
               if (difference < 0) {
-                console.log(new Date(expDate) + "---" + difference + "---" + "Medicine Expired");
+               // console.log(new Date(expDate) + "---" + difference + "---" + "Medicine Expired");
                 html = "<div class=\"card\"><div class=\"expiry-warning\"><small>Expired</small></div>"
 
               } else if (difference < 30) {
                 if (difference == 0) {
-                  console.log(new Date(expDate) + "---" + difference + "---" + "Medicine Expiring today.");
+                  //console.log(new Date(expDate) + "---" + difference + "---" + "Medicine Expiring today.");
                   html = "<div class=\"card\"><div class=\"expiry-warning\"><small>Today</small></div>";
                 } else {
-                  console.log(new Date(expDate) + "---" + difference + "---" + "About to expire in " +
-                    difference + " days.");
+                  //console.log(new Date(expDate) + "---" + difference + "---" + "About to expire in " +difference + " days.");
+                    
                   html = "<div class=\"card\"><div class=\"expiry-warning\"><small>" + difference +
                     " days</small></div>";
                 }
                 //console.log("About to expire in 30 days.");
               } else {
 
-                console.log(new Date(expDate) + "---" + difference + "---" + "Expiry in more than 30 day.");
+                //console.log(new Date(expDate) + "---" + difference + "---" + "Expiry in more than 30 day.");
                 html = "<div class=\"card\"><div class=\"expiry-success\"><small>" + difference +
                   " days</small></div>";
                 //console.log("Expiry in more than 30 day");
@@ -402,9 +458,14 @@
             }
           },
           error: function (xhr, status, error) {
+            $('#loader').addClass('hidden');
             alert("Exception occured!");
             console.log(xhr.responseText);
-          }
+          },
+          complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
+                $('#loader').addClass('hidden');
+                $('#cardContainer').removeClass('opaque');
+            },
         });
       }
       function formatDate(date){
@@ -993,7 +1054,12 @@
     <div class="col">
     </div>
   </div>
-
+  <div class="loadingModal" style="display: none">
+    <div class="center">
+        <img alt="abc" src="loader.gif" />
+        <h1>loading</h1>
+    </div>
+</div>
   <div class="modal" tabindex="-1" role="dialog" id="pdtDeleteConfirmModal">
     <input type="hidden" id="hiddenId">
     <div class="modal-dialog" role="document">
@@ -1014,7 +1080,7 @@
       </div>
     </div>
   </div>
-
+  <div id="loader" class="lds-dual-ring hidden overlay"></div>
 </body>
 
 </html>
