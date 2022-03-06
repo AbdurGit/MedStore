@@ -38,12 +38,13 @@
     .updatePdt {
       margin-left: 4px;
     }
-    .usericon{
+
+    .usericon {
       padding: 3px 6px;
-      
+
       border-radius: 50%;
-     color: white;
-      background:#007bff;
+      color: white;
+      background: #007bff;
     }
 
     @media (min-width: 576px) {
@@ -114,9 +115,7 @@
     }
 
     .update-count {
-      position: absolute;
-      top: 20px;
-      left: 15px;
+      
       background-color: #007bff1c;
       border-radius: 4px;
       padding-left: 5px;
@@ -179,6 +178,7 @@
     .img-wrap:hover {
       box-shadow: 1px 1px 10px rgb(197, 197, 197);
     }
+
     .required:after {
       content: " *";
       color: red;
@@ -187,79 +187,83 @@
 
     /* spinner css */
     .lds-dual-ring.hidden {
-        display: none;
+      display: none;
     }
 
     /*Add an overlay to the entire page blocking any further presses to buttons or other elements.*/
     .overlay {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        width: 100%;
-        height: 100vh;
-        /* background: rgba(0,0,0,.8); */
-        z-index: 999;
-        opacity: 1;
-        transition: all 0.5s;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100vh;
+      /* background: rgba(0,0,0,.8); */
+      z-index: 999;
+      opacity: 1;
+      transition: all 0.5s;
     }
-    
+
     /*Spinner Styles*/
     .lds-dual-ring {
-        display: inline-block;
-        width: 80px;
-        height: 80px;
+      display: inline-block;
+      width: 80px;
+      height: 80px;
     }
+
     .lds-dual-ring:after {
-        content: " ";
-        display: block;
-        width: 64px;
-        height: 64px;
-        margin: 5% auto;
-        border-radius: 50%;
-        border: 6px solid #fff;
-        border-color: rgb(252, 138, 138) transparent rgb(252, 138, 138) transparent;
-        animation: lds-dual-ring 1.2s linear infinite;
+      content: " ";
+      display: block;
+      width: 64px;
+      height: 64px;
+      margin: 5% auto;
+      border-radius: 50%;
+      border: 6px solid #fff;
+      border-color: rgb(252, 138, 138) transparent rgb(252, 138, 138) transparent;
+      animation: lds-dual-ring 1.2s linear infinite;
     }
+
     @keyframes lds-dual-ring {
-        0% {
-            transform: rotate(0deg);
-        }
-        100% {
-            transform: rotate(360deg);
-        }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
-    .opaque{
+
+    .opaque {
       opacity: 0.5;
     }
   </style>
   <script>
     $(document).ready(function () {
-     
-        $.ajax({
-          type: "GET",
-          url: "/resource" ,
-          success: function (data) {
-           console.log(data);
-           $("#userName").text("");
-           $("#userName").text(data);
-           
-           
-          },
-          error: function (xhr, status, error) {
 
-            alert("Exception occured!");
-            console.log(xhr.responseText);
-          }
-        });
-     
+      $.ajax({
+        type: "GET",
+        url: "/resource",
+        success: function (data) {
+          console.log(data);
+          $("#userName").text("");
+          $("#userName").text(data);
+
+
+        },
+        error: function (xhr, status, error) {
+
+          alert("Exception occured!");
+          console.log(xhr.responseText);
+        }
+      });
+
 
       populateProducts("allProducts");
-      $("#medImg").fileinput({
-        'showUpload': false,
-        'previewFileType': 'any',
-        maxFileCount: 1,
-        allowedFileExtensions: ["jpg", "jpeg", "png", "gif"]
-      });
+      // $("#medImg").fileinput({
+      //   'showUpload': false,
+      //   'previewFileType': 'any',
+      //   maxFileCount: 1,
+      //   allowedFileExtensions: ["jpg", "jpeg", "png", "gif"]
+      // });
 
 
 
@@ -361,13 +365,14 @@
             $('#loader').removeClass('hidden');
             $('#cardContainer').addClass('opaque');
 
-            },
+          },
 
           success: function (data) {
-            $('#loader').addClass('hidden');
-           $('#cardContainer').removeClass('opaque');
             
-           // console.log(data);
+           
+            $("#cardColumnContainer").html("");
+
+            // console.log(data);
 
             var cardColumnHtml = "";
             var count = 0;
@@ -375,9 +380,9 @@
               record = data[i];
               var mfgDate = record.mfgDate;
               var expDate = record.expDate;
-              
-              var formattedMfgDt=formatDate(mfgDate);
-              var formattedExpDt=formatDate(expDate);
+
+              var formattedMfgDt = formatDate(mfgDate);
+              var formattedExpDt = formatDate(expDate);
 
               var currentDate = new Date();
               var oneDay = 24 * 60 * 60 * 1000;
@@ -401,7 +406,7 @@
               var html = "";
               var html2 = "";
               if (difference < 0) {
-               // console.log(new Date(expDate) + "---" + difference + "---" + "Medicine Expired");
+                // console.log(new Date(expDate) + "---" + difference + "---" + "Medicine Expired");
                 html = "<div class=\"card\"><div class=\"expiry-warning\"><small>Expired</small></div>"
 
               } else if (difference < 30) {
@@ -410,7 +415,7 @@
                   html = "<div class=\"card\"><div class=\"expiry-warning\"><small>Today</small></div>";
                 } else {
                   //console.log(new Date(expDate) + "---" + difference + "---" + "About to expire in " +difference + " days.");
-                    
+
                   html = "<div class=\"card\"><div class=\"expiry-warning\"><small>" + difference +
                     " days</small></div>";
                 }
@@ -422,18 +427,22 @@
                   " days</small></div>";
                 //console.log("Expiry in more than 30 day");
               }
+              if (record.productImagePath != null) {
 
-              if ((record.productImagePath).split(".").pop() == "jpg" || (record.productImagePath).split(".")
-                .pop() == "png" || (record.productImagePath).split(".").pop() == "jpeg") {
-                html2 = "<img class=\"card-img-top\" src=\"" + "images/" + record.productImagePath +
-                  "\" alt=\"No Image\">";
+
+                if ((record.productImagePath).split(".").pop() == "jpg" || (record.productImagePath).split(
+                    ".")
+                  .pop() == "png" || (record.productImagePath).split(".").pop() == "jpeg") {
+                  html2 = "<img class=\"card-img-top\" src=\"" + "images/" + record.productImagePath +
+                    "\" alt=\"No Image\">";
+                }
               }
-              
+
               var html3 = "<div class=\"card-body\"><h5 class=\"card-title\">" + record.productName +
                 "</h5>" +
 
                 "<div class=\"prop\"> <i class=\"bi bi-calendar3\"></i> <small>Manufacturing </small><br><small>" +
-                  formattedMfgDt + "</small> </div> <div class=\"prop\">" +
+                formattedMfgDt + "</small> </div> <div class=\"prop\">" +
                 "<i class=\"bi bi-calendar3\"></i><small> Expiry </small><br><small>" + formattedExpDt +
                 " </small></div><small class=\"card-text\">" + record.productDesc + "</small>" +
                 "<div style=\"margin-top: 10px;\"><button  class=\"btn btn-sm btn-outline-primary viewpdt\"  data-id=\"" +
@@ -442,10 +451,11 @@
                 record.id + "\">Update</a>" +
                 "</div> </div></div>";
               html = html + html2 + html3;
-              cardColumnHtml += html;
+              $("#cardColumnContainer").append(html);
+              //cardColumnHtml += html;
             }
-            $("#cardColumnContainer").html("");
-            $("#cardColumnContainer").html(cardColumnHtml);
+           // $("#cardColumnContainer").html("");
+           // $("#cardColumnContainer").html(cardColumnHtml);
             $("#updateCount").html("");
             if (flag == "allProducts") {
               $("#updateCount").html("<div class=\"count-text\">Total " + count + " records</div>");
@@ -456,19 +466,23 @@
             } else if (flag == "expired") {
               $("#updateCount").html("<div class=\"count-text\"> " + count + " medicines expired</div>");
             }
+            $('#loader').addClass('hidden');
+            $('#cardContainer').removeClass('opaque');
           },
+          
           error: function (xhr, status, error) {
             $('#loader').addClass('hidden');
             alert("Exception occured!");
             console.log(xhr.responseText);
           },
           complete: function () { // Set our complete callback, adding the .hidden class and hiding the spinner.
-                $('#loader').addClass('hidden');
-                $('#cardContainer').removeClass('opaque');
-            },
+            $('#loader').addClass('hidden');
+            $('#cardContainer').removeClass('opaque');
+          },
         });
       }
-      function formatDate(date){
+
+      function formatDate(date) {
         return moment(date).format("DD-MM-YYYY");
       }
 
@@ -498,7 +512,7 @@
             $("#bonusVal").text("");
             $("#compositionVal").text("");
             $("#brandVal").text("");
-            
+
 
             $("#pdtNameVal").text(data.productName);
             $("#descVal").text(data.productDesc);
@@ -506,7 +520,12 @@
             $("#priceVal").text(data.mrp);
             $("#sellerVal").text(data.sellerName);
             $("#discountVal").text(data.percentageDiscount);
-            $("#typeVal").text(data.medType);
+            if (data.medType == "-1") {
+              $("#typeVal").text("");
+            } else {
+              $("#typeVal").text(data.medType);
+            }
+
             $("#boxBoughtVal").text(data.noBoxBought);
             $("#boxSoldVal").text(data.noBoxSold);
             $("#noteVal").text(data.additionalNotes);
@@ -546,7 +565,7 @@
         $("#hiddenId").val("");
         $("#hiddenId").val(pdtId);
       }
-      $(".closeModalBtn").click(function(){
+      $(".closeModalBtn").click(function () {
         $("#pdtDeleteConfirmModal").modal("hide");
       });
 
@@ -593,7 +612,23 @@
           type: "GET",
           url: "/getProductById/" + productId,
           success: function (data) {
+
+            var imagepth = 'images/' + data.productImagePath;
+            $("#medImg").fileinput('destroy');
+            $("#medImg").val(null);
+
+            $("#medImg").fileinput({
+              'showUpload': false,
+              'previewFileType': 'any',
+              initialPreview: [
+                '<img src="' + imagepth + '" class="file-preview-image" .... >'
+              ],
+              maxFileCount: 1,
+              allowedFileExtensions: ["jpg", "jpeg", "png", "gif"]
+            });
             console.log(data);
+            //$('#medImg').val(data.productImagePath);
+
             $('#pdtIdHidden').val(data.id);
             $("#pdtNameInput").val(data.productName);
             $("#pdtDescInput").val(data.productDesc);
@@ -603,7 +638,14 @@
             $("#pdtMrpInput").val(data.mrp);
             $("#pdtSellerInput").val(data.sellerName);
             $("#pdtDiscountInput").val(data.percentageDiscount);
-            $("#pdtMedTypeInput").val(data.medType);
+            if (data.medType == null || data.medType == "") {
+              $("#pdtMedTypeInput").val("-1");
+
+            } else {
+              $("#pdtMedTypeInput").val(data.medType);
+
+            }
+
             $("#boxNoBoughtInput").val(data.noBoxBought);
             $("#boxNoSoldInput").val(data.noBoxSold);
             $("#addNoteInput").val(data.additionalNotes);
@@ -621,6 +663,62 @@
           }
         });
       }
+      $.validator.addMethod(
+        "nonNegativeNumber", 
+        function(value, element) {      
+            return value>=0;
+        },
+        "Should be non negative number."
+    );
+      $.validator.addMethod(
+        "lessThanHundred", 
+        function(value, element) {      
+            return value<=100;
+        },
+        "Discount should be less than 100%."
+    );
+      $.validator.addMethod(
+        "soldItemValidation", 
+        function(value, element) {
+          $("#boxNoBoughtInput").val()
+                
+            return $("#boxNoBoughtInput").val()>=value;
+        },
+        "Sold item number should be less than bought item number."
+    );
+    $.validator.addMethod(
+        "lessThanBoughtItem", 
+        function(value, element) {
+          var bought;
+                if($("#boxNoBoughtInput").val()==''||$("#boxNoBoughtInput").val()==null||$("#boxNoBoughtInput").val()==undefined){
+                  bought=0;
+                }else{
+                  bought=$("#boxNoBoughtInput").val();
+                }
+
+                if(bought==0){
+                  if(value==0){
+                    return true;
+                  }else if(value>0){
+                    return false;
+                  }
+                  else if(value<0){
+                    return false;
+                  }else{
+                    return true;
+                  }
+                }else{
+                  return bought>value;
+                }
+                
+
+
+            
+        },
+        "Bonus should be less than bought item number."
+    );
+    
+
 
       $("#productUpdateForm").validate({
         rules: {
@@ -638,10 +736,14 @@
           },
           pdtMrpInput: {
             required: true,
-            number: true
+            number: true,
+            nonNegativeNumber:true
           },
           pdtDiscountInput: {
-            number: true
+            number: true,
+            lessThanHundred:true,
+            nonNegativeNumber:true,
+
           },
           pdtSellerInput: {
             required: true,
@@ -651,8 +753,17 @@
             digits: true
           },
           boxNoSoldInput: {
+            
+            digits: true,
+            soldItemValidation:true
+          },
+          pdtBonusInput:{
+            digits: true,
+            lessThanBoughtItem:true
 
-            digits: true
+          },
+          pdtBrandInput: {
+            required: true,
           },
         },
         messages: {
@@ -684,12 +795,24 @@
           boxNoSoldInput: {
             digits: "Provide a valid integer number"
           },
+          pdtBrandInput: {
+            required: "Please provide Brand",
+          },
         },
         submitHandler: function (form) {
           form.submit();
         }
       });
- 
+      jQuery.expr[':'].icontains = function (a, i, m) {
+        return jQuery(a).text().toUpperCase()
+          .indexOf(m[3].toUpperCase()) >= 0;
+      };
+      $('#searchPdtBtn').click(function () {
+        var searchText = $('#searchText').val();
+        $('.card').hide();
+        $('.card-title:icontains(' + searchText + ')').parent().parent().show();
+      })
+
     });
   </script>
 
@@ -698,7 +821,8 @@
 <body style="background: #eee;">
 
   <nav class="navbar navbar-expand navbar-light bg-light" style="box-shadow: 1px 1px 11px #ddd;position: relative;">
-    <div class="logo"><img src="img/logo.png" alt="logo" style="height: 3rem;"></div><a class="navbar-brand" href="/medstore" style="color: #dc3563;">Med Store</a>
+    <div class="logo"><img src="img/logo.png" alt="logo" style="height: 3rem;"></div><a class="navbar-brand"
+      href="/medstore" style="color: #dc3563;">Med Store</a>
     <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
       aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -725,37 +849,59 @@
         </li> -->
 
       </ul>
-      
-     
+
+
     </div>
     <div class="" style="position: absolute;right: 1rem;">
       <div class="" style="display: inline; color: #007bff;"><i class="bi bi-bell"></i></div>
-        <div class="usericon" style="display: inline;margin-left: 1rem;"><i class="bi bi-person"></i></div>
+      <div class="usericon" style="display: inline;margin-left: 1rem;"><i class="bi bi-person"></i></div>
       <div class="userDetail" id="userName" style="display: inline;"></div>
-      <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}" style="display: inline;margin-left: 1rem;">
-       
+      <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}"
+        style="display: inline;margin-left: 1rem;">
+
         <button class="btn btn-sm btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
       </form>
-    
+
     </div>
-    
-    
-  
+
+
+
   </nav>
-  <div class="container" id="cardContainer" style="position: relative;">
-    <div class="btnContent">
-      <button class="btn btn-sm btn-primary filter-btn" id="showAllPdt">All</button>
-      <button class="btn btn-sm btn-outline-success filter-btn" id="showInStorePdt">In Store</button>
-      <button class="btn btn-sm btn-outline-warning filter-btn" id="showSoldPdt">Sold</button>
-      <button class="btn btn-sm btn-outline-danger filter-btn" id="showExpiredPdt">Expired</button>
+  <!-- <div class="container" id="cardContainer" style="position: relative;"> -->
+  <div class="container" id="cardContainer" >
+    <div class="row justify-content-center no-gutters" style="margin-top: 20px;margin-bottom: 10px;">
+      <div class="col-md-auto">
+        <button class="btn btn-sm btn-primary filter-btn" id="showAllPdt">All</button>
+        <button class="btn btn-sm btn-outline-success filter-btn" id="showInStorePdt">In Store</button>
+        <button class="btn btn-sm btn-outline-warning filter-btn" id="showSoldPdt">Sold</button>
+        <button class="btn btn-sm btn-outline-danger filter-btn" id="showExpiredPdt">Expired</button>
+
+
+      </div>
+    
+
+
 
     </div>
-    <div id="updateCount" class="update-count"></div>
+    <div class="row justify-content-between no-gutters" style="margin-bottom: 10px;">
+      <div class="col-auto"> <div id="updateCount" class="update-count"></div></div>
+      <div class="col-md-auto">
+        <div class="form-inline">
+        <input type="text" class="form-control" id="searchText" placeholder="search text..">
+        <button class="btn btn-success" id="searchPdtBtn"><i class="bi bi-search"></i></button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row no-gutters">
+      
+
+      <div class="card-columns" id="cardColumnContainer">
+        
 
 
-    <div class="card-columns" id="cardColumnContainer">
-
-
+      </div>
     </div>
   </div>
   <div class="row" id="pdtViewContainer" style="display: none;">
@@ -934,8 +1080,7 @@
               <div class="form-group ">
                 <label for="pdtBonusInput" class="col-sm-10 col-form-label">Bonus </label>
                 <div class="col-sm-12">
-                  <input type="" class="form-control" id="pdtBonusInput" name="pdtBonusInput"
-                    placeholder="Bonus">
+                  <input type="" class="form-control" id="pdtBonusInput" name="pdtBonusInput" placeholder="Bonus">
                 </div>
               </div>
               <div class="form-group ">
@@ -962,8 +1107,7 @@
               <div class="form-group ">
                 <label for="pdtBrandInput" class="col-sm-10 col-form-label required">Brand </label>
                 <div class="col-sm-12">
-                  <input type="" class="form-control" id="pdtBrandInput" name="pdtBrandInput"
-                    placeholder="Brand name">
+                  <input type="" class="form-control" id="pdtBrandInput" name="pdtBrandInput" placeholder="Brand name">
                 </div>
               </div>
               <div class="form-group ">
@@ -1024,14 +1168,15 @@
                 <label for="pdtMedTypeInput" class="col-sm-10 col-form-label">Type :</label>
                 <div class="col-sm-12">
                   <select type="dropdown" class="form-control" id="pdtMedTypeInput" name="pdtMedTypeInput"
-                      placeholder="Medicine Type">
-                      <option value="Tablet">Tablet</option>
-                      <option value="Capsule">Capsule</option>
-                      <option value="Syrup">Syrup</option>
-                      <option value="Injection">Injection</option>
-                      <option value="Drop">Drop</option>
-                      <option value="Oral">Oral</option>
-                      </select>
+                    placeholder="Medicine Type">
+                    <option value="-1">Select medicine type</option>
+                    <option value="Tablet">Tablet</option>
+                    <option value="Capsule">Capsule</option>
+                    <option value="Syrup">Syrup</option>
+                    <option value="Injection">Injection</option>
+                    <option value="Drop">Drop</option>
+                    <option value="Oral">Oral</option>
+                  </select>
                 </div>
               </div>
 
@@ -1056,10 +1201,10 @@
   </div>
   <div class="loadingModal" style="display: none">
     <div class="center">
-        <img alt="abc" src="loader.gif" />
-        <h1>loading</h1>
+      <img alt="abc" src="loader.gif" />
+      <h1>loading</h1>
     </div>
-</div>
+  </div>
   <div class="modal" tabindex="-1" role="dialog" id="pdtDeleteConfirmModal">
     <input type="hidden" id="hiddenId">
     <div class="modal-dialog" role="document">

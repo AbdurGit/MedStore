@@ -137,9 +137,66 @@
       // })
 
 
+      $.validator.addMethod(
+        "nonNegativeNumber", 
+        function(value, element) {      
+            return value>=0;
+        },
+        "Should be non negative number."
+    );
+      $.validator.addMethod(
+        "lessThanHundred", 
+        function(value, element) {      
+            return value<=100;
+        },
+        "Discount should be less than 100%."
+    );
+
+      $.validator.addMethod(
+        "soldItemValidation", 
+        function(value, element) {
+         // $("#boxNoBoughtInput").val();
+         var bought;
+                if($("#boxNoBoughtInput").val()==''||$("#boxNoBoughtInput").val()==null||$("#boxNoBoughtInput").val()==undefined){
+                  bought=0;
+                }else{
+                  bought=$("#boxNoBoughtInput").val();
+                }
+            return bought>=value;
+        },
+        "Sold can't be grater than bought item number."
+    );
+    $.validator.addMethod(
+        "lessThanBoughtItem", 
+        function(value, element) {
+          var bought;
+                if($("#boxNoBoughtInput").val()==''||$("#boxNoBoughtInput").val()==null||$("#boxNoBoughtInput").val()==undefined){
+                  bought=0;
+                }else{
+                  bought=$("#boxNoBoughtInput").val();
+                }
+
+                if(bought==0){
+                  if(value==0){
+                    return true;
+                  }else if(value>0){
+                    return false;
+                  }
+                  else if(value<0){
+                    return false;
+                  }else{
+                    return true;
+                  }
+                }else{
+                  return bought>value;
+                }
+                
 
 
-
+            
+        },
+        "Bonus should be less than bought item number."
+    );
 
 
       $("#productForm").validate({
@@ -158,11 +215,14 @@
           },
           pdtMrpInput: {
             required: true,
-            number: true
+            number: true,
+            nonNegativeNumber:true
           },
           pdtDiscountInput: {
 
-            number: true
+            number: true,
+            lessThanHundred:true,
+            nonNegativeNumber:true
 
           },
           pdtSellerInput: {
@@ -173,12 +233,14 @@
             digits: true
           },
           boxNoSoldInput: {
-
-            digits: true
+            
+            digits: true,
+            soldItemValidation:true
           },
-          pdtBonusInput: {
+          pdtBonusInput:{
+            digits: true,
+            lessThanBoughtItem:true
 
-            digits: true
           },
           pdtBrandInput: {
             required: true,
@@ -454,6 +516,7 @@ pdtBrandInput: {
                       placeholder="Medicine Type"> -->
                       <select type="dropdown" class="form-control" id="pdtMedTypeInput" name="pdtMedTypeInput"
                       placeholder="Medicine Type">
+                      <option value="-1">Select medicine type</option>
                       <option value="Tablet">Tablet</option>
                       <option value="Capsule">Capsule</option>
                       <option value="Syrup">Syrup</option>

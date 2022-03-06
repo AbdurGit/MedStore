@@ -141,12 +141,7 @@
           }
         });
 
-      $("#medImg").fileinput({
-        'showUpload': false,
-        'previewFileType': 'any',
-        maxFileCount: 1,
-        allowedFileExtensions: ["jpg", "jpeg", "png", "gif"]
-      });
+     
 
 
       $('#pdtTable').DataTable({
@@ -281,7 +276,12 @@
             $("#priceVal").text(data.mrp);
             $("#sellerVal").text(data.sellerName);
             $("#discountVal").text(data.percentageDiscount);
-            $("#typeVal").text(data.medType);
+            if(data.medType=="-1"){
+              $("#typeVal").text("");
+            }else{
+              $("#typeVal").text(data.medType);
+            }
+           
 
             $("#boxBoughtVal").text(data.noBoxBought);
             $("#boxSoldVal").text(data.noBoxSold);
@@ -408,6 +408,20 @@ openDeleteConfirmDialog(pdtId);
           url: rootUrl+"/getProductById/" + productId,
 
           success: function (data) {
+
+            var imagepth='images/'+data.productImagePath;
+            $("#medImg").fileinput('destroy');
+            $("#medImg").val(null);
+           
+            $("#medImg").fileinput({
+        'showUpload': false,
+        'previewFileType': 'any',
+        initialPreview: [
+    '<img src="'+imagepth+'" class="file-preview-image" .... >'           
+  ],
+        maxFileCount: 1,
+        allowedFileExtensions: ["jpg", "jpeg", "png", "gif"]
+      });
 
 
             console.log(data);
@@ -596,7 +610,61 @@ openDeleteConfirmDialog(pdtId);
         return changedFormat;
 
       }
+      $.validator.addMethod(
+        "nonNegativeNumber", 
+        function(value, element) {      
+            return value>=0;
+        },
+        "Should be non negative number."
+    );
+      $.validator.addMethod(
+        "lessThanHundred", 
+        function(value, element) {      
+            return value<=100;
+        },
+        "Discount should be less than 100%."
+    );
+      $.validator.addMethod(
+        "soldItemValidation", 
+        function(value, element) {
+          $("#boxNoBoughtInput").val()
+                
+            return $("#boxNoBoughtInput").val()>=value;
+        },
+        "Sold item number should be less than bought item number."
+    );
+    $.validator.addMethod(
+        "lessThanBoughtItem", 
+        function(value, element) {
+          var bought;
+                if($("#boxNoBoughtInput").val()==''||$("#boxNoBoughtInput").val()==null||$("#boxNoBoughtInput").val()==undefined){
+                  bought=0;
+                }else{
+                  bought=$("#boxNoBoughtInput").val();
+                }
 
+                if(bought==0){
+                  if(value==0){
+                    return true;
+                  }else if(value>0){
+                    return false;
+                  }
+                  else if(value<0){
+                    return false;
+                  }else{
+                    return true;
+                  }
+                }else{
+                  return bought>value;
+                }
+                
+
+
+            
+        },
+        "Bonus should be less than bought item number."
+    );
+    
 
       $("#productUpdateForm").validate({
         rules: {
@@ -614,11 +682,14 @@ openDeleteConfirmDialog(pdtId);
           },
           pdtMrpInput: {
             required: true,
-            number: true
+            number: true,
+            nonNegativeNumber:true
           },
           pdtDiscountInput: {
 
-            number: true
+            number: true,
+            lessThanHundred:true,
+            nonNegativeNumber:true
 
           },
           pdtSellerInput: {
@@ -629,8 +700,17 @@ openDeleteConfirmDialog(pdtId);
             digits: true
           },
           boxNoSoldInput: {
+            
+            digits: true,
+            soldItemValidation:true
+          },
+          pdtBonusInput:{
+            digits: true,
+            lessThanBoughtItem:true
 
-            digits: true
+          },
+          pdtBrandInput: {
+            required: true,
           },
 
 
@@ -920,6 +1000,7 @@ openDeleteConfirmDialog(pdtId);
                 <div class="col-sm-12">
                   <select type="dropdown" class="form-control" id="pdtMedTypeInput" name="pdtMedTypeInput"
                       placeholder="Medicine Type">
+                      <option value="-1">Select medicine type</option>
                       <option value="Tablet">Tablet</option>
                       <option value="Capsule">Capsule</option>
                       <option value="Syrup">Syrup</option>

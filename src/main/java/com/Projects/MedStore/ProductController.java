@@ -89,7 +89,8 @@ public ModelAndView home() {
 
 		if(productId==null||productId.equals("")||productId.trim().length()==0){
 			//System.out.println("id present");
-			pdt.setId(UUID.randomUUID().toString());
+			productId=UUID.randomUUID().toString();
+			pdt.setId(productId);
 			
 
 		}else{
@@ -121,8 +122,10 @@ public ModelAndView home() {
 		}else{
 			pdt.setPercentageDiscount(0);
 		}
+		if((medtype!=null) && medtype.trim().length()>0){
+			pdt.setMedType(medtype);
+		}
 		
-		pdt.setMedType(medtype);
 		if(boxBought.trim().length()>0){
 			pdt.setNoBoxBought(Integer.parseInt(boxBought.trim()));
 		}else{
@@ -146,20 +149,38 @@ public ModelAndView home() {
 		pdt.setBrand(brand);
 		pdt.setComposition(composition);
 		
-		String randomFileId=UUID.randomUUID().toString();
+		//String randomFileId=UUID.randomUUID().toString();
 		//String fileName=file.getOriginalFilename();
+		if(file.isEmpty()){
+			if(productService.existsById(productId)){
+				Optional<Product> product=productService.getProductById(productId);
+		
+				String imagePath=product.get().getProductImagePath();
+		
+				if(imagePath !=null){
+					pdt.setProductImagePath(imagePath);
+				}
+		
+			}
+		}else{
+			String fileName=productId.concat("_"+file.getOriginalFilename());
+			String fullFileName=uploadFolderPath.concat(fileName);
+	
+			 //String rootuploadPath="C:\\MedStore\\upload\\";
+			 try {
+				file.transferTo( new File( fullFileName));
+			 }catch (Exception e){
+				e.printStackTrace();
+			 }
+			pdt.setProductImagePath(fileName);
+			
+		}
 
 
-		String fileName=randomFileId.concat("_"+file.getOriginalFilename());
-		String fullFileName=uploadFolderPath.concat(fileName);
 
-		 //String rootuploadPath="C:\\MedStore\\upload\\";
-		 try {
-			file.transferTo( new File( fullFileName));
-		 }catch (Exception e){
-			e.printStackTrace();
-		 }
-		pdt.setProductImagePath(fileName);
+
+		
+	
 		productService.addProduct(pdt);
 		//return pdt.getId();
 		if(backFlag.equals("backToCard")){
