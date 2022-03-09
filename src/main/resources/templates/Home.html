@@ -512,7 +512,7 @@
             $("#bonusVal").text("");
             $("#compositionVal").text("");
             $("#brandVal").text("");
-
+            $("#rateVal").text("");
 
             $("#pdtNameVal").text(data.productName);
             $("#descVal").text(data.productDesc);
@@ -534,6 +534,7 @@
             $("#bonusVal").text(data.bonus);
             $("#compositionVal").text(data.composition);
             $("#brandVal").text(data.brand);
+            $("#rateVal").text(data.rate);
             $("#updatePdtBtn").attr("data-id", "");
             $("#updatePdtBtn").attr("data-id", pdtId);
             $("#deletePdtBtn").attr("data-id", "");
@@ -636,6 +637,7 @@
             $("#pdtExpInput").val(formatDate(data.expDate));
             $("#pdtBatchInput").val(data.batch);
             $("#pdtMrpInput").val(data.mrp);
+            $("#pdtRateInput").val(data.rate);
             $("#pdtSellerInput").val(data.sellerName);
             $("#pdtDiscountInput").val(data.percentageDiscount);
             if (data.medType == null || data.medType == "") {
@@ -663,6 +665,14 @@
           }
         });
       }
+      $.validator.addMethod(
+        "lessThanMrp", 
+        function(value, element) {
+          var mrp=$("#pdtMrpInput").val();     
+            return value<=mrp;
+        },
+        "Can't be grater than MRP."
+    );;
       $.validator.addMethod(
         "nonNegativeNumber", 
         function(value, element) {      
@@ -765,6 +775,14 @@
           pdtBrandInput: {
             required: true,
           },
+          pdtRateInput: {
+            number: true,
+            
+            nonNegativeNumber:true,
+            lessThanMrp:true,
+
+
+          },
         },
         messages: {
           pdtNameInput: {
@@ -797,6 +815,10 @@
           },
           pdtBrandInput: {
             required: "Please provide Brand",
+          },
+          pdtRateInput: {
+            number: "Provide a valid number",
+            
           },
         },
         submitHandler: function (form) {
@@ -1007,6 +1029,14 @@
                 <div class="value" id="compositionVal"></div>
               </div>
             </div>
+            <div class="row">
+
+              <div class="propGroup col-sm-6">
+                <div class="title" id="">Rate </div>
+                <div class="value" id="rateVal"></div>
+              </div>
+             
+            </div>
             <div class="propGroup">
               <div class="title" id="">Additional Note
               </div>
@@ -1081,6 +1111,13 @@
                 <label for="pdtBonusInput" class="col-sm-10 col-form-label">Bonus </label>
                 <div class="col-sm-12">
                   <input type="" class="form-control" id="pdtBonusInput" name="pdtBonusInput" placeholder="Bonus">
+                </div>
+              </div>
+              <div class="form-group ">
+                <label for="pdtRateInput" class="col-sm-10 col-form-label">Rate </label>
+                <div class="col-sm-12">
+                  <input type="" class="form-control" id="pdtRateInput" name="pdtRateInput"
+                    placeholder="Rate">
                 </div>
               </div>
               <div class="form-group ">

@@ -30,6 +30,7 @@ public class Product implements Serializable {
     private Date expDate;
 	
 	private double mrp;
+	private double rate;
 	private String sellerName;
 	private String medType;
 	private double percentageDiscount;
@@ -237,6 +238,16 @@ public class Product implements Serializable {
 
 	public void setComposition(String composition) {
 		this.composition = composition;
+	}
+
+
+	public double getRate() {
+		return rate;
+	}
+
+
+	public void setRate(double rate) {
+		this.rate = rate;
 	}
 	
 	

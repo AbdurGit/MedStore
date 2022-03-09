@@ -76,7 +76,7 @@ public ModelAndView home() {
 
 	@PostMapping("/addProduct")
 	public String addProduct( @RequestParam ("pageFlag") String backFlag,@RequestParam ("pdtIdInput") String productId,@RequestParam("pdtNameInput") String productName,@RequestParam("pdtDescInput") String productDescription,@RequestParam("pdtMfgInput") String  mfgDate,
-	@RequestParam("pdtExpInput") String expDate, @RequestParam("pdtBatchInput")String batch, @RequestParam("pdtMrpInput") String mrp, @RequestParam("pdtSellerInput") String seller,
+	@RequestParam("pdtExpInput") String expDate, @RequestParam("pdtBatchInput")String batch, @RequestParam("pdtMrpInput") String mrp,@RequestParam("pdtRateInput") String rate ,@RequestParam("pdtSellerInput") String seller,
 	@RequestParam("pdtDiscountInput") String discount, @RequestParam("pdtMedTypeInput") String medtype, @RequestParam("boxNoBoughtInput") String boxBought, @RequestParam("boxNoSoldInput") String boxSold,
 	@RequestParam("addNoteInput") String note,@RequestParam("medImg") MultipartFile file,HttpServletResponse httpResponse,
 	@RequestParam("pdtBonusInput") String bonus,
@@ -116,6 +116,10 @@ public ModelAndView home() {
 		}
 		pdt.setBatch(batch);
 		pdt.setMrp(Double.parseDouble(mrp));
+		if(rate.trim().length()>0){
+			pdt.setRate(Double.parseDouble(rate));
+		}
+		
 		pdt.setSellerName(seller);
 		if(discount.trim().length()>0){
 			pdt.setPercentageDiscount(Double.parseDouble(discount.trim()));
