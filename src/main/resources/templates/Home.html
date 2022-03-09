@@ -668,7 +668,7 @@
       $.validator.addMethod(
         "lessThanMrp", 
         function(value, element) {
-          var mrp=$("#pdtMrpInput").val();     
+          var mrp=parseFloat($("#pdtMrpInput").val()); 
             return value<=mrp;
         },
         "Can't be grater than MRP."

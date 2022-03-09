@@ -139,14 +139,7 @@
       
      
 
-    $.validator.addMethod(
-        "lessThanMrp", 
-        function(value, element) {
-          var mrp=$("#pdtMrpInput").val();     
-            return value<=mrp;
-        },
-        "Can't be grater than MRP."
-    );
+    
       $.validator.addMethod(
         "nonNegativeNumber", 
         function(value, element) {      
@@ -206,6 +199,15 @@
             
         },
         "Bonus should be less than bought item number."
+    );
+    $.validator.addMethod(
+        "lessThanMrp", 
+        function(value, element) {
+          var mrp=parseFloat($("#pdtMrpInput").val()); 
+          
+            return mrp>=value;
+        },
+        "Can't be grater than MRP."
     );
 
 

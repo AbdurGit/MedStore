@@ -614,20 +614,21 @@ openDeleteConfirmDialog(pdtId);
         return changedFormat;
 
       }
-      $.validator.addMethod(
-        "lessThanMrp", 
-        function(value, element) {
-          var mrp=$("#pdtMrpInput").val();     
-            return value<=mrp;
-        },
-        "Can't be grater than MRP."
-    );
+     
       $.validator.addMethod(
         "nonNegativeNumber", 
         function(value, element) {      
             return value>=0;
         },
         "Should be non negative number."
+    );
+    $.validator.addMethod(
+        "lessThanMrp", 
+        function(value, element) {
+          var mrp=parseFloat($("#pdtMrpInput").val());    
+            return value<=mrp;
+        },
+        "Can't be grater than MRP."
     );
       $.validator.addMethod(
         "lessThanHundred", 
