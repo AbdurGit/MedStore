@@ -625,11 +625,20 @@ openDeleteConfirmDialog(pdtId);
     $.validator.addMethod(
         "lessThanMrp", 
         function(value, element) {
-          var mrp=parseFloat($("#pdtMrpInput").val());    
-            return value<=mrp;
+          console.log(typeof(value));
+          var mrp=$("#pdtMrpInput").val();
+          if(value==''||value==null||value==undefined){
+            value=0;
+                }
+                if(mrp==''||mrp==null||mrp==undefined){
+                  mrp=0;
+                }else{
+                  mrp= parseFloat(mrp);
+                }      
+            return parseFloat(value)<=mrp;
         },
         "Can't be grater than MRP."
-    );
+    );;
       $.validator.addMethod(
         "lessThanHundred", 
         function(value, element) {      
