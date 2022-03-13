@@ -1,5 +1,5 @@
 package com.Projects.MedStore;
-
+import com.Projects.MedStore.MedStoreUtil.MedStoreDateUtil;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -13,8 +13,10 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.Projects.MedStore.Model.Notification;
 import com.Projects.MedStore.Model.Product;
 import com.Projects.MedStore.service.ProductService;
+import com.Projects.MedStore.service.NotificationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +37,8 @@ public class ProductController {
 
 	@Autowired
 	ProductService productService;
+	@Autowired
+	NotificationService notificationService;
 
 	@Value("${application.upload.folder.image}")
     private String uploadFolderPath;
@@ -186,6 +190,48 @@ public ModelAndView home() {
 		
 	
 		productService.addProduct(pdt);
+		Optional<Notification> notif=notificationService.getNotificationById(pdt.getId());
+		if(notif.isPresent()==false){
+			
+
+			//expiring in,muted
+
+			Date today=MedStoreDateUtil.getTodaysDateOnly();
+			long millis=pdt.getExpDate().getTime()-today.getTime();
+			long dayDiff=millis/(1000*60*60*24);
+			if(dayDiff<60){
+				Notification newNotif=new Notification();
+				newNotif.setId(pdt.getId());
+
+				 newNotif.setExpiringIn((int)dayDiff);
+				 newNotif.setMuted(false);
+				 newNotif.setType("Expiry");
+				 newNotif.setPdtName(pdt.getProductName());
+				 newNotif.setBatch(pdt.getBatch());
+				 newNotif.setExpDate(pdt.getExpDate());
+				 notificationService.saveNotification(newNotif);
+
+			}
+		}else{
+			Notification notification=notif.get();
+
+			//expiring in,muted
+
+			Date today=MedStoreDateUtil.getTodaysDateOnly();
+			long millis=pdt.getExpDate().getTime()-today.getTime();
+			long dayDiff=millis/(1000*60*60*24);
+			if(dayDiff<60){
+				 notification.setExpiringIn((int)dayDiff);
+				 notification.setMuted(false);
+				 notification.setPdtName(pdt.getProductName());
+				 notification.setBatch(pdt.getBatch());
+				 notification.setExpDate(pdt.getExpDate());
+				 notificationService.saveNotification(notification);
+
+			}
+
+		}
+
 		//return pdt.getId();
 		if(backFlag.equals("backToCard")){
 			httpResponse.sendRedirect("/medstore");
@@ -211,6 +257,10 @@ public ModelAndView home() {
 		product.setId(productId);
 
 		productService.deleteProduct(product);
+		Optional<Notification> notif =notificationService.getNotificationById(productId);
+		if(notif.isPresent()){
+			notificationService.deleteNotification(notif.get().getId());
+		}
 	}
 
 

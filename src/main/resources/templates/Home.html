@@ -115,7 +115,7 @@
     }
 
     .update-count {
-      
+
       background-color: #007bff1c;
       border-radius: 4px;
       padding-left: 5px;
@@ -133,9 +133,6 @@
       border-radius: 5px;
 
     }
-
-
-
 
 
     .error {
@@ -368,8 +365,8 @@
           },
 
           success: function (data) {
-            
-           
+
+
             $("#cardColumnContainer").html("");
 
             // console.log(data);
@@ -386,7 +383,15 @@
 
               var currentDate = new Date();
               var oneDay = 24 * 60 * 60 * 1000;
-              var difference = Math.round(((new Date(expDate)).getTime() - currentDate.getTime()) / oneDay);
+              var difference;
+              //console.log("todate:"+new Date(currentDate.toDateString())+"----"+"exp:"+ new Date(expDate));
+              
+             if((new Date(expDate)).getTime() - new Date(currentDate.toDateString()).getTime()==0){
+              difference=0;
+             }else{
+              difference = Math.round(((new Date(expDate)).getTime() - new Date(currentDate.toDateString()).getTime()) / oneDay);
+             }
+              
               var boxCount = record.noBoxBought - record.noBoxSold;
 
               if (flag == "expired") {
@@ -407,9 +412,9 @@
               var html2 = "";
               if (difference < 0) {
                 // console.log(new Date(expDate) + "---" + difference + "---" + "Medicine Expired");
-                html = "<div class=\"card\"><div class=\"expiry-warning\"><small>Expired</small></div>"
+                html = "<div class=\"card\"><div class=\"expiry-warning\"><small>Expired</small></div>";
 
-              } else if (difference < 30) {
+              } else if (difference==0 || (difference>0 && difference <= 30)) {
                 if (difference == 0) {
                   //console.log(new Date(expDate) + "---" + difference + "---" + "Medicine Expiring today.");
                   html = "<div class=\"card\"><div class=\"expiry-warning\"><small>Today</small></div>";
@@ -454,8 +459,8 @@
               $("#cardColumnContainer").append(html);
               //cardColumnHtml += html;
             }
-           // $("#cardColumnContainer").html("");
-           // $("#cardColumnContainer").html(cardColumnHtml);
+            // $("#cardColumnContainer").html("");
+            // $("#cardColumnContainer").html(cardColumnHtml);
             $("#updateCount").html("");
             if (flag == "allProducts") {
               $("#updateCount").html("<div class=\"count-text\">Total " + count + " records</div>");
@@ -469,7 +474,7 @@
             $('#loader').addClass('hidden');
             $('#cardContainer').removeClass('opaque');
           },
-          
+
           error: function (xhr, status, error) {
             $('#loader').addClass('hidden');
             alert("Exception occured!");
@@ -666,78 +671,78 @@
         });
       }
       $.validator.addMethod(
-        "lessThanMrp", 
-        function(value, element) {
-          console.log(typeof(value));
-          var mrp=$("#pdtMrpInput").val();
-          if(value==''||value==null||value==undefined){
-            value=0;
-                }
-                if(mrp==''||mrp==null||mrp==undefined){
-                  mrp=0;
-                }else{
-                  mrp= parseFloat(mrp);
-                }      
-            return parseFloat(value)<=mrp;
+        "lessThanMrp",
+        function (value, element) {
+          console.log(typeof (value));
+          var mrp = $("#pdtMrpInput").val();
+          if (value == '' || value == null || value == undefined) {
+            value = 0;
+          }
+          if (mrp == '' || mrp == null || mrp == undefined) {
+            mrp = 0;
+          } else {
+            mrp = parseFloat(mrp);
+          }
+          return parseFloat(value) <= mrp;
         },
         "Can't be grater than MRP."
-    );
+      );
       $.validator.addMethod(
-        "nonNegativeNumber", 
-        function(value, element) {      
-            return value>=0;
+        "nonNegativeNumber",
+        function (value, element) {
+          return value >= 0;
         },
         "Should be non negative number."
-    );
+      );
       $.validator.addMethod(
-        "lessThanHundred", 
-        function(value, element) {      
-            return value<=100;
+        "lessThanHundred",
+        function (value, element) {
+          return value <= 100;
         },
         "Discount should be less than 100%."
-    );
+      );
       $.validator.addMethod(
-        "soldItemValidation", 
-        function(value, element) {
+        "soldItemValidation",
+        function (value, element) {
           $("#boxNoBoughtInput").val()
-                
-            return $("#boxNoBoughtInput").val()>=value;
+
+          return $("#boxNoBoughtInput").val() >= value;
         },
         "Sold item number should be less than bought item number."
-    );
-    $.validator.addMethod(
-        "lessThanBoughtItem", 
-        function(value, element) {
+      );
+      $.validator.addMethod(
+        "lessThanBoughtItem",
+        function (value, element) {
           var bought;
-                if($("#boxNoBoughtInput").val()==''||$("#boxNoBoughtInput").val()==null||$("#boxNoBoughtInput").val()==undefined){
-                  bought=0;
-                }else{
-                  bought=$("#boxNoBoughtInput").val();
-                  console.log(typeof(bought));
-                }
+          if ($("#boxNoBoughtInput").val() == '' || $("#boxNoBoughtInput").val() == null || $("#boxNoBoughtInput")
+            .val() == undefined) {
+            bought = 0;
+          } else {
+            bought = $("#boxNoBoughtInput").val();
+            console.log(typeof (bought));
+          }
 
-                if(bought==0){
-                  if(value==0){
-                    return true;
-                  }else if(value>0){
-                    return false;
-                  }
-                  else if(value<0){
-                    return false;
-                  }else{
-                    return true;
-                  }
-                }else{
-                  return bought>value;
-                }
-                
+          if (bought == 0) {
+            if (value == 0) {
+              return true;
+            } else if (value > 0) {
+              return false;
+            } else if (value < 0) {
+              return false;
+            } else {
+              return true;
+            }
+          } else {
+            return bought > value;
+          }
 
 
-            
+
+
         },
         "Bonus should be less than bought item number."
-    );
-    
+      );
+
 
 
       $("#productUpdateForm").validate({
@@ -757,12 +762,12 @@
           pdtMrpInput: {
             required: true,
             number: true,
-            nonNegativeNumber:true
+            nonNegativeNumber: true
           },
           pdtDiscountInput: {
             number: true,
-            lessThanHundred:true,
-            nonNegativeNumber:true,
+            lessThanHundred: true,
+            nonNegativeNumber: true,
 
           },
           pdtSellerInput: {
@@ -773,13 +778,13 @@
             digits: true
           },
           boxNoSoldInput: {
-            
+
             digits: true,
-            soldItemValidation:true
+            soldItemValidation: true
           },
-          pdtBonusInput:{
+          pdtBonusInput: {
             digits: true,
-            lessThanBoughtItem:true
+            lessThanBoughtItem: true
 
           },
           pdtBrandInput: {
@@ -787,9 +792,9 @@
           },
           pdtRateInput: {
             number: true,
-            
-            nonNegativeNumber:true,
-            lessThanMrp:true,
+
+            nonNegativeNumber: true,
+            lessThanMrp: true,
 
 
           },
@@ -828,7 +833,7 @@
           },
           pdtRateInput: {
             number: "Provide a valid number",
-            
+
           },
         },
         submitHandler: function (form) {
@@ -850,7 +855,7 @@
 
 </head>
 
-<body style="background: #eee;">
+<body style="background: #eee;position: relative;">
 
   <nav class="navbar navbar-expand navbar-light bg-light" style="box-shadow: 1px 1px 11px #ddd;position: relative;">
     <div class="logo"><img src="img/logo.png" alt="logo" style="height: 3rem;"></div><a class="navbar-brand"
@@ -885,8 +890,9 @@
 
     </div>
     <div class="" style="position: absolute;right: 1rem;">
-      <div class="" style="display: inline; color: #007bff;"><i class="bi bi-bell"></i></div>
-      <div class="usericon" style="display: inline;margin-left: 1rem;"><i class="bi bi-person"></i></div>
+      <div class="" style="display: inline; color: #007bff;"><a id="notificationIcon" href="javascript:void(0)"><i
+            class="bi bi-bell"></i></a></div>
+      <div class="usericon" style="display: inline;"><i class="bi bi-person"></i></div>
       <div class="userDetail" id="userName" style="display: inline;"></div>
       <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}"
         style="display: inline;margin-left: 1rem;">
@@ -900,7 +906,10 @@
 
   </nav>
   <!-- <div class="container" id="cardContainer" style="position: relative;"> -->
-  <div class="container" id="cardContainer" >
+  <div class="notification border  rounded hide-notification" id="notification">
+    <div class="container" id="notifContainer"></div>
+  </div>
+  <div class="container" id="cardContainer">
     <div class="row justify-content-center no-gutters" style="margin-top: 20px;margin-bottom: 10px;">
       <div class="col-md-auto">
         <button class="btn btn-sm btn-primary filter-btn" id="showAllPdt">All</button>
@@ -910,27 +919,29 @@
 
 
       </div>
-    
+
 
 
 
     </div>
     <div class="row justify-content-between no-gutters" style="margin-bottom: 10px;">
-      <div class="col-auto"> <div id="updateCount" class="update-count"></div></div>
+      <div class="col-auto">
+        <div id="updateCount" class="update-count"></div>
+      </div>
       <div class="col-md-auto">
         <div class="form-inline">
-        <input type="text" class="form-control" id="searchText" placeholder="search text..">
-        <button class="btn btn-success" id="searchPdtBtn"><i class="bi bi-search"></i></button>
+          <input type="text" class="form-control" id="searchText" placeholder="search text..">
+          <button class="btn btn-success" id="searchPdtBtn"><i class="bi bi-search"></i></button>
         </div>
       </div>
 
     </div>
 
     <div class="row no-gutters">
-      
+
 
       <div class="card-columns" id="cardColumnContainer">
-        
+
 
 
       </div>
@@ -1045,7 +1056,7 @@
                 <div class="title" id="">Rate </div>
                 <div class="value" id="rateVal"></div>
               </div>
-             
+
             </div>
             <div class="propGroup">
               <div class="title" id="">Additional Note
@@ -1126,8 +1137,7 @@
               <div class="form-group ">
                 <label for="pdtRateInput" class="col-sm-10 col-form-label">Rate </label>
                 <div class="col-sm-12">
-                  <input type="" class="form-control" id="pdtRateInput" name="pdtRateInput"
-                    placeholder="Rate">
+                  <input type="" class="form-control" id="pdtRateInput" name="pdtRateInput" placeholder="Rate">
                 </div>
               </div>
               <div class="form-group ">
@@ -1246,12 +1256,7 @@
     <div class="col">
     </div>
   </div>
-  <div class="loadingModal" style="display: none">
-    <div class="center">
-      <img alt="abc" src="loader.gif" />
-      <h1>loading</h1>
-    </div>
-  </div>
+  
   <div class="modal" tabindex="-1" role="dialog" id="pdtDeleteConfirmModal">
     <input type="hidden" id="hiddenId">
     <div class="modal-dialog" role="document">

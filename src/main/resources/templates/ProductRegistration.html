@@ -394,8 +394,9 @@ pdtRateInput: {
     </form> -->
     </div>
     <div class="" style="position: absolute;right: 1rem;">
-      <div class="" style="display: inline; color: #007bff;"><i class="bi bi-bell"></i></div>
-        <div class="usericon" style="display: inline;margin-left: 1rem;"><i class="bi bi-person"></i></div>
+      <div class="" style="display: inline; color: #007bff;"><a id="notificationIcon" href="javascript:void(0)"><i
+        class="bi bi-bell"></i></a></div>
+        <div class="usericon" style="display: inline;"><i class="bi bi-person"></i></div>
       <div class="userDetail" id="userName" style="display: inline;"></div>
       <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}" style="display: inline;margin-left: 1rem;">
        
@@ -404,6 +405,9 @@ pdtRateInput: {
     
     </div>
   </nav>
+  <div class="notification border  rounded hide-notification" id="notification">
+    <div class="container" id="notifContainer"></div>
+  </div>
   <div class="container-fluid">
     <div class="row">
       <div class="col">

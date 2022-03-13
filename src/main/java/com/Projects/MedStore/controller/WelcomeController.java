@@ -2,6 +2,10 @@ package com.Projects.MedStore.controller;
 
 import java.security.Principal;
 
+import com.Projects.MedStore.Model.Notification;
+import com.Projects.MedStore.service.NotificationService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class WelcomeController {
+@Autowired
+NotificationService notificationService;
+
+
     @GetMapping("/login")    
 	public ModelAndView showView()  {    
 	ModelAndView modelAndView = new ModelAndView();    
@@ -31,6 +39,15 @@ public class WelcomeController {
 
 	return ((UserDetails) principal).getUsername();    
 	}
+	@GetMapping("/allNotification")    
+	public Iterable<Notification> getallNotification()  {    
+		  
+		
+
+	return notificationService.getAllNotification();    
+	}
+
+
 
     
 }
