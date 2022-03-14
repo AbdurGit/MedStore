@@ -51,6 +51,7 @@
   background: white;
   z-index: 1000;
   border: 1px solid white;
+  overflow: auto;
  
   
   /* background-color: rgba(255, 255, 255, .15);
@@ -58,7 +59,7 @@
 }
 
 #notification:hover {
-  /* border-color: #007bff !important; */
+ 
 }
 .single-notif{
   background-color: white; 
@@ -83,7 +84,7 @@
 .n-med-name{
   font-size: medium;
   font-weight: 600;
-  color: #0083db;
+  color: #3d3d3d;
 }
 .n-batch{
   font-size: small;
@@ -91,7 +92,12 @@
 }
 .n-expiry{
   font-size: small;
-  color: #999999;
+  color: #818181;
+  background-color: #ffd1d1;
+  padding-left: 3px;
+  padding-right: 3px;
+  display: inline-block;
+  border-radius: 4px;
 }
 #notificationIcon{
   padding:3px 6px ;
@@ -101,4 +107,23 @@
 #notificationIcon:hover{
   background-color: #c6e2ff;
 
+}
+
+
+/* custom scrollbar style */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #ebebeb;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #c2c2c2; 
 }
