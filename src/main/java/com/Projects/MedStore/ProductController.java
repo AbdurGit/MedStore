@@ -318,7 +318,6 @@ public ModelAndView home() {
 //not in use
 	@GetMapping("/viewProduct")
 	public ResponseEntity<Object> showProductDetails() {
-
 		return new ResponseEntity<>(productRepo.values(), HttpStatus.OK);
 	}
 //not in use
@@ -350,7 +349,7 @@ public ModelAndView home() {
 public static void main(String[] args) throws IOException {
 	String allPdt="";
 	
-	for(int i=1;i<=1000;i++){
+	for(int i=1;i<=100;i++){
 		String id=UUID.randomUUID().toString();
 		String a="(\'"+id+"\', \'\', \'B-302\', \'2022-03-11\', \'\', \'2021-02-02\', 100, 0, 0, 0, \'\', \'\', \'Test-e"+i+"\', \'seller 2\', 0, NULL, NULL),\n";
 		allPdt+=a;

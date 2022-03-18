@@ -174,7 +174,12 @@
               if (type === "sort" || type === "type") {
                 return data;
               }
-              return moment(data).format("DD-MM-YYYY");
+              if(data!=null){
+                return moment(data).format("DD-MM-YYYY");
+              }else{
+                return "NA";
+              }
+             
             }
           },
           {
@@ -288,7 +293,11 @@
             $("#boxSoldVal").text(data.noBoxSold);
             $("#noteVal").text(data.additionalNotes);
             
-            $("#mfgDtVal").text(formatDate(data.mfgDate));
+            if(data.mfgDate!=null){
+              $("#mfgDtVal").text(formatDate(data.mfgDate));
+            }else{
+              $("#mfgDtVal").text("");
+            }
             $("#expiryDtVal").text(formatDate(data.expDate));
             $("#bonusVal").text(data.bonus);
             $("#compositionVal").text(data.composition);
@@ -431,7 +440,12 @@ openDeleteConfirmDialog(pdtId);
             $('#pdtIdHidden').val(data.id);
             $("#pdtNameInput").val(data.productName);
             $("#pdtDescInput").val(data.productDesc);
-            $("#pdtMfgInput").val(formatDate(data.mfgDate));
+            if(data.mfgDate!=null){
+              $("#pdtMfgInput").val(formatDate(data.mfgDate));
+            }else{
+              $("#pdtMfgInput").val("");
+            }
+            
             
             $("#pdtExpInput").val(formatDate(data.expDate));
             $("#pdtBatchInput").val(data.batch);
@@ -646,14 +660,23 @@ openDeleteConfirmDialog(pdtId);
         },
         "Discount should be less than 100%."
     );
-      $.validator.addMethod(
+    $.validator.addMethod(
         "soldItemValidation", 
         function(value, element) {
-          $("#boxNoBoughtInput").val()
-                
-            return $("#boxNoBoughtInput").val()>=value;
+        
+         var bought;
+        
+                if($("#boxNoBoughtInput").val()==''||$("#boxNoBoughtInput").val()==null||$("#boxNoBoughtInput").val()==undefined){
+                  bought=0;
+                }else{
+                  bought=$("#boxNoBoughtInput").val();
+                }
+                if(value==''||value==null||value==undefined){
+                  value=0;
+                }
+            return bought>=parseInt(value);
         },
-        "Sold item number should be less than bought item number."
+        "Sold quantity can't be grater than bought quantity."
     );
     $.validator.addMethod(
         "lessThanBoughtItem", 
@@ -693,9 +716,9 @@ openDeleteConfirmDialog(pdtId);
           pdtNameInput: {
             required: true,
           },
-          pdtMfgInput: {
-            required: true,
-          },
+          // pdtMfgInput: {
+          //   required: true,
+          // },
           pdtBatchInput: {
             required: true,
           },
@@ -726,11 +749,11 @@ openDeleteConfirmDialog(pdtId);
             digits: true,
             soldItemValidation:true
           },
-          pdtBonusInput:{
-            digits: true,
-            lessThanBoughtItem:true
+          // pdtBonusInput:{
+          //   digits: true,
+          //   lessThanBoughtItem:true
 
-          },
+          // },
           pdtBrandInput: {
             required: true,
           },
@@ -750,9 +773,9 @@ openDeleteConfirmDialog(pdtId);
           pdtNameInput: {
             required: "Please enter product Name",
           },
-          pdtMfgInput: {
-            required: "Please enter mfg date",
-          },
+          // pdtMfgInput: {
+          //   required: "Please enter mfg date",
+          // },
           pdtBatchInput: {
             required: "Please enter batch number",
           },
@@ -1005,7 +1028,7 @@ openDeleteConfirmDialog(pdtId);
                 </div>
               </div>
               <div class="form-group ">
-                <label for="pdtMfgInput" class="col-sm-10 col-form-label required">Mfg Date :</label>
+                <label for="pdtMfgInput" class="col-sm-10 col-form-label">Mfg Date :</label>
                 <div class="col-sm-12">
 
                   <input type="text" class="form-control datepicker" name="pdtMfgInput" id="pdtMfgInput"
