@@ -146,7 +146,7 @@ public ModelAndView home() {
 			pdt.setNoBoxSold(0);
 		}
 		if(bonus.trim().length()>0){
-			pdt.setBonus(Integer.parseInt(bonus.trim()));
+			pdt.setBonus(bonus.trim());
 		}else{
 			pdt.setNoBoxSold(0);
 		}

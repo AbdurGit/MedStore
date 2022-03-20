@@ -53,6 +53,8 @@
       padding-top: 30px;
       padding-bottom: 30px;
       border-radius: 5px;
+      padding-left: 40px;
+      padding-right: 40px;
 
     }
 
@@ -131,7 +133,6 @@
            console.log(data);
            $("#userName").text("");
            $("#userName").text(data);
-           
            
           },
           error: function (xhr, status, error) {
@@ -272,9 +273,6 @@
             $("#compositionVal").text("");
             $("#brandVal").text("");
             $("#rateVal").text("");
-
-
-
             $("#pdtNameVal").text(data.productName);
             $("#descVal").text(data.productDesc);
 
@@ -917,7 +915,7 @@ openDeleteConfirmDialog(pdtId);
 
       <div class="container" id="pdtUpdateContainer" style="display: none; position: relative;">
         <h4 class="section-title">Update Medicine Details</h4>
-        <div style="position: absolute; left:15px; top: 20px;">
+        <div style="position: absolute; left:30px; top: 20px;">
           <button class="btn btn-outline-primary btn-sm" id="backToTableFromUpdateForm">
             <i class="bi-arrow-left"></i>
             Back To List</button>
@@ -928,70 +926,7 @@ openDeleteConfirmDialog(pdtId);
 
 
           <div class="row">
-            <div class="col-6">
-
-              <div class="form-group ">
-
-                <div class="col-sm-12">
-                  <input type="hidden" id="pdtIdHidden" name="pdtIdInput">
-                 
-                  <input type="file" id="medImg" name="medImg">
-
-
-                  
-                <input type="hidden" id="pageFlag" name="pageFlag" value="backToTable">
-         
-
-
-                </div>
-              </div>
-              <div class="form-group ">
-                <label for="pdtDescInput" class="col-sm-10 col-form-label">Description :</label>
-                <div class="col-sm-12">
-                  <input type="text" class="form-control" id="pdtDescInput" name="pdtDescInput"
-                    placeholder="Description">
-                </div>
-              </div>
-
-              <div class="form-group ">
-                <label for="boxNoBoughtInput" class="col-sm-10 col-form-label">Box Bought :</label>
-                <div class="col-sm-12">
-                  <input type="" class="form-control" id="boxNoBoughtInput" name="boxNoBoughtInput"
-                    placeholder="No of box bought">
-                </div>
-              </div>
-              <div class="form-group ">
-                <label for="boxNoSoldInput" class="col-sm-10 col-form-label">Box Sold :</label>
-                <div class="col-sm-12">
-                  <input type="" class="form-control" id="boxNoSoldInput" name="boxNoSoldInput"
-                    placeholder="No of box sold">
-                </div>
-              </div>
-              <div class="form-group ">
-                <label for="pdtBonusInput" class="col-sm-10 col-form-label">Bonus </label>
-                <div class="col-sm-12">
-                  <input type="" class="form-control" id="pdtBonusInput" name="pdtBonusInput"
-                    placeholder="Bonus">
-                </div>
-              </div>
-              <div class="form-group ">
-                <label for="pdtRateInput" class="col-sm-10 col-form-label">Rate </label>
-                <div class="col-sm-12">
-                  <input type="" class="form-control" id="pdtRateInput" name="pdtRateInput"
-                    placeholder="Rate">
-                </div>
-              </div>
-              <div class="form-group ">
-                <label for="addNoteInput" class="col-sm-10 col-form-label">Note :</label>
-                <div class="col-sm-12">
-                  <!-- <input type="textarea" class="form-control" id="addNoteInput" name="addNoteInput" placeholder="Provide additional note"> -->
-                  <textarea type="textarea" class="form-control" id="addNoteInput" name="addNoteInput"
-                    placeholder="Provide additional note"></textarea>
-                </div>
-              </div>
-
-
-            </div>
+            
 
             <div class="col-6">
 
@@ -1009,13 +944,7 @@ openDeleteConfirmDialog(pdtId);
                     placeholder="Brand name">
                 </div>
               </div>
-              <div class="form-group ">
-                <label for="pdtCompositionInput" class="col-sm-10 col-form-label">Composition </label>
-                <div class="col-sm-12">
-                  <input type="" class="form-control" id="pdtCompositionInput" name="pdtCompositionInput"
-                    placeholder="provide medicine composition">
-                </div>
-              </div>
+              
 
 
 
@@ -1050,6 +979,21 @@ openDeleteConfirmDialog(pdtId);
                 </div>
               </div>
               <div class="form-group ">
+                <label for="pdtRateInput" class="col-sm-10 col-form-label">Rate </label>
+                <div class="col-sm-12">
+                  <input type="" class="form-control" id="pdtRateInput" name="pdtRateInput"
+                    placeholder="Rate">
+                </div>
+              </div>
+              <div class="form-group ">
+                <label for="pdtBonusInput" class="col-sm-10 col-form-label">Bonus </label>
+                <div class="col-sm-12">
+                  <input type="" class="form-control" id="pdtBonusInput" name="pdtBonusInput"
+                    placeholder="Bonus">
+                </div>
+              </div>
+           
+              <div class="form-group ">
                 <label for="pdtSellerInput" class="col-sm-10 col-form-label required">Seller :</label>
                 <div class="col-sm-12">
                   <input type="" class="form-control" id="pdtSellerInput" name="pdtSellerInput"
@@ -1061,6 +1005,55 @@ openDeleteConfirmDialog(pdtId);
                 <div class="col-sm-12">
                   <input type="" class="form-control" id="pdtDiscountInput" name="pdtDiscountInput"
                     placeholder="Discount %">
+                </div>
+              </div>
+              
+
+            </div>
+            <div class="col-6">
+
+              <div class="form-group ">
+
+                <div class="col-sm-12">
+                  <input type="hidden" id="pdtIdHidden" name="pdtIdInput">
+                 
+                  <input type="file" id="medImg" name="medImg">
+
+
+                  
+                <input type="hidden" id="pageFlag" name="pageFlag" value="backToTable">
+         
+
+
+                </div>
+              </div>
+              <div class="form-group ">
+                <label for="pdtDescInput" class="col-sm-10 col-form-label">Description :</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="pdtDescInput" name="pdtDescInput"
+                    placeholder="Description">
+                </div>
+              </div>
+
+              <div class="form-group ">
+                <label for="boxNoBoughtInput" class="col-sm-10 col-form-label">Quantity Bought :</label>
+                <div class="col-sm-12">
+                  <input type="" class="form-control" id="boxNoBoughtInput" name="boxNoBoughtInput"
+                    placeholder="No of item bought">
+                </div>
+              </div>
+              <div class="form-group ">
+                <label for="boxNoSoldInput" class="col-sm-10 col-form-label">Quantity Sold :</label>
+                <div class="col-sm-12">
+                  <input type="" class="form-control" id="boxNoSoldInput" name="boxNoSoldInput"
+                    placeholder="No of item sold">
+                </div>
+              </div>
+              <div class="form-group ">
+                <label for="pdtCompositionInput" class="col-sm-10 col-form-label">Composition </label>
+                <div class="col-sm-12">
+                  <input type="" class="form-control" id="pdtCompositionInput" name="pdtCompositionInput"
+                    placeholder="provide medicine composition">
                 </div>
               </div>
               <div class="form-group ">
@@ -1078,30 +1071,21 @@ openDeleteConfirmDialog(pdtId);
                       </select>
                 </div>
               </div>
-
+              
+              <div class="form-group ">
+                <label for="addNoteInput" class="col-sm-10 col-form-label">Note :</label>
+                <div class="col-sm-12">
+                  <!-- <input type="textarea" class="form-control" id="addNoteInput" name="addNoteInput" placeholder="Provide additional note"> -->
+                  <textarea type="textarea" class="form-control" id="addNoteInput" name="addNoteInput"
+                    placeholder="Provide additional note"></textarea>
+                </div>
+              </div>
             </div>
           </div>
           
-         
-          
-          
-          
-          
-          
-         
-          
-         
-          
-          
-
-
-
-
-
-
-          <div class="form-group row">
-            <div class="col-sm-10">
-              <button class="btn btn-primary" id="uploadProduct">Save</button>
+          <div class="row">
+            <div class="col-sm-12" style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-success" id="uploadProduct" style="padding-left: 30px;padding-right: 30px;">Update</button>
             </div>
           </div>
         </form>

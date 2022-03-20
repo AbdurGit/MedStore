@@ -7,8 +7,6 @@
   <link rel="stylesheet" href="lib/bootstrap-4.0.0-dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css"
     crossorigin="anonymous">
-
-
   <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/css/fileinput.min.css" media="all"
     rel="stylesheet" type="text/css" />
   <script src="lib/jquery-3.6.0.js"></script>
@@ -18,50 +16,25 @@
     type="text/javascript"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
   </script>
-
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">  -->
-
-
-
-
   <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.5/js/fileinput.min.js"></script>
-
-
-
-
-
   <link rel="stylesheet" href="css/header.css">
   <script src="lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
   <script src="js/header.js"></script>
-
-
-
-
-
-
-
-
-
-
-
   <link rel="stylesheet" href="lib/datepicker/css/bootstrap-datepicker.css">
   <script src="lib/datepicker/js/bootstrap-datepicker.js"></script>
-
-
-
   <script type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
   <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 
-
   <style>
-     .usericon{
+    .usericon {
       padding: 3px 6px;
-      
       border-radius: 50%;
-     color: white;
-      background:#007bff;
+      color: white;
+      background: #007bff;
     }
+
     .main-content {
       background-color: white;
       border: 1px solid #ddd;
@@ -99,22 +72,18 @@
   <script>
     $(document).ready(function () {
       $.ajax({
-          type: "GET",
-          url: "/resource" ,
-          success: function (data) {
-           console.log(data);
-           $("#userName").text("");
-           $("#userName").text(data);
-           
-           
-          },
-          error: function (xhr, status, error) {
-
-            alert("Exception occured!");
-            console.log(xhr.responseText);
-          }
-        });
-
+        type: "GET",
+        url: "/resource",
+        success: function (data) {
+          console.log(data);
+          $("#userName").text("");
+          $("#userName").text(data);
+        },
+        error: function (xhr, status, error) {
+          alert("Exception occured!");
+          console.log(xhr.responseText);
+        }
+      });
 
       $("#medImg").fileinput({
         'showUpload': false,
@@ -122,106 +91,89 @@
         maxFileCount: 1,
         allowedFileExtensions: ["jpg", "jpeg", "png", "gif"]
       });
-
-      //changeDateFormat();
-
       $('.datepicker').datepicker({
 
         format: 'dd-mm-yyyy',
-       // startDate: '-1500d'
+        // startDate: '-1500d'
         startDate: '-3y'
       });
-      // jQuery.validator.setDefaults({
-      //   debug:true,
-      //   success:"valid"
-      // })
 
-      
-     
-
-    
       $.validator.addMethod(
-        "nonNegativeNumber", 
-        function(value, element) {      
-            return value>=0;
+        "nonNegativeNumber",
+        function (value, element) {
+          return value >= 0;
         },
         "Should be non negative number."
-    );
+      );
       $.validator.addMethod(
-        "lessThanHundred", 
-        function(value, element) {      
-            return value<=100;
+        "lessThanHundred",
+        function (value, element) {
+          return value <= 100;
         },
         "Discount should be less than 100%."
-    );
+      );
 
       $.validator.addMethod(
-        "soldItemValidation", 
-        function(value, element) {
-        
-         var bought;
-        
-                if($("#boxNoBoughtInput").val()==''||$("#boxNoBoughtInput").val()==null||$("#boxNoBoughtInput").val()==undefined){
-                  bought=0;
-                }else{
-                  bought=$("#boxNoBoughtInput").val();
-                }
-                if(value==''||value==null||value==undefined){
-                  value=0;
-                }
-            return bought>=parseInt(value);
+        "soldItemValidation",
+        function (value, element) {
+          var bought;
+          if ($("#boxNoBoughtInput").val() == '' || $("#boxNoBoughtInput").val() == null || $("#boxNoBoughtInput")
+            .val() == undefined) {
+            bought = 0;
+          } else {
+            bought = $("#boxNoBoughtInput").val();
+          }
+          if (value == '' || value == null || value == undefined) {
+            value = 0;
+          }
+          return bought >= parseInt(value);
         },
         "Sold quantity can't be grater than bought quantity."
-    );
-    $.validator.addMethod(
-        "lessThanBoughtItem", 
-        function(value, element) {
+      );
+      $.validator.addMethod(
+        "lessThanBoughtItem",
+        function (value, element) {
           var bought;
-                if($("#boxNoBoughtInput").val()==''||$("#boxNoBoughtInput").val()==null||$("#boxNoBoughtInput").val()==undefined){
-                  bought=0;
-                }else{
-                  bought=$("#boxNoBoughtInput").val();
-                }
+          if ($("#boxNoBoughtInput").val() == '' || $("#boxNoBoughtInput").val() == null || $("#boxNoBoughtInput")
+            .val() == undefined) {
+            bought = 0;
+          } else {
+            bought = $("#boxNoBoughtInput").val();
+          }
 
-                if(bought==0){
-                  if(value==0){
-                    return true;
-                  }else if(value>0){
-                    return false;
-                  }
-                  else if(value<0){
-                    return false;
-                  }else{
-                    return true;
-                  }
-                }else{
-                  return bought>value;
-                }
-                
-
-
-            
+          if (bought == 0) {
+            if (value == 0) {
+              return true;
+            } else if (value > 0) {
+              return false;
+            } else if (value < 0) {
+              return false;
+            } else {
+              return true;
+            }
+          } else {
+            return bought > value;
+          }
         },
         "Bonus should be less than bought item number."
-    );
-    $.validator.addMethod(
-        "lessThanMrp", 
-        function(value, element) {
-          console.log(typeof(value));
-          var mrp=$("#pdtMrpInput").val();
-          if(value==''||value==null||value==undefined){
-            value=0;
-                }
-                if(mrp==''||mrp==null||mrp==undefined){
-                  mrp=0;
-                }else{
-                  mrp= parseFloat(mrp);
-                }      
-            return parseFloat(value)<=mrp;
+      );
+      $.validator.addMethod(
+        "lessThanMrp",
+        function (value, element) {
+          console.log(typeof (value));
+          var mrp = $("#pdtMrpInput").val();
+          if (value == '' || value == null || value == undefined) {
+            value = 0;
+          }
+          if (mrp == '' || mrp == null || mrp == undefined) {
+            mrp = 0;
+          } else {
+            mrp = parseFloat(mrp);
+          }
+          return parseFloat(value) <= mrp;
         },
         "Can't be grater than MRP."
-    );
-
+      );
 
       $("#productForm").validate({
         rules: {
@@ -240,13 +192,13 @@
           pdtMrpInput: {
             required: true,
             number: true,
-            nonNegativeNumber:true
+            nonNegativeNumber: true
           },
           pdtDiscountInput: {
 
             number: true,
-            lessThanHundred:true,
-            nonNegativeNumber:true
+            lessThanHundred: true,
+            nonNegativeNumber: true
 
           },
           pdtSellerInput: {
@@ -257,9 +209,9 @@
             digits: true
           },
           boxNoSoldInput: {
-            
+
             digits: true,
-            soldItemValidation:true
+            soldItemValidation: true
           },
           // pdtBonusInput:{
           //   digits: true,
@@ -271,15 +223,9 @@
           },
           pdtRateInput: {
             number: true,
-            
-            nonNegativeNumber:true,
-            lessThanMrp:true,
-
-
+            nonNegativeNumber: true,
+            lessThanMrp: true,
           },
-          
-
-
         },
         messages: {
           pdtNameInput: {
@@ -301,77 +247,47 @@
           pdtSellerInput: {
             required: "Please enter seller name",
           },
-
-
           pdtDiscountInput: {
-
             number: "Provide a valid number"
-
           },
-
           boxNoBoughtInput: {
-
             digits: "Provide a valid integer number"
           },
           boxNoSoldInput: {
-
             digits: "Provide a valid integer number"
           },
-//           pdtBonusInput: {
+          //           pdtBonusInput: {
 
-// digits: "Provide a valid integer number"
-// },
-pdtBrandInput: {
-
-  required: "Please provide brand name"
-},
-pdtRateInput: {
-            number: "Provide a valid number",
-            
+          // digits: "Provide a valid integer number"
+          // },
+          pdtBrandInput: {
+            required: "Please provide brand name"
           },
-
-
+          pdtRateInput: {
+            number: "Provide a valid number",
+          },
         },
-
-
-
         submitHandler: function (form) {
           form.submit();
-
-
         }
-
       });
-
 
       function changeDateFormat(date) {
         var changedFormat = '';
-
         if (date != null || date != undefined || date != "") {
           var dtArray = date.split("-");
           changedFormat = dtArray[2] + '-' + dtArray[1] + '-' + dtArray[0];
         }
-
-
         return changedFormat;
-
       }
     });
   </script>
-
 </head>
-
-
 
 <body style="background: #eee;">
 
   <nav class="navbar navbar-expand navbar-light bg-light" style="box-shadow: 1px 1px 11px #ddd;position: relative;">
     <a class="navbar-brand" href="/medstore" style="color: #dc3563;">Med Store</a>
-    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
-      aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button> -->
-
     <div class="collapse navbar-collapse navbar-center" id="navbarTogglerDemo02">
       <ul class="navbar-nav  mr-auto mt-2 mt-lg-0 navul">
         <li class="nav-item ">
@@ -399,95 +315,30 @@ pdtRateInput: {
     </div>
     <div class="" style="position: absolute;right: 1rem;">
       <div class="" style="display: inline; color: #007bff;"><a id="notificationIcon" href="javascript:void(0)"><i
-        class="bi bi-bell"></i></a></div>
-        <div class="usericon" style="display: inline;"><i class="bi bi-person"></i></div>
+            class="bi bi-bell"></i></a></div>
+      <div class="usericon" style="display: inline;"><i class="bi bi-person"></i></div>
       <div class="userDetail" id="userName" style="display: inline;"></div>
-      <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}" style="display: inline;margin-left: 1rem;">
-       
+      <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}"
+        style="display: inline;margin-left: 1rem;">
         <button class="btn btn-sm btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
       </form>
-    
     </div>
   </nav>
+
   <div class="notification border  rounded hide-notification" id="notification">
     <div class="container" id="notifContainer"></div>
   </div>
   <div class="container-fluid">
     <div class="row">
       <div class="col">
-
       </div>
       <div class="col-10  main-content">
-
         <div class="container">
           <h4 class="form-title">Upload Medicine</h4>
-
-
           <form id="productForm" method="post" enctype="multipart/form-data" th:action="@{/addProduct}">
             <div class="row">
+              
               <div class="col-6">
-
-                <!-- <button type="button" class="btn btn-primary" >Upload</button>
-
-    <button type="button" class="btn btn-secondary" >Remove</button> -->
-
-                <div class="form-group ">
-
-                  <div class="col-sm-12">
-                    <input type="file" id="medImg" name="medImg">
-                    <input type="hidden" id="pdtIdInput" name="pdtIdInput">
-                    <input type="hidden" id="pageFlag" name="pageFlag" value="backToTable">
-                  </div>
-                </div>
-                <div class="form-group ">
-                  <label for="pdtDescInput" class="col-sm-10 col-form-label">Description :</label>
-                  <div class="col-sm-12">
-                    <input type="text" class="form-control" id="pdtDescInput" name="pdtDescInput"
-                      placeholder="Description">
-                  </div>
-                </div>
-
-                <div class="form-group ">
-                  <label for="boxNoBoughtInput" class="col-sm-10 col-form-label">Quantity Bought :</label>
-                  <div class="col-sm-12">
-                    <input type="" class="form-control" id="boxNoBoughtInput" name="boxNoBoughtInput"
-                      placeholder="No of box bought">
-                  </div>
-                </div>
-                <div class="form-group ">
-                  <label for="boxNoSoldInput" class="col-sm-10 col-form-label">Quantity Sold :</label>
-                  <div class="col-sm-12">
-                    <input type="" class="form-control" id="boxNoSoldInput" name="boxNoSoldInput"
-                      placeholder="No of box sold">
-                  </div>
-                </div>
-                <div class="form-group ">
-                  <label for="pdtBonusInput" class="col-sm-10 col-form-label">Bonus </label>
-                  <div class="col-sm-12">
-                    <input type="" class="form-control" id="pdtBonusInput" name="pdtBonusInput"
-                      placeholder="Bonus">
-                  </div>
-                </div>
-                <div class="form-group ">
-                  <label for="pdtRateInput" class="col-sm-10 col-form-label">Rate </label>
-                  <div class="col-sm-12">
-                    <input type="" class="form-control" id="pdtRateInput" name="pdtRateInput"
-                      placeholder="Rate">
-                  </div>
-                </div>
-                <div class="form-group ">
-                  <label for="addNoteInput" class="col-sm-10 col-form-label">Note :</label>
-                  <div class="col-sm-12">
-                    <!-- <input type="textarea" class="form-control" id="addNoteInput" name="addNoteInput" placeholder="Provide additional note"> -->
-                    <textarea type="textarea" class="form-control" id="addNoteInput" name="addNoteInput"
-                      placeholder="Provide additional note"></textarea>
-                  </div>
-                </div>
-
-
-              </div>
-              <div class="col-6">
-
                 <div class="form-group">
                   <label for="pdtNameInput" class="col-sm-10 col-form-label required">Product Name:</label>
                   <div class="col-sm-12">
@@ -503,16 +354,7 @@ pdtRateInput: {
                       placeholder="Brand name">
                   </div>
                 </div>
-                <div class="form-group ">
-                  <label for="pdtCompositionInput" class="col-sm-10 col-form-label">Composition </label>
-                  <div class="col-sm-12">
-                    <input type="" class="form-control" id="pdtCompositionInput" name="pdtCompositionInput"
-                      placeholder="provide medicine composition">
-                  </div>
-                </div>
-
-
-
+                
                 <div class="form-group ">
                   <label for="pdtBatchInput" class="col-sm-10 col-form-label required">Batch :</label>
                   <div class="col-sm-12">
@@ -523,7 +365,6 @@ pdtRateInput: {
                 <div class="form-group ">
                   <label for="pdtMfgInput" class="col-sm-10 col-form-label">Mfg Date :</label>
                   <div class="col-sm-12">
-
                     <input type="text" class="form-control datepicker" name="pdtMfgInput" id="pdtMfgInput"
                       data-provide="datepicker" placeholder="dd-mm-yyyy">
                   </div>
@@ -531,7 +372,6 @@ pdtRateInput: {
                 <div class="form-group ">
                   <label for="pdtExpInput" class="col-sm-10 col-form-label required">Exp. Date :</label>
                   <div class="col-sm-12">
-
                     <input type="text" class="form-control datepicker" id="pdtExpInput" name="pdtExpInput"
                       data-provide="datepicker" placeholder="dd-mm-yyyy">
                   </div>
@@ -542,6 +382,19 @@ pdtRateInput: {
                     <input type="" class="form-control" id="pdtMrpInput" name="pdtMrpInput" placeholder="Price">
                   </div>
                 </div>
+                <div class="form-group ">
+                  <label for="pdtRateInput" class="col-sm-10 col-form-label">Rate </label>
+                  <div class="col-sm-12">
+                    <input type="" class="form-control" id="pdtRateInput" name="pdtRateInput" placeholder="Rate">
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label for="pdtBonusInput" class="col-sm-10 col-form-label">Bonus </label>
+                  <div class="col-sm-12">
+                    <input type="" class="form-control" id="pdtBonusInput" name="pdtBonusInput" placeholder="Bonus">
+                  </div>
+                </div>
+               
                 <div class="form-group ">
                   <label for="pdtSellerInput" class="col-sm-10 col-form-label required">Seller :</label>
                   <div class="col-sm-12">
@@ -556,12 +409,51 @@ pdtRateInput: {
                       placeholder="Discount %">
                   </div>
                 </div>
+               
+               
+              </div>
+              <div class="col-6">
+                <div class="form-group ">
+                  <div class="col-sm-12">
+                    <input type="file" id="medImg" name="medImg">
+                    <input type="hidden" id="pdtIdInput" name="pdtIdInput">
+                    <input type="hidden" id="pageFlag" name="pageFlag" value="backToTable">
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label for="pdtDescInput" class="col-sm-10 col-form-label">Description :</label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control" id="pdtDescInput" name="pdtDescInput"
+                      placeholder="Description">
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label for="boxNoBoughtInput" class="col-sm-10 col-form-label">Quantity Bought :</label>
+                  <div class="col-sm-12">
+                    <input type="" class="form-control" id="boxNoBoughtInput" name="boxNoBoughtInput"
+                      placeholder="No of item bought">
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label for="boxNoSoldInput" class="col-sm-10 col-form-label">Quantity Sold :</label>
+                  <div class="col-sm-12">
+                    <input type="" class="form-control" id="boxNoSoldInput" name="boxNoSoldInput"
+                      placeholder="No of item sold">
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <label for="pdtCompositionInput" class="col-sm-10 col-form-label">Composition </label>
+                  <div class="col-sm-12">
+                    <input type="" class="form-control" id="pdtCompositionInput" name="pdtCompositionInput"
+                      placeholder="provide medicine composition">
+                  </div>
+                </div>
                 <div class="form-group ">
                   <label for="pdtMedTypeInput" class="col-sm-10 col-form-label">Type :</label>
                   <div class="col-sm-12">
                     <!-- <input type="dropdown" class="form-control" id="pdtMedTypeInput" name="pdtMedTypeInput"
                       placeholder="Medicine Type"> -->
-                      <select type="dropdown" class="form-control" id="pdtMedTypeInput" name="pdtMedTypeInput"
+                    <select type="dropdown" class="form-control" id="pdtMedTypeInput" name="pdtMedTypeInput"
                       placeholder="Medicine Type">
                       <option value="-1">Select medicine type</option>
                       <option value="Tablet">Tablet</option>
@@ -570,36 +462,33 @@ pdtRateInput: {
                       <option value="Injection">Injection</option>
                       <option value="Drop">Drop</option>
                       <option value="Oral">Oral</option>
-                      </select>
-                      
+                    </select>
                   </div>
                 </div>
-                       
-               
+                
+                <div class="form-group ">
+                  <label for="addNoteInput" class="col-sm-10 col-form-label">Note :</label>
+                  <div class="col-sm-12">
+                    <!-- <input type="textarea" class="form-control" id="addNoteInput" name="addNoteInput" placeholder="Provide additional note"> -->
+                    <textarea type="textarea" class="form-control" id="addNoteInput" name="addNoteInput"
+                      placeholder="Provide additional note"></textarea>
+                  </div>
+                </div>
               </div>
-
             </div>
             <div class="row">
-
               <div class="col-sm-12" style="text-align: center; margin-top: 20px;">
                 <button type="submit" class="btn btn-success" id="uploadProduct"
                   style="padding-left: 30px;padding-right: 30px;">Save</button>
-
               </div>
             </div>
           </form>
-
-
         </div>
-
       </div>
       <div class="col">
-
       </div>
-
     </div>
   </div>
-
 
   <div class="modal fade" id="uploadSuccessModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -616,13 +505,10 @@ pdtRateInput: {
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
         </div>
       </div>
     </div>
   </div>
-
-
 
 </body>
 

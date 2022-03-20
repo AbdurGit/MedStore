@@ -38,7 +38,7 @@ public class Product implements Serializable {
 	private int noBoxSold;
 	private String additionalNotes;
 	private String productImagePath;
-	private int bonus;
+	private String bonus;
 	private String brand;
 	private String composition;
 	
@@ -50,7 +50,7 @@ public class Product implements Serializable {
 
 	public Product(String id, String productName, String productDesc, String batch, Date mfgDate, Date expDate,
 			double mrp, String sellerName, String medType, double percentageDiscount, int noBoxBought, int noBoxSold,
-			String additionalNotes, String productImagePath, int bonus, String brand, String composition) {
+			String additionalNotes, String productImagePath, String bonus, String brand, String composition) {
 		this.id = id;
 		this.productName = productName;
 		this.productDesc = productDesc;
@@ -211,12 +211,12 @@ public class Product implements Serializable {
 	}
 
 
-	public int getBonus() {
+	public String getBonus() {
 		return bonus;
 	}
 
 
-	public void setBonus(int bonus) {
+	public void setBonus(String bonus) {
 		this.bonus = bonus;
 	}
 

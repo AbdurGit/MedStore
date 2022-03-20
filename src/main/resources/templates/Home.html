@@ -131,6 +131,8 @@
       padding-top: 30px;
       padding-bottom: 30px;
       border-radius: 5px;
+      padding-left: 40px;
+      padding-right: 40px;
 
     }
 
@@ -1108,7 +1110,7 @@
     <div class="col-10 main-content">
       <div class="container" style="position: relative;">
         <h4 class="section-title">Update Medicine Details</h4>
-        <div style="position: absolute; left:15px; top: 20px;">
+        <div style="position: absolute; left:30px; top: 20px;">
           <button class="btn btn-outline-primary btn-sm" id="backToCardFromUpdateForm">
             <i class="bi-arrow-left"></i>
             Back To List</button>
@@ -1118,63 +1120,7 @@
 
 
           <div class="row">
-            <div class="col-6">
-
-              <div class="form-group ">
-
-                <div class="col-sm-12">
-                  <input type="hidden" id="pdtIdHidden" name="pdtIdInput">
-                  <input type="hidden" id="pageFlag" name="pageFlag" value="backToCard">
-                  <input type="file" id="medImg" name="medImg">
-
-
-                </div>
-              </div>
-              <div class="form-group ">
-                <label for="pdtDescInput" class="col-sm-10 col-form-label">Description :</label>
-                <div class="col-sm-12">
-                  <input type="text" class="form-control" id="pdtDescInput" name="pdtDescInput"
-                    placeholder="Description">
-                </div>
-              </div>
-
-              <div class="form-group ">
-                <label for="boxNoBoughtInput" class="col-sm-10 col-form-label">Box Bought :</label>
-                <div class="col-sm-12">
-                  <input type="" class="form-control" id="boxNoBoughtInput" name="boxNoBoughtInput"
-                    placeholder="No of box bought">
-                </div>
-              </div>
-              <div class="form-group ">
-                <label for="boxNoSoldInput" class="col-sm-10 col-form-label">Box Sold :</label>
-                <div class="col-sm-12">
-                  <input type="" class="form-control" id="boxNoSoldInput" name="boxNoSoldInput"
-                    placeholder="No of box sold">
-                </div>
-              </div>
-              <div class="form-group ">
-                <label for="pdtBonusInput" class="col-sm-10 col-form-label">Bonus </label>
-                <div class="col-sm-12">
-                  <input type="" class="form-control" id="pdtBonusInput" name="pdtBonusInput" placeholder="Bonus">
-                </div>
-              </div>
-              <div class="form-group ">
-                <label for="pdtRateInput" class="col-sm-10 col-form-label">Rate </label>
-                <div class="col-sm-12">
-                  <input type="" class="form-control" id="pdtRateInput" name="pdtRateInput" placeholder="Rate">
-                </div>
-              </div>
-              <div class="form-group ">
-                <label for="addNoteInput" class="col-sm-10 col-form-label">Note :</label>
-                <div class="col-sm-12">
-                  <!-- <input type="textarea" class="form-control" id="addNoteInput" name="addNoteInput" placeholder="Provide additional note"> -->
-                  <textarea type="textarea" class="form-control" id="addNoteInput" name="addNoteInput"
-                    placeholder="Provide additional note"></textarea>
-                </div>
-              </div>
-
-
-            </div>
+            
 
             <div class="col-6">
 
@@ -1191,17 +1137,7 @@
                   <input type="" class="form-control" id="pdtBrandInput" name="pdtBrandInput" placeholder="Brand name">
                 </div>
               </div>
-              <div class="form-group ">
-                <label for="pdtCompositionInput" class="col-sm-10 col-form-label">Composition </label>
-                <div class="col-sm-12">
-                  <input type="" class="form-control" id="pdtCompositionInput" name="pdtCompositionInput"
-                    placeholder="provide medicine composition">
-                </div>
-              </div>
-
-
-
-
+             
               <div class="form-group ">
                 <label for="pdtBatchInput" class="col-sm-10 col-form-label required">Batch :</label>
                 <div class="col-sm-12">
@@ -1231,6 +1167,19 @@
                   <input type="" class="form-control" id="pdtMrpInput" name="pdtMrpInput" placeholder="Price">
                 </div>
               </div>
+              
+              <div class="form-group ">
+                <label for="pdtRateInput" class="col-sm-10 col-form-label">Rate </label>
+                <div class="col-sm-12">
+                  <input type="" class="form-control" id="pdtRateInput" name="pdtRateInput" placeholder="Rate">
+                </div>
+              </div>
+              <div class="form-group ">
+                <label for="pdtBonusInput" class="col-sm-10 col-form-label">Bonus </label>
+                <div class="col-sm-12">
+                  <input type="" class="form-control" id="pdtBonusInput" name="pdtBonusInput" placeholder="Bonus">
+                </div>
+              </div>
               <div class="form-group ">
                 <label for="pdtSellerInput" class="col-sm-10 col-form-label required">Seller :</label>
                 <div class="col-sm-12">
@@ -1243,6 +1192,51 @@
                 <div class="col-sm-12">
                   <input type="" class="form-control" id="pdtDiscountInput" name="pdtDiscountInput"
                     placeholder="Discount %">
+                </div>
+              </div>
+            
+
+            </div>
+            <div class="col-6">
+
+              <div class="form-group ">
+
+                <div class="col-sm-12">
+                  <input type="hidden" id="pdtIdHidden" name="pdtIdInput">
+                  <input type="hidden" id="pageFlag" name="pageFlag" value="backToCard">
+                  <input type="file" id="medImg" name="medImg">
+
+
+                </div>
+              </div>
+              <div class="form-group ">
+                <label for="pdtDescInput" class="col-sm-10 col-form-label">Description :</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="pdtDescInput" name="pdtDescInput"
+                    placeholder="Description">
+                </div>
+              </div>
+
+              <div class="form-group ">
+                <label for="boxNoBoughtInput" class="col-sm-10 col-form-label">Quantity Bought :</label>
+                <div class="col-sm-12">
+                  <input type="" class="form-control" id="boxNoBoughtInput" name="boxNoBoughtInput"
+                    placeholder="No of items bought">
+                </div>
+              </div>
+              <div class="form-group ">
+                <label for="boxNoSoldInput" class="col-sm-10 col-form-label">Quantity Sold :</label>
+                <div class="col-sm-12">
+                  <input type="" class="form-control" id="boxNoSoldInput" name="boxNoSoldInput"
+                    placeholder="No of items sold">
+                </div>
+              </div>
+             
+              <div class="form-group ">
+                <label for="pdtCompositionInput" class="col-sm-10 col-form-label">Composition </label>
+                <div class="col-sm-12">
+                  <input type="" class="form-control" id="pdtCompositionInput" name="pdtCompositionInput"
+                    placeholder="provide medicine composition">
                 </div>
               </div>
               <div class="form-group ">
@@ -1260,6 +1254,15 @@
                   </select>
                 </div>
               </div>
+              <div class="form-group ">
+                <label for="addNoteInput" class="col-sm-10 col-form-label">Note :</label>
+                <div class="col-sm-12">
+                  <!-- <input type="textarea" class="form-control" id="addNoteInput" name="addNoteInput" placeholder="Provide additional note"> -->
+                  <textarea type="textarea" class="form-control" id="addNoteInput" name="addNoteInput"
+                    placeholder="Provide additional note"></textarea>
+                </div>
+              </div>
+
 
             </div>
           </div>
@@ -1269,9 +1272,16 @@
 
 
 
-          <div class=" row">
+          <!-- <div class="row">
             <div class="col-sm-12" style="padding-left: 30px;padding-right: 30px; margin-top: 20px;">
               <button class="btn btn-primary" id="uploadProduct">Save</button>
+            </div>
+          </div> -->
+
+
+          <div class="row">
+            <div class="col-sm-12" style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-success" id="uploadProduct" style="padding-left: 30px;padding-right: 30px;">Update</button>
             </div>
           </div>
         </form>
