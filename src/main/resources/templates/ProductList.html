@@ -832,8 +832,9 @@ openDeleteConfirmDialog(pdtId);
 
 <body style="background: #eee;">
 
-  <nav class="navbar navbar-expand navbar-light bg-light" style="box-shadow: 1px 1px 11px #ddd;position: relative;">
-    <a class="navbar-brand" href="/medstore" style="color: #dc3563;">Med Store</a>
+  <nav class="navbar navbar-expand fixed-top" style="box-shadow: 1px 1px 11px #ddd; background-color: white;">
+    <a class="navbar-brand"
+      href="/medstore" ><img src="img/MedStore-logos_transparent.png" alt="logo" style="height: 2.5rem;"></a>
     <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
       aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -841,8 +842,9 @@ openDeleteConfirmDialog(pdtId);
 
     <div class="collapse navbar-collapse navbar-center" id="navbarTogglerDemo02">
       <ul class="navbar-nav  mr-auto mt-2 mt-lg-0 navul">
-        <li class="nav-item">
-          <a class="nav-link" href="/medstore" id="loadHomePage">Home <span class="sr-only">(current)</span></a>
+        <li class="nav-item ">
+          <a class="nav-link " href="/medstore" id="loadHomePage">Home <span
+              class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item liclicked">
           <a class="nav-link navclicked" href="/pdtListPage" id="loadAllProductsPage">Products</a>
@@ -859,22 +861,24 @@ openDeleteConfirmDialog(pdtId);
         </li> -->
 
       </ul>
-      <!-- <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form> -->
+
+
     </div>
     <div class="" style="position: absolute;right: 1rem;">
       <div class="" style="display: inline; color: #007bff;"><a id="notificationIcon" href="javascript:void(0)"><i
-        class="bi bi-bell"></i></a></div>
-        <div class="usericon" style="display: inline;"><i class="bi bi-person"></i></div>
+            class="bi bi-bell"></i></a></div>
+      <div class="usericon" style="display: inline;"><i class="bi bi-person"></i></div>
       <div class="userDetail" id="userName" style="display: inline;"></div>
-      <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}" style="display: inline;margin-left: 1rem;">
-       
+      <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}"
+        style="display: inline;margin-left: 1rem;">
+
         <button class="btn btn-sm btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
       </form>
-    
+
     </div>
+
+
+
   </nav>
   <div class="notification border  rounded hide-notification" id="notification">
     <div class="container" id="notifContainer"></div>
