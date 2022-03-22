@@ -6,6 +6,7 @@ import com.Projects.MedStore.Model.User;
 import com.Projects.MedStore.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,9 @@ public class UserController {
 
 @Autowired
 UserService userService;
+
+@Autowired
+PasswordEncoder encoder;
 
 
     @PostMapping("/addUser")
@@ -31,11 +35,11 @@ UserService userService;
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setUserName(userName);
-        user.setPassword(password);
+        user.setPassword(encoder.encode(password));
         userService.saveUser(user);
-
         httpResponse.sendRedirect("/registrationSuccess");
         return null;
+        
     }
 
 
