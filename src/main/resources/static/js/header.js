@@ -42,7 +42,7 @@ $(document).ready(function () {
 
   });
   $(document).on("click", function(e) {
-    console.log(e.target);
+    // console.log(e.target);
     if ($(e.target).is("#notification,#notificationIcon,.bi-bell,.close-btn,.open-btn,.bi-x-lg") === false) {
       
       $("#notification").addClass("hide-notification");
@@ -293,6 +293,22 @@ var count=0;
   function formatDate(date) {
     return moment(date).format("DD-MM-YYYY");
   }
+
+// validation for input of rate.
+// By default 28.56 % discount is applied to mrp to calculate rate.
+// Later user can change the rate.
+
+  $("#pdtMrpInput").on('input', function(){
+    var inputmrp=$(this).val();
+    var rate=inputmrp*(1-.2856);
+    rate = +rate.toFixed(2);
+    if(!isNaN(rate)){
+      $("#pdtRateInput").val("");
+      $("#pdtRateInput").val(rate);
+    }else{
+      $("#pdtRateInput").val("");  
+    }
+    });
 
 
 

@@ -94,13 +94,13 @@ body{
   color: #999999;
 }
 .n-expiry{
-  font-size: small;
-  color: #818181;
-  background-color: #ffd1d1;
+  color: #ff2907;
+  background-color: #ffdede;
   padding-left: 3px;
   padding-right: 3px;
   display: inline-block;
   border-radius: 4px;
+  font-size: 14px;
 }
 #notificationIcon{
   padding:3px 6px ;
